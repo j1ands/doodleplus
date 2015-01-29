@@ -33,5 +33,40 @@ db.User = db.sequelize.import(path.join(
 ));
 
 // Insert models below
+db.Email = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'email',
+  'email.model'
+));
+db.Response = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'response',
+  'response.model'
+));
+db.Time = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'time',
+  'time.model'
+));
+db.Event = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'event',
+  'event.model'
+));
+db.Event = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'Event',
+  'Event.model'
+));
 
 module.exports = db;

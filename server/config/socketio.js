@@ -18,6 +18,11 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/email/email.socket').register(socket);
+  require('../api/response/response.socket').register(socket);
+  require('../api/time/time.socket').register(socket);
+  require('../api/event/event.socket').register(socket);
+  require('../api/Event/Event.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 }
 
