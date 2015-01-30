@@ -1,0 +1,54 @@
+<div class="col-lg-3">
+  <form name="EventInfo" ng-submit="message()">
+    <label> Name:
+      <input class="form-control" name="name" ng-model="event.name" type="text" placeholder="">
+    </label>
+    <label> Description:
+      <textarea class="form-control" name="description" ng-model="event.description" type="text" placeholder=""></textarea>
+    </label>
+    <label> Location:
+      <input class="form-control" name="location" ng-model="event.location" type="text" placeholder="">
+    </label>
+    <label> Your Name:
+      <input class="form-control" name="creatorName" ng-model="creator.name" type="text" placeholder="">
+    </label>
+    <label> Your Email:
+      <input class="form-control" name="creatorEmail" ng-model="creator.email" type="email" placeholder="">
+    </label>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
+
+<div class="col-lg-3">
+  <datepicker ng-click="" ng-model="activeDate" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
+</div>
+
+<div class="col-lg-3">
+  <label> Time Increment:
+    <select class="form-control">
+      <option>15 Minutes</option>
+      <option>30 Minutes</option>
+      <option>1 Hour</option>
+    </select>
+  </label>
+</div>
+
+<div class="col-lg-3">
+  <h3>Invite Peepz (email)</h3>
+  <form name="invites" ng-submit="addEmail()">
+    <input name="emailToAdd" class="form-control" ng-model="emailToAdd" type="email">
+    <button class="btn btn-primary" type="submit">Add Invitee</button>
+  </form>
+
+  <ul>
+    <li ng-repeat="email in invitedEmails">{{email}}</li>
+  </ul>
+  <div>
+    <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
+      <i class="fa fa-facebook"></i> Facebook Contacts
+    </a><br><br>
+    <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+      <i class="fa fa-google-plus"></i> Google Contacts
+    </a>
+  </div>
+</div>
