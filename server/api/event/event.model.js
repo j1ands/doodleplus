@@ -10,6 +10,13 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     name: DataTypes.STRING,
+    sendername: DataTypes.STRING,
+    senderemail: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true
+      }
+    },
     description: DataTypes.TEXT,
     location: DataTypes.STRING,
     onlyDays: DataTypes.BOOLEAN,
