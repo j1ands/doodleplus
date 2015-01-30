@@ -1,7 +1,8 @@
 'use strict';
 
+
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Event', {
+  var Event = sequelize.define('Event', {
     _id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -9,7 +10,19 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     name: DataTypes.STRING,
-    info: DataTypes.STRING,
-    active: DataTypes.BOOLEAN
+    description: DataTypes.TEXT,
+    location: DataTypes.STRING,
+    onlyDays: DataTypes.BOOLEAN,
+    private: DataTypes.BOOLEAN
+  }, {
+    classMethods: {
+      associate: function(models){
+        Event.belongsTo(models.User);
+        Event.hasMany(models.Time);
+        Event.hasMany(models.Contact);
+      }
+    }
   });
+
+  return Event;
 };

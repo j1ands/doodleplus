@@ -1,15 +1,26 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Time', {
+  var Time =  sequelize.define('Time', {
     _id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
-    info: DataTypes.STRING,
-    active: DataTypes.BOOLEAN
+    time: DataTypes.INTEGER
+  },{
+    classMethods: {
+      associate: function(models){
+        Time.belongsTo(models.Event);
+        Time.hasMany(models.Response);
+      }
+    }
   });
+
+  return Time;
 };
+
+
+// Time has many Response
+// Response.hasOne()

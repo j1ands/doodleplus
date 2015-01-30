@@ -4,27 +4,27 @@
 
 'use strict';
 
-var Email = require('../../sqldb').Email;
+var Contact = require('../../sqldb').Contact;
 
 exports.register = function(socket) {
-  Email.hook('afterCreate', function(doc, fields, fn) {
+  Contact.hook('afterCreate', function(doc, fields, fn) {
     onSave(socket, doc);
     fn(null);
   });
-  Email.hook('afterUpdate', function(doc, fields, fn) {
+  Contact.hook('afterUpdate', function(doc, fields, fn) {
     onSave(socket, doc);
     fn(null);
   });
-  Email.hook('afterDestroy', function(doc, fields, fn) {
+  Contact.hook('afterDestroy', function(doc, fields, fn) {
     onRemove(socket, doc);
     fn(null);
   });
 };
 
 function onSave(socket, doc, cb) {
-  socket.emit('email:save', doc);
+  socket.emit('Contact:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('email:remove', doc);
+  socket.emit('Contact:remove', doc);
 }
