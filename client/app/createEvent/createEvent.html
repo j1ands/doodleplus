@@ -1,36 +1,47 @@
+<div class="col-sm-12">
+  <h1>{{eventOptions}}</h1>
+  <h1>{{userOptions}}</h1>
+  <h1>{{timeOptions}}</h1>
+</div>
+
 <div class="col-lg-3">
   <form name="EventInfo" ng-submit="message()">
     <label> Name:
-      <input class="form-control" name="name" ng-model="event.name" type="text" placeholder="">
+      <input class="form-control" name="name" ng-model="eventOptions.name" type="text" placeholder="">
     </label>
     <label> Description:
-      <textarea class="form-control" name="description" ng-model="event.description" type="text" placeholder=""></textarea>
+      <textarea class="form-control" name="description" ng-model="eventOptions.description" type="text" placeholder=""></textarea>
     </label>
     <label> Location:
-      <input class="form-control" name="location" ng-model="event.location" type="text" placeholder="">
+      <input class="form-control" name="location" ng-model="eventOptions.location" type="text" placeholder="">
     </label>
     <label> Your Name:
-      <input class="form-control" name="creatorName" ng-model="creator.name" type="text" placeholder="">
+      <input class="form-control" name="creatorName" ng-model="userOptions.name" type="text" placeholder="">
     </label>
     <label> Your Email:
-      <input class="form-control" name="creatorEmail" ng-model="creator.email" type="email" placeholder="">
+      <input class="form-control" name="creatorEmail" ng-model="userOptions.email" type="email" placeholder="">
     </label>
-    <button class="btn btn-primary" type="submit">Submit</button>
   </form>
 </div>
 
 <div class="col-lg-3">
-  <datepicker ng-click="" ng-model="activeDate" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
+  <datepicker ng-click="" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
 </div>
 
 <div class="col-lg-3">
-  <label> Time Increment:
-    <select class="form-control">
-      <option>15 Minutes</option>
-      <option>30 Minutes</option>
-      <option>1 Hour</option>
-    </select>
-  </label>
+  <div class="row">
+    <label> Time Increment:
+      <select class="form-control" ng-model="timeOptions.increment">
+        <option>15 Minutes</option>
+        <option>30 Minutes</option>
+        <option>1 Hour</option>
+        <option>24 Hours</option>
+      </select>
+    </label>
+  </div>
+  <div class="row">
+    <a href="" class="btn btn-success btn-lg" ng-click="storeEvent()" style="margin-top:20px">Submit</a>
+  </div>
 </div>
 
 <div class="col-lg-3">
