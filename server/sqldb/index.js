@@ -33,12 +33,12 @@ db.User = db.sequelize.import(path.join(
 ));
 
 // Insert models below
-db.Email = db.sequelize.import(path.join(
+db.Contact = db.sequelize.import(path.join(
   config.root,
   'server',
   'api',
-  'email',
-  'email.model'
+  'contact',
+  'contact.model'
 ));
 db.Response = db.sequelize.import(path.join(
   config.root,
@@ -61,12 +61,11 @@ db.Event = db.sequelize.import(path.join(
   'event',
   'event.model'
 ));
-db.Event = db.sequelize.import(path.join(
-  config.root,
-  'server',
-  'api',
-  'Event',
-  'Event.model'
-));
+
+Object.keys(db).forEach(function(modelName) {
+  if ("associate" in db[modelName]) {
+    db[modelName].associate(db);
+  }
+});
 
 module.exports = db;

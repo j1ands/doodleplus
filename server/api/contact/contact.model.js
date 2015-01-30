@@ -1,24 +1,21 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-  var Response = sequelize.define('Response', {
+  var Contact = sequelize.define('Contact', {
     _id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    status: DataTypes.ENUM('able','unable','maybe','ifneedbe'),
-    username: DataTypes.STRING,
-    UUID: DataTypes.STRING,
-    privateID: DataTypes.STRING
+    email: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models){
-        Response.belongsTo(models.Time);
+        Contact.belongsTo(models.User);
+        Contact.hasMany(models.Event);
       }
     }
   });
-
-  return Response;
+  return Contact;
 };
