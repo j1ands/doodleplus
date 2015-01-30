@@ -1,0 +1,28 @@
+
+<div class="col-lg-3">
+  <datepicker ng-click="" ng-model="activeDate" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
+</div>
+
+<div vertical="true" class="col-lg-3">
+	<tabset type="">
+		<tab heading="{{day.day}}" ng-repeat="day in days">
+			<ul class="list-unstyled">
+				<li ng-repeat="time in day.times">{{time}} &nbsp;
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-ok-sign"></span></button>
+						<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-question-sign"></span></button>
+					</div>
+				</li>
+			</ul>
+		</tab>
+	</tabset>
+</div>
+
+<div class="col-lg-3">
+	<form>
+		<label class=""> Name 
+			<input class="form-control" type="text" placeholder="Name">
+		</label> <br>
+		<button class="btn btn-primary form-control">Submit Response</button>
+	</form>
+</div>
