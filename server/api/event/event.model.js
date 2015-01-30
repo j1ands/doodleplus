@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models){
         Event.belongsTo(models.User);
         Event.hasMany(models.Time);
-        Event.hasMany(models.Contact);
+        Event.belongsToMany(models.Contact, {through: 'EventContacts'});
       }
     }
   });
