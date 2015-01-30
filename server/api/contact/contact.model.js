@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models){
         Contact.belongsTo(models.User);
-        Contact.hasMany(models.Event);
+        Contact.belongsToMany(models.Event, {through: 'EventContacts'});
       }
     }
   });
