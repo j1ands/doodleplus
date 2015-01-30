@@ -1,0 +1,24 @@
+<div class="col-lg-4">
+  <form name="EventInfo" ng-submit="message()">
+    <label> Name:
+      <input class="form-control" name="name" ng-model="event.name" type="text" placeholder="">
+    </label>
+    <label> Description:
+      <textarea class="form-control" name="description" ng-model="event.description" type="text" placeholder=""></textarea>
+    </label>
+    <label> Location:
+      <input class="form-control" name="location" ng-model="event.location" type="text" placeholder="">
+    </label>
+    <label> Your Name:
+      <input class="form-control" name="creatorName" ng-model="creator.name" type="text" placeholder="">
+    </label>
+    <label> Your Email:
+      <input class="form-control" name="creatorEmail" ng-model="creator.email" type="email" placeholder="">
+    </label>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
+
+<div class="col-lg-4">
+  <datepicker></datepicker>
+</div>
