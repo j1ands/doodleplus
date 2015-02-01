@@ -1,11 +1,8 @@
 'use strict';
 
-
-
 var sqldb = require('../../sqldb');
 var Event = sqldb.Event;
-// Gets list of events from the DB
-
+var Time = sqldb.Time;
 var User = sqldb.User;
 
 exports.index = function(req, res) {
@@ -13,12 +10,9 @@ exports.index = function(req, res) {
 };
 
 exports.create = function(req, res) {
-	// (req.body.user.email )
 	var userId;
 	User.findOrCreate({where: {email: req.body.user.email}, defaults: {name: req.body.user.name}})
 	.spread(function(user, created){
-		console.log(user.values)
-		console.log(created)
 		userId = user.values._id;
 	})
 	.then(function(){
@@ -33,9 +27,48 @@ exports.create = function(req, res) {
 	})
 	.save()
 	.then(function(event){
-		res.send(200, event)
+
+		var times = [];
+		var incrementInMilli;
+		var currentTime = req.body.time.date;
+
+		switch(req.body.time.increment)
+		{
+			case "15 Minutes":
+				incrementInMilli = 900000;
+				break;
+			case "30 Minutes":
+				incrementInMilli = 1800000;
+				break;
+			case "1 Hour":
+				incrementInMilli = 3600000;
+				break;
+			case "24 Hours":
+				incrementInMilli = 86400000;
+				break;
+		}
+
+		function buildTimes(){
+			if(currentTime < req.body.time.date + 86400000)
+			{
+				Time.build({
+					time: currentTime,
+					EventId: event._id
+				})
+				.save()
+				.then(function(newTime){
+					currentTime += incrementInMilli;
+					times.push(newTime);
+					buildTimes();
+				})
+			}
+			else
+			{
+				res.send(200, {times:times});
+			}
+		}
+
+		buildTimes();
 	})
 	})
-// console.log(User);
-// res.send(200, req.body);
 }
