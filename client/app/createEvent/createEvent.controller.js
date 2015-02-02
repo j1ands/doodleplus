@@ -21,6 +21,12 @@ angular.module('doodleplusApp')
       label: '1 Day',
       timeIncrement: 86400000
     }];
+    $scope.selectedDates = [];
+
+    $scope.test = function(){
+      console.log('date',$scope.timeOptions.date);
+      console.log('selectedDates',$scope.selectedDates);
+    }
 
     $scope.genTimes =function(){
       $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
