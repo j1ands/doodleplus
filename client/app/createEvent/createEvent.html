@@ -41,13 +41,13 @@
 
     <div class="col-lg-6 col-md-6">
       <h4>2. What dates are you considering?</h4><hr>
-      <datepicker ng-show="dateToggle.value" class="datepicker" ng-click="dayView()" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+      <datepicker ng-show="dateToggle.value" class="datepicker" ng-click="dayView()" ng-model="date.value" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
       <table class="table table-striped table-responsive" ng-hide="dateToggle.value">
         <thead>
           <tr>
             <th class="time-input">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true" ng-click="toggleDate()"></span>
-              Select times for {{timeOptions.date.toDateString()}}
+              Select times for {{date.value.toDateString()}}
             </th>
           </tr>
         </thead>
@@ -64,14 +64,17 @@
     <div class="col-lg-6">
       <h4>3. What times are you considering?</h4><hr>
       <label for="timeIncrement">Time Increment:</label>
-        <select class="form-control" id="timeIncrement" ng-model="timeOptions.increment">
-          <option>15 Minutes</option>
-          <option>30 Minutes</option>
-          <option>1 Hour</option>
-          <option>24 Hours</option>
-        </select>
-      <a href="" class="btn btn-success btn-lg" ng-click="storeEvent()" style="margin-top:20px">Publish Poll</a>
-    </div>
+        <select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="selected"></select>
+        <button ng-click="genTimes()" class="btn btn-primary">test Post Button</button>
+        <!--<select class="form-control" id="timeIncrement" ng-model="timeOptions.increment">-->
+          <!--<option>15 Minutes</option>-->
+          <!--<option>30 Minutes</option>-->
+          <!--<option>1 Hour</option>-->
+          <!--<option>24 Hours</option>-->
+        <!--</select>-->
+<!--       <a href="" class="btn btn-success btn-lg" ng-click="storeEvent()" style="margin-top:20px">Publish Poll</a>
+ -->
+      </div>
 
     <div class="col-lg-6">
       <h4>4. Invite people to participate in your event poll</h4><hr>

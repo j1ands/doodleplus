@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeevent) {
+  .controller('CreateEventCtrl', function ($scope, storeEvent, time) {
     $scope.message = function(){
       console.log('hi');
     }
@@ -11,27 +11,24 @@ angular.module('doodleplusApp')
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
     $scope.userOptions = {};
-    $scope.timeOptions = {};
+    $scope.timeOptions = [{
+      label: '15 Minutes',
+      timeIncrement: 900000
+    },{
+      label: '30 Minutes',
+      timeIncrement: 1800000
+    },{
+      label: '1 Hour',
+      timeIncrement: 3600000
+    },{
+      label: '1 Day',
+      timeIncrement: 86400000
+    }];
+    $scope.date = {};
     $scope.dateToggle = {value: true};
     $scope.dayTimes = [];
 
-    $scope.timeOptions.increment = "15 Minutes";
     $scope.timeOptions.times = [];
-
-    ceCtrl.calculateIncrement = function(str)
-    {
-      switch(str)
-      {
-        case "15 Minutes":
-          return 900000;
-        case "30 Minutes":
-          return 1800000;
-        case "1 Hour":
-          return 3600000;
-        case "24 Hours":
-          return 86400000;
-      }
-    }
 
     $scope.toggleDate = function()
     {
@@ -40,8 +37,8 @@ angular.module('doodleplusApp')
 
     $scope.dayView = function()
     {
-      var increment = ceCtrl.calculateIncrement($scope.timeOptions.increment);
-      var currentTime = $scope.timeOptions.date.getTime();
+      var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
+      var currentTime = $scope.date.value.getTime();
       var today = currentTime;
 
       $scope.dayTimes = [];
@@ -55,18 +52,28 @@ angular.module('doodleplusApp')
       $scope.toggleDate();
     }
 
-    $scope.storeEvent = function()
-    {
-      storeevent.save(
-        {
-          event: $scope.eventOptions,
-          user: $scope.userOptions,
-          time: $scope.timeOptions
-        }, function(something)
-        {
-          console.log(something);
-        })
-    }
+
+    $scope.genTimes =function(){
+      $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
+      storeEvent.save({
+        event: $scope.eventOptions,
+        user: $scope.userOptions,
+        time: $scope.times
+      }, function(res){
+        console.log("response",res);
+      });
+    };
+
+    // $scope.storeEvent = function()
+    // {
+    //   storeEvent.save({
+    //       event: $scope.eventOptions,
+    //       user: $scope.userOptions,
+    //       time: $scope.date
+    //     }, function(something) {
+    //       console.log(something);
+    //     });
+    // };
 
     $scope.addEmail = function(){
       if ($scope.emailToAdd){
