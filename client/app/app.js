@@ -6,7 +6,8 @@ angular.module('doodleplusApp', [
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'd3'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
