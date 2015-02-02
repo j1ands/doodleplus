@@ -23,7 +23,7 @@ exports.create = function(req, res) {
 	})
 	.then(function(){
 		Event.build({
-			name: req.body.event.name,
+			title: req.body.event.title,
 			sendername: req.body.user.name,
 			senderemail: req.body.user.email,
 			description: req.body.event.description,

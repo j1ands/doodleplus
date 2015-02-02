@@ -5,7 +5,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'font-awesome/scss/font-awesome';
 
 /**
- * App-wide Styles
+ * App-wide Styless
  */
 
 .browsehappy {
@@ -23,4 +23,5 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'eventResponse/eventResponse.scss';
 @import 'main/main.scss';
 @import 'modal/modal.scss';
+@import 'navbar/navbar.scss';
 // endinjector
