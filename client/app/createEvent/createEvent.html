@@ -1,66 +1,85 @@
-<div class="col-sm-12">
-  <h1>{{eventOptions}}</h1>
-  <h1>{{userOptions}}</h1>
-  <h1>{{timeOptions}}</h1>
-</div>
-
-<div class="col-lg-3">
-  <form name="EventInfo" ng-submit="message()">
-    <label> Name:
-      <input class="form-control" name="name" ng-model="eventOptions.name" type="text" placeholder="">
-    </label>
-    <label> Description:
-      <textarea class="form-control" name="description" ng-model="eventOptions.description" type="text" placeholder=""></textarea>
-    </label>
-    <label> Location:
-      <input class="form-control" name="location" ng-model="eventOptions.location" type="text" placeholder="">
-    </label>
-    <label> Your Name:
-      <input class="form-control" name="creatorName" ng-model="userOptions.name" type="text" placeholder="">
-    </label>
-    <label> Your Email:
-      <input class="form-control" name="creatorEmail" ng-model="userOptions.email" type="email" placeholder="">
-    </label>
-  </form>
-</div>
-
-<div class="col-lg-3">
-  <datepicker ng-click="" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
-</div>
-
-<div class="col-lg-3">
+<div class="container">
   <div class="row">
-    <label> Time Increment:
-      <select class="form-control" ng-model="timeOptions.increment">
-        <option>15 Minutes</option>
-        <option>30 Minutes</option>
-        <option>1 Hour</option>
-        <option>24 Hours</option>
-      </select>
-    </label>
+    <div class="col-lg-12">
+      <div class="page-header">
+        <h2>Create an Event Poll</h2>
+      </div>
+    </div>
   </div>
   <div class="row">
-    <a href="" class="btn btn-success btn-lg" ng-click="storeEvent()" style="margin-top:20px">Submit</a>
-  </div>
-</div>
+<!--     <div class="col-sm-12">
+      <h1>{{eventOptions}}</h1>
+      <h1>{{userOptions}}</h1>
+      <h1>{{timeOptions}}</h1>
+    </div>
+ -->
+    <div class="col-lg-6 col-md-6">
+      <h4>1. Event Details</h4><hr>
+      <form name="EventInfo" class="event-form" ng-submit="message()">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input class="form-control" id="title" name="title" ng-model="eventOptions.title" type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea class="form-control" rows="5" id="description" name="description" ng-model="eventOptions.description" type="text" placeholder=""></textarea>
+        </div>
+        <div class="form-group">
+          <label for="location">Location:</label>
+          <input class="form-control" id="location" name="location" ng-model="eventOptions.location" type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label for="creatorName">Your Name:</label>
+          <input class="form-control" id="creatorName" name="creatorName" ng-model="userOptions.name" type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label for="creatorEmail">Your Email:</label>
+          <input class="form-control" id="creatorEmail" name="creatorEmail" ng-model="userOptions.email" type="email" placeholder="">
+        </div>
+      </form>
+    </div>
 
-<div class="col-lg-3">
-  <h3>Invite Peepz (email)</h3>
-  <form name="invites" ng-submit="addEmail()">
-    <input name="emailToAdd" class="form-control" ng-model="emailToAdd" type="email">
-    <button class="btn btn-primary" type="submit">Add Invitee</button>
-  </form>
-
-  <ul>
-    <li ng-repeat="email in invitedEmails">{{email}}</li>
-  </ul>
-  <div>
-    <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-      <i class="fa fa-facebook"></i> Facebook Contacts
-    </a><br><br>
-    <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-      <i class="fa fa-google-plus"></i> Google Contacts
-    </a>
+    <div class="col-lg-6 col-md-6">
+      <h4>2. What dates are you considering?</h4><hr>
+      <datepicker class="datepicker" ng-click="" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+    </div>
   </div>
-  <button class="btn btn-primary">Review!!!!</button>
+  <br><br>
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>3. What times are you considering?</h4><hr>
+      <label for="timeIncrement">Time Increment:</label>
+        <select class="form-control" id="timeIncrement" ng-model="timeOptions.increment">
+          <option>15 Minutes</option>
+          <option>30 Minutes</option>
+          <option>1 Hour</option>
+          <option>24 Hours</option>
+        </select>
+      <a href="" class="btn btn-success btn-lg" ng-click="storeEvent()" style="margin-top:20px">Publish Poll</a>
+    </div>
+
+    <div class="col-lg-6">
+      <h4>4. Invite people to participate in your event poll</h4><hr>
+      <form name="invites" ng-submit="addEmail()">
+        <div class="form-group">
+          <label for="emailToAdd">Add Email Addresses:</label>
+          <textarea class="form-control" rows="4" id="emailToAdd" name="emailToAdd" ng-model="emailToAdd" placeholder=""></textarea>
+        </div>
+        <button class="btn btn-primary pull-right" type="submit">Add Invitee(s)</button>
+      </form>
+
+      <ul>
+        <li ng-repeat="email in invitedEmails">{{email}}</li>
+      </ul>
+      <div>
+        <a class="btn btn-facebook pull-left" href="" ng-click="loginOauth('facebook')">
+          <i class="fa fa-facebook"></i> Facebook Contacts
+        </a>
+        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+          <i class="fa fa-google-plus"></i> Google Contacts
+        </a>
+      </div>
+      <button class="btn btn-success btn-lg">Send Invites</button>
+    </div>
+  </div>
 </div>
