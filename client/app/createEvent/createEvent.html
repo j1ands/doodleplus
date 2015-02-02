@@ -41,7 +41,22 @@
 
     <div class="col-lg-6 col-md-6">
       <h4>2. What dates are you considering?</h4><hr>
-      <datepicker class="datepicker" ng-click="" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+      <datepicker ng-show="dateToggle.value" class="datepicker" ng-click="dayView()" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+      <table class="table table-striped table-responsive" ng-hide="dateToggle.value">
+        <thead>
+          <tr>
+            <th class="time-input">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true" ng-click="toggleDate()"></span>
+              Select times for {{timeOptions.date.toDateString()}}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="time-input">
+          <tr ng-repeat="time in dayTimes">
+            <th class="time-input">{{time | date:"h:mm a"}}</th>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <br><br>

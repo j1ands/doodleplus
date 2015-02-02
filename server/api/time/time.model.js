@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    time: DataTypes.INTEGER
+    time: DataTypes.BIGINT
   },{
     classMethods: {
       associate: function(models){
