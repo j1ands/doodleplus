@@ -6,7 +6,6 @@ angular.module('doodleplusApp')
       console.log('hi');
     }
 
-    var ceCtrl = this;
 
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
@@ -24,6 +23,9 @@ angular.module('doodleplusApp')
       label: '1 Day',
       timeIncrement: 86400000
     }];
+    $scope.selectedDates = [];
+
+
     $scope.date = {};
     $scope.dateToggle = {value: true};
     $scope.dayTimes = [];
@@ -48,10 +50,9 @@ angular.module('doodleplusApp')
         $scope.dayTimes.push(new Date(currentTime));
         currentTime += increment;
       }
-      
+
       $scope.toggleDate();
     }
-
 
     $scope.genTimes =function(){
       $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
