@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-mouseleave="resetMouse()" ng-mouseup="resetMouse()">
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
@@ -59,10 +59,10 @@
 								<td class="text-center"><h5>MAYBE</h5></td>
 							</tr>
 							<tr ng-repeat="time in day.times">
-								<td>{{time}}</td>
-								<td class="text-center response-cell"><button class="response-cell-btn response-cell-btn-yes" ng-click="select("yes")"><h3><span class="glyphicon glyphicon-ok-sign"></span></h3></button></td>
-								<td class="text-center response-cell"><button class="response-cell-btn response-cell-btn-ifneedbe" ng-click="select("ifneedbe")"><h3><span class="glyphicon glyphicon-ok-circle"></span></h3></button></td>
-								<td class="text-center response-cell"><button class="response-cell-btn response-cell-btn-maybe" ng-click="select("maybe")"><h3><span class="glyphicon glyphicon-question-sign"></span></h3></button></td>
+								<td>{{time.value}}</td>
+								<td class="text-center response-cell"><button ng-class="{able: time.able}" class="response-cell-btn response-cell-btn-yes" ng-mousedown="select(time, 'able')" ng-mouseover="checkClick(time, 'able')"><h2><span class="glyphicon glyphicon-ok-sign"></span></h2></button></td>
+								<td class="text-center response-cell"><button ng-class="{ifneedbe: time.ifneedbe}" class="response-cell-btn response-cell-btn-ifneedbe" ng-mousedown="select(time, 'ifneedbe')" ng-mouseover="checkClick(time, 'ifneedbe')"><h2><span class="glyphicon glyphicon-ok-circle"></span></h2></button></td>
+								<td class="text-center response-cell"><button ng-class="{maybe: time.maybe}" class="response-cell-btn response-cell-btn-maybe" ng-mousedown="select(time, 'maybe')" ng-mouseover="checkClick(time, 'maybe')"><h2><span class="glyphicon glyphicon-question-sign"></span></h2></button></td>
 							</tr>
 						</table>
 

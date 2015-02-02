@@ -14,6 +14,7 @@
 .response-time-table {
 	width: 100%;
 	border: 0px;
+	margin: 15px;
 	padding: 0px;
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -35,19 +36,35 @@
 	background-color: #F9F8F8;
 	border: solid 1px #ccc;
 	border-radius: 0px;
+	color: #D8D5D5;
 	display: block;
 }
 
-.response-cell-btn-yes:hover {
+.response-cell-btn:hover {
+	background-color: #F2F0F0;
+}
+
+.able, .able:hover {
 	background-color: #6CF2A4;
+	color: white;
 }
 
-.response-cell-btn-ifneedbe:hover {
+.ifneedbe, .ifneedbe:hover {
 	background-color: #7CD1F2;
+	color: white;
 }
 
-.response-cell-btn-maybe:hover {
+.maybe, .maybe:hover {
 	background-color: #F2B37C;
+	color: white;
+}
+
+.unable {
+	background-color: #F9F8F8;
+}
+
+.unable:hover {
+	background-color: #F2F0F0;
 }
 
 .list-times {
