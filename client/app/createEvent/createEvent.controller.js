@@ -12,6 +12,8 @@ angular.module('doodleplusApp')
 
     $scope.storeEvent = function()
     {
+      $scope.timeOptions.date = $scope.timeOptions.date.getTime();
+      
       storeevent.save(
         {
           event: $scope.eventOptions,

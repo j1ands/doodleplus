@@ -9,6 +9,7 @@
  var Thing = sqldb.Thing;
  var User = sqldb.User;
  var Event = sqldb.Event;
+ var Time = sqldb.Time;
 
  Thing.sync()
  .then(function() {
@@ -86,4 +87,9 @@ Event.sync()
     onlyDays: true,
     private: true
   }])
-})
+});
+
+Time.sync()
+.then(function() {
+  Time.destroy();
+});
