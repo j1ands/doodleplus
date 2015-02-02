@@ -14,38 +14,45 @@ exports.index = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  User.findOrCreate({where: {email:req.body.user.email}, defaults: {name:req.body.user.name}})
-      .spread(function(user,created){
-        console.log('created',created);
-        return user;
-      })
-      .then(function(user){
-        Event.create({
-          title: req.body.event.title,
-          sendername: req.body.user.name,
-          senderemail: req.body.user.email,
-          description: req.body.event.description,
-          location: req.body.event.location,
-          onlyDays:  false,
-          isPrivate: false
-        }).then(function(event){
-            event.setUser(user).then(function(event){
-              console.log('success?');
-            });
-            Time.bulkCreate(req.body.time).then(function(timesCreated){
-              timesCreated.forEach(function(time){
-                time.setEvent(event);
-              });
-              res.send(200,{time: timesCreated});
-            });
-          });
-      }).error(function(err){
-        console.log('error',err);
-        res.send(500);
+  User.findOrCreate({where: {email: req.body.user.email}, defaults: {name: req.body.user.name}})
+    .spread(function(user,created){
+      console.log('created',created);
+      return user;
+    })
+    .then(function(user){
+      return Event.create({
+        title:req.body.event.title,
+        sendername: req.body.user.name,
+        senderemail: req.body.user.email,
+        description: req.body.event.description,
+        location: req.body.event.location,
+        onlyDays: false,
+        isPrivate: false
+      }).then(function(event){
+        return event.setUser(user);
       });
+    })
+    .then(function(event){
+      req.body.time.forEach(function(elem){
+        elem.EventId = event._id;
+      });
+    })
+    .then(function(){
+      return Time.bulkCreate(req.body.time);
+    })
+    .then(function(timesCreated){
+      res.status(200).send({time:timesCreated});
+    })
+    .catch(function(err){
+      console.log('err',err);
+      res.status(500);
+    });
 };
 
 exports.findEvent = function(req,res){
   var eventId = req.params.id;
-  res.send(200);
+  Event.find({where: {_id: eventId}, include: [Time]}).then(function(event){
+    console.log(event);
+    res.status(200).send(event);
+  });
 };
