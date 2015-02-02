@@ -7,7 +7,11 @@ angular.module('doodleplusApp')
     $scope.days = [
     	{
     		day: "Monday",
-    		times: ["8:00", "8:30", "9:00" , "9:30"]
+    		times: ["8:00 PM", "8:30 PM", "9:00 PM" , "9:30 PM"]
     	}
     ]
+
+    $scope.select = function(res) {
+
+    }
   });

@@ -1,0 +1,64 @@
+/*.datepicker-response {
+	tr {
+		height: 40px !important;
+		padding:
+		button {
+			height: 100% !important;
+		}
+	}
+}*/
+.eventdetail {
+	padding: 15px 0 0 0;
+}
+
+.response-time-table {
+	width: 100%;
+	border: 0px;
+	padding: 0px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	tr {
+		padding: 0px;
+		margin: 0px;
+		border: 0px;
+	}
+}
+
+.response-cell {
+	width: 30%;
+	padding: 0px;
+}
+
+.response-cell-btn {
+	height: 100%;
+	width: 100%;
+	background-color: #F9F8F8;
+	border: solid 1px #ccc;
+	border-radius: 0px;
+	display: block;
+}
+
+.response-cell-btn-yes:hover {
+	background-color: #6CF2A4;
+}
+
+.response-cell-btn-ifneedbe:hover {
+	background-color: #7CD1F2;
+}
+
+.response-cell-btn-maybe:hover {
+	background-color: #F2B37C;
+}
+
+.list-times {
+	padding: 30px 0 0 0;
+}
+
+
+.btn-group-yesmaybe {
+	width: 100%;
+}
+
+.btn-yesmaybe {
+	width: 33%;
+}

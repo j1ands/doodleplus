@@ -5,8 +5,16 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'font-awesome/scss/font-awesome';
 
 /**
- * App-wide Styless
+ * App-wide Styles
  */
+
+h5, .h5 {
+	font-weight: bold;
+}
+
+a:hover {
+	text-decoration: none;
+}
 
 .browsehappy {
     margin: 0.2em 0;
