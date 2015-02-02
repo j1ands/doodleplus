@@ -41,8 +41,8 @@
 
     <div class="col-lg-6 col-md-6">
       <h4>2. What dates are you considering?</h4><hr>
-      <datepicker ng-show="dateToggle.value" class="datepicker" ng-click="dayView()" ng-model="date.value" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
-      <table class="table table-striped table-responsive" ng-hide="dateToggle.value">
+      <datepicker id="days" class="datepicker" ng-click="dayView()" ng-model="date.value" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+      <table id="times" class="table table-striped table-responsive ng-hide">
         <thead>
           <tr>
             <th class="time-input">
@@ -51,7 +51,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="time-input">
+        <tbody id="hours" class="time-input">
           <tr ng-repeat="time in dayTimes">
             <th class="time-input">{{time | date:"h:mm a"}}</th>
           </tr>
