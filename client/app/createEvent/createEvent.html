@@ -41,7 +41,7 @@
 
     <div class="col-lg-6 col-md-6">
       <h4>2. What dates are you considering?</h4><hr>
-      <datepicker class="datepicker" ng-click="" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+      <datepicker ng-click="" ng-model="timeOptions.date" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
     </div>
   </div>
   <br><br>
@@ -49,12 +49,14 @@
     <div class="col-lg-6">
       <h4>3. What times are you considering?</h4><hr>
       <label for="timeIncrement">Time Increment:</label>
-        <select class="form-control" id="timeIncrement" ng-model="timeOptions.increment">
-          <option>15 Minutes</option>
-          <option>30 Minutes</option>
-          <option>1 Hour</option>
-          <option>24 Hours</option>
-        </select>
+        <select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="selected"></select>
+        <button ng-click="genTimes()" class="btn btn-primary">test Post Button</button>
+        <!--<select class="form-control" id="timeIncrement" ng-model="timeOptions.increment">-->
+          <!--<option>15 Minutes</option>-->
+          <!--<option>30 Minutes</option>-->
+          <!--<option>1 Hour</option>-->
+          <!--<option>24 Hours</option>-->
+        <!--</select>-->
       <a href="" class="btn btn-success btn-lg" ng-click="storeEvent()" style="margin-top:20px">Publish Poll</a>
     </div>
 

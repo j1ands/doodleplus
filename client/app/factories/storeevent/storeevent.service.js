@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .factory('storeevent', function ($resource) {
+  .factory('storeEvent', function ($resource) {
       return $resource('/api/events');
     });
