@@ -35,6 +35,7 @@ exports.create = function(req, res) {
     .then(function(event){
       req.body.time.forEach(function(elem){
         elem.EventId = event._id;
+        console.log(elem);
       });
     })
     .then(function(){

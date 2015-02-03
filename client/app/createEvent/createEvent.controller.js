@@ -59,7 +59,7 @@ angular.module('doodleplusApp')
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: $scope.times
+        time: time.filterTimes($scope.times)
       }, function(res){
         console.log("response",res);
       });
