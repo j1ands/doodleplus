@@ -7,6 +7,27 @@ angular.module('doodleplusApp')
     }
 
 
+    $scope.testTouch = function(){
+      $scope.swipeTest = 'Test Works!!!';
+      console.log('swipe left works');
+    };
+    $scope.showItem = [true,false,false,false];
+
+    $scope.swipeLeft = function(){
+      var index = $scope.showItem.indexOf(true);
+      if (index!==3){
+        $scope.showItem[index]=false;
+        $scope.showItem[index+1]=true;
+      }
+    }
+    $scope.swipeRight = function(){
+      var index = $scope.showItem.indexOf(true);
+      if (index!==0){
+        $scope.showItem[index]=false;
+        $scope.showItem[index-1]=true;
+      }
+    }
+
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
     $scope.userOptions = {};
