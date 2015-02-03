@@ -80,7 +80,8 @@ angular.module('doodleplusApp')
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: time.filterTimes($scope.times)
+        time: time.filterTimes($scope.times),
+        emails: $scope.emailToAdd
       }, function(res){
         console.log("response",res);
       });
