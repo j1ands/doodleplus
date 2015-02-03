@@ -1,10 +1,10 @@
 'use strict';
 
-describe('Directive: simpleLineChart', function () {
+describe('Directive: responseChart', function () {
 
   // load the directive's module and view
   beforeEach(module('doodleplusApp'));
-  beforeEach(module('app/directives/simpleLineChart/simpleLineChart.html'));
+  beforeEach(module('app/directives/responseChart/responseChart.html'));
 
   var element, scope;
 
@@ -13,9 +13,9 @@ describe('Directive: simpleLineChart', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<simple-line-chart></simple-line-chart>');
+    element = angular.element('<response-chart></response-chart>');
     element = $compile(element)(scope);
     scope.$apply();
-    expect(element.text()).toBe('this is the simpleLineChart directive');
+    expect(element.text()).toBe('this is the responseChart directive');
   }));
 });
