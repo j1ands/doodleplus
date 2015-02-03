@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams,storeEvent) {
 
   	$scope.mouseDown = false;
 
@@ -10,9 +10,9 @@ angular.module('doodleplusApp')
     $scope.days = [
     	{
     		day: "Monday",
-    		times: [{value: "8:00 PM", status: "unable", able: false, ifneedbe: false, maybe: false}, 
-    						{value: "8:30 PM", status: "unable"}, 
-    						{value: "9:00 PM", status: "unable"}, 
+    		times: [{value: "8:00 PM", status: "unable", able: false, ifneedbe: false, maybe: false},
+    						{value: "8:30 PM", status: "unable"},
+    						{value: "9:00 PM", status: "unable"},
     						{value: "9:30 PM", status: "unable"},
     						{value: "10:00 PM", status: "unable"}
     						]
@@ -32,7 +32,7 @@ angular.module('doodleplusApp')
     		time[response] = true;
     	}
     }
-  
+
 	  $scope.resetMouse = function() {
 	  	$scope.mouseDown = false;
 	  }

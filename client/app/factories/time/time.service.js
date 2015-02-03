@@ -14,15 +14,28 @@ angular.module('doodleplusApp')
         var timeNum = startTime + i * increment;
         times.push({
           time: timeNum,
-          selected: false
+          selected: true //Should be false for production
         });
       }
+      return times;
+    }
+
+    function filterTimes(timesArray){
+      var times = [];
+      timesArray.forEach(function(elem){
+        if (elem.selected){
+          times.push({
+            time: elem.time
+          });
+        }
+      });
       return times;
     }
 
 
     // Public API here
     return {
-      genTime: genTimes
+      genTime: genTimes,
+      filterTimes: filterTimes
     };
   });
