@@ -4,10 +4,10 @@
 module.exports = function(sequelize, DataTypes) {
   var Event = sequelize.define('Event', {
     _id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
     title: DataTypes.STRING,
     sendername: DataTypes.STRING,
