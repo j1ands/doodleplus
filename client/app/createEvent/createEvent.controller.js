@@ -76,6 +76,9 @@ angular.module('doodleplusApp')
     }
 
     $scope.genTimes =function(){
+      if (!$scope.emailToAdd){
+        $scope.emailToAdd = '';
+      }
       $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
       storeEvent.save({
         event: $scope.eventOptions,

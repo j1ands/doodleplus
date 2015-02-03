@@ -64,28 +64,30 @@ exports.findEvent = function(req,res){
 };
 
 function genEmail(emails,user,eventId){
-  var individualEmail = emails.split(',');
-  var toEmail = []
-  individualEmail.forEach(function(email){
-    toEmail.push({
-      email: email,
-      name: 'none',
-      type: 'to'
-    })
-  })
-  var message = {
-    html: '<p>Hey! this is in a p element</p><a href="localhost:9000/eventResponse/"'+eventId+'>The Event</a>',
-    text: 'some example text cooooool',
-    subject: 'You\'ve been invited to a super cool event!',
-    from_email: user.email,
-    from_name: user.name,
-    to: toEmail
-  };
-  mandrill_client.messages.send({message:message,async:'async'},function(result){
-    console.log('messages Result!!!!!!',result);
-  },function(err){
-    console.log('A Mandrill Error has ocurred',err, err.name+ err.message);
-  });
+  if (emails){
+    var individualEmail = emails.split(',');
+    var toEmail = []
+    individualEmail.forEach(function(email){
+      toEmail.push({
+        email: email,
+        name: 'none',
+        type: 'to'
+      });
+    });
+    var message = {
+      html: '<p>Hey! this is in a p element</p><a href="localhost:9000/eventResponse/"'+eventId+'>The Event</a>',
+      text: 'some example text cooooool',
+      subject: 'You\'ve been invited to a super cool event!',
+      from_email: user.email,
+      from_name: user.name,
+      to: toEmail
+    };
+    mandrill_client.messages.send({message:message,async:'async'},function(result){
+      console.log('messages Result!!!!!!',result);
+    },function(err){
+      console.log('A Mandrill Error has ocurred',err, err.name+ err.message);
+    });
+  }
 }
 
 
