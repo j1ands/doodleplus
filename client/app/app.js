@@ -7,6 +7,7 @@ angular.module('doodleplusApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
+  'd3',
   'gm.datepickerMultiSelect'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
