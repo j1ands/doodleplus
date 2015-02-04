@@ -35,11 +35,24 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
           link.apply(this, arguments);
 
           var selectedDates = [];
+          // var selectedDates = {};
           var alreadyUpdated;
 
           /* Called when multiSelect model is updated */
           scope.$on('update', function(event, newDates) {
             selectedDates = newDates;
+            
+            // if(newDates)
+            // {
+            //   newDates.forEach(function(date){
+            //     if(!selectedDates[date].date)
+            //     {
+            //       selectedDates[date] = {};
+            //       selectedDates[date].date = date;
+            //     }
+            //   });
+            // }
+
             update();
           });
 
@@ -61,6 +74,8 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
             angular.forEach(scope.rows, function(row) {
               angular.forEach(row, function(day) {
                 day.selected = selectedDates.indexOf(day.date.setHours(0, 0, 0, 0)) > -1
+
+                // day.selected = selectedDates[day.date.setHours(0,0,0,0)] != undefined;
               });
             });
             alreadyUpdated = true;
@@ -76,6 +91,12 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
       require: ['datepicker', 'ngModel'],
       link: function(scope, elem, attrs, ctrls) {
         var selectedDates = scope.$eval(attrs.multiSelect);
+        // var selectedDates;
+
+        // scope.$eval(attrs.multiSelect).forEach(function(date){
+        //   selectedDates[date] = {};
+        //   selectedDates[date].date = date;
+        // })
 
         /* Called when directive is compiled */
         scope.$on('requestSelectedDates', function() {
@@ -97,8 +118,14 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
           } else {
             selectedDates.splice(selectedDates.indexOf(dateVal), 1);
             console.log(selectedDates);
-            
           }
+          // if(selectedDates[dateVal] == undefined)
+          // {
+          //   selectedDates[dateVal] = {};
+          //   selectedDates[dateVal].date = dateVal;
+          // } else {
+          //   selectedDates[dateVal] = {};
+          // }
         });
       }
     }

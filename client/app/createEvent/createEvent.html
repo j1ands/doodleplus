@@ -40,21 +40,24 @@
     </div>
 
     <div class="col-lg-6 col-md-6">
-      <h4>2. What dates are you considering?</h4><hr>
       {{selectedDates}}
+      <!-- <p>{{date.value}}</p> -->
+      <!-- {{dayHours[selectedDates.length - 1]}} -->
+      <h4>2. What dates are you considering?</h4><hr>
       <datepicker ng-click="showEdit()" ng-show="dateToggle.value" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
       <table class="table table-striped table-responsive disable-text-selection" ng-hide="dateToggle.value" ng-mouseup="timeUp()">
         <thead>
           <tr>
             <th class="time-input">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true" ng-click="toggleDate()"></span>
-              Select times for {{date.value.toDateString()}}
+              <!-- Select times for {{date.value.toDateString()}} -->
+              Select times for {{dateString(selectedDates[selectedDates.length - 1])}}
             </th>
           </tr>
         </thead>
         <tbody class="time-input">
-          <tr ng-mousedown="timeClick($event)" ng-mouseenter="timeEnter($event)" ng-repeat="time in dayTimes">
-            <th class="time-input">{{time | date:"h:mm a"}}</th>
+          <tr ng-mousedown="timeClick($event, $index)" ng-mouseenter="timeEnter($event, $index)" ng-repeat="time in dayHours[selectedDates.length - 1]">
+            <th class="time-input">{{::time.time | date:"h:mm a"}}</th>
           </tr>
         </tbody>
       </table>
