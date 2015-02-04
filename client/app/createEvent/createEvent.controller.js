@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, time) {
+  .controller('CreateEventCtrl', function ($scope, storeEvent, Time) {
     $scope.message = function(){
       console.log('hi');
     }
@@ -73,18 +73,17 @@ angular.module('doodleplusApp')
       }
 
       $scope.toggleDate();
-    }
+    };
 
     $scope.genTimes =function(){
       if (!$scope.emailToAdd){
         $scope.emailToAdd = '';
       }
-      $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
+      $scope.times = Time.genTimes(1422898264,$scope.selected.timeIncrement);
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: time.filterTimes($scope.times),
-        emails: $scope.emailToAdd
+        time: Time.filterTimes($scope.times)
       }, function(res){
         console.log("response",res);
       });
