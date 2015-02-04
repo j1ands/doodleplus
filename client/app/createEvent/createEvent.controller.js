@@ -6,6 +6,18 @@ angular.module('doodleplusApp')
       console.log('hi');
     }
 
+    var ceCtrl = this;
+
+    // $scope.testClick = function(t)
+    // {
+    //   console.log("click");
+    // }
+
+    // $scope.testMouseEnter = function(t)
+    // {
+    //   console.log("enter");
+    // }
+
 
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
@@ -27,31 +39,60 @@ angular.module('doodleplusApp')
 
 
     $scope.date = {};
-    $scope.dateToggle = {value: true};
+    ceCtrl.dateToggle = {value: true};
     $scope.dayTimes = [];
 
     $scope.timeOptions.times = [];
 
     $scope.toggleDate = function()
     {
-      $scope.dateToggle.value = !$scope.dateToggle.value;
+      ceCtrl.dateToggle.value = !ceCtrl.dateToggle.value;
     }
+
+    $scope.isMouseDown = {value:false};
+
+    $scope.timeClick = function(e)
+    {
+      $scope.isMouseDown.value = true;
+      angular.element(e.target).toggleClass("success");
+    }
+
+    $scope.timeEnter = function(e)
+    {
+      if($scope.isMouseDown.value)
+      {
+        angular.element(e.target).toggleClass("success");
+      }
+    }
+
+    $scope.timeUp = function(e)
+    {
+      $scope.isMouseDown.value = false;
+    }
+
+    // ceCtrl.toggleDate = function()
+    // {
+    //   $scope.dateToggle.value = !$scope.dateToggle.value;
+    // }
 
     $scope.dayView = function()
     {
+      $scope.toggleDate();
+
       var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
       var currentTime = $scope.date.value.getTime();
       var today = currentTime;
 
-      $scope.dayTimes = [];
+      var dayTimes = [];
 
       while(currentTime < today + 86400000)
       {
-        $scope.dayTimes.push(new Date(currentTime));
+        dayTimes.push(new Date(currentTime));
         currentTime += increment;
       }
 
-      $scope.toggleDate();
+      $scope.dayTimes = dayTimes;
+
     }
 
     $scope.genTimes =function(){

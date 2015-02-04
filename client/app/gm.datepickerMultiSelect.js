@@ -96,6 +96,8 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
             console.log(selectedDates);
           } else {
             selectedDates.splice(selectedDates.indexOf(dateVal), 1);
+            console.log(selectedDates);
+            
           }
         });
       }
