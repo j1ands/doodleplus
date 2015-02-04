@@ -53,7 +53,6 @@ exports.create = function(req, res) {
 exports.findEvent = function(req,res){
   var eventId = req.params.id;
   Event.find({where: {_id: eventId}, include: [Time]}).then(function(event){
-    console.log(event);
     res.status(200).send(event);
   });
 };
