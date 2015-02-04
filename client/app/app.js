@@ -8,7 +8,8 @@ angular.module('doodleplusApp', [
   'ui.router',
   'ui.bootstrap',
   'd3',
-  'gm.datepickerMultiSelect'
+  'gm.datepickerMultiSelect',
+  'ngMaterial'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

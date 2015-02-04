@@ -6,6 +6,6 @@ angular.module('doodleplusApp')
       .state('createEvent', {
         url: '/createEvent',
         templateUrl: 'app/createEvent/createEvent.html',
-        controller: 'CreateEventCtrl as CreateEvent'
+        controller: 'CreateEventCtrl'
       });
   });

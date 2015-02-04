@@ -1,23 +1,13 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, time) {
+  .controller('CreateEventCtrl', function ($scope, storeEvent, time, $mdToast, $animate) {
     $scope.message = function(){
       console.log('hi');
     }
 
-    var ceCtrl = this;
-
-    // $scope.testClick = function(t)
-    // {
-    //   console.log("click");
-    // }
-
-    // $scope.testMouseEnter = function(t)
-    // {
-    //   console.log("enter");
-    // }
-
+    //used to check if a date was selected in the datepicker.
+    $scope.oldDates = [];
 
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
@@ -39,14 +29,14 @@ angular.module('doodleplusApp')
 
 
     $scope.date = {};
-    ceCtrl.dateToggle = {value: true};
+    $scope.dateToggle = {value: true};
     $scope.dayTimes = [];
 
     $scope.timeOptions.times = [];
 
     $scope.toggleDate = function()
     {
-      ceCtrl.dateToggle.value = !ceCtrl.dateToggle.value;
+      $scope.dateToggle.value = !$scope.dateToggle.value;
     }
 
     $scope.isMouseDown = {value:false};
@@ -122,4 +112,36 @@ angular.module('doodleplusApp')
         $scope.invitedEmails.push($scope.emailToAdd);
       }
     }
+
+    $scope.showEdit = function()
+    {
+      //console.log($scope.selectedDates);
+      //debugger;
+      if($scope.oldDates.length != $scope.selectedDates.length)
+      {
+        $scope.showActionToast();
+        $scope.oldDates = $scope.selectedDates;
+      }
+    }
+
+    $scope.showSimpleToast = function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Simple Toast!')
+          .hideDelay(0)
+          .position("top right")
+      );
+    };
+
+    $scope.showActionToast = function() {
+      var toast = $mdToast.simple()
+            .content('Click here to edit day:')
+            .action('EDIT')
+            .highlightAction(false)
+            .hideDelay(2000)
+            .position('top right');
+      $mdToast.show(toast).then(function() {
+        alert('You clicked \'OK\'.');
+      });
+    };    
   });
