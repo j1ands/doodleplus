@@ -1,15 +1,19 @@
 'use strict';
 
 angular.module('doodleplusApp')
-.directive('responseChart', ['d3Service', function(d3Service) {
+.directive('responseChart', ['d3Service', function(d3Service, ManageEventCtrl) {
 	return {
 		restrict: 'EA',
-		scope: {},
+		controller: ManageEventCtrl,
 		link: function(scope, element, attrs) {
 			d3Service.d3().then(function(d3) {
 
 				var data = [{"start":"2015-08-18 18:00:00","stop":"2015-08-18 20:00:00", "user": "Biff", "status": "Yes"},{"start":"2015-08-21 06:00:00","stop":"2015-08-21 10:00:00", "user": "Ringo", "status": "If Need Be"},{"start":"2015-08-23 18:00:00","stop":"2015-08-23 23:00:00", "user": "Prince", "status": "Maybe"},{"start":"2015-08-23 20:21:00","stop":"2015-08-23 21:21:00", "user": "Charles Barkley", "status": "Yes"},{"start":"2015-08-25 17:01:00","stop":"2015-08-25 22:01:00", "user": "Abe Vigoda", "status": "If Need Be"},{"start":"2015-08-26 17:23:00","stop":"2015-08-26 23:23:00", "user": "Janet Reno", "status": "Unable"},{"start":"2015-08-26 17:52:00","stop":"2015-08-26 23:52:00", "user": "George Costanza", "status": "Yes"},{"start":"2015-08-26 21:01:00","stop":"2015-08-26 23:01:00", "user": "50 Cent", "status": "Unable"},{"start":"2015-08-27 11:23:00","stop":"2015-08-27 23:23:00", "user": "Vladimir Putin", "status": "If Need Be"}];
 				
+				scope.responses = [];
+
+
+
 				var first = d3.time.day.floor( new Date(data[0].start)),
 					last = d3.time.day.ceil( new Date(data[data.length-1].stop)),
 					dRange = [d3.min(data,function(d){
@@ -82,28 +86,29 @@ angular.module('doodleplusApp')
 			.attr("status", function(d){ return d.status})
 			.on('click', function(d){ 
 				// var overlap = d3.select(this).getIntersectionList("rect", null) 
-				// $("rect").each(function() {
+				$("rect").each(function() {
 					var mouse = d3.mouse(this)
-					var x = this.getAttribute('x')
-					var y = this.getAttribute('y')
+					var x = Number(this.getAttribute('x'))
+					var y = Number(this.getAttribute('y'))
 					var user = this.getAttribute('user')
 					var status = this.getAttribute('status')
-					var width = this.getAttribute('width')
-					console.log(x)
-					var height = this.getAttribute('height')
-					// console.log(height)
-					// console.log(mouse[0] > x)
-					// console.log(mouse[0] < x + width)
-					// console.log(mouse[1] > y)
-					// console.log(mouse[1] < y + height)
+					var width = Number(this.getAttribute('width'))
+					var height = Number(this.getAttribute('height'))
+					
+					if(mouse[0] > x && mouse[0] < x + width && mouse[1] > y && mouse[1] < y + height){
+					scope.responses.push(user + '' + status)
+					console.log(scope.responses)
+			}
 
 					// console.log(mouse, x, (parseFloat(x) + width), y, (parseFloat(y) + height))
 
 					// {
 					// 	console.log("this is a rect: " + user + " " + status)
 					// // }
-					// });
+					});
 			});
+
+
 
   
 // });
