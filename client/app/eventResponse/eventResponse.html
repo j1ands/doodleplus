@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
-        <h2>This Awesome Event Poll</h2>
+        <h2>{{event.title}}</h2>
       </div>
     </div>
   </div>
@@ -20,13 +20,13 @@
   <div class="row eventdetail" ng-show="eventdetail">
   	<div class="col-lg-3 col-md-3">
   		<h5>ORGANIZER</h5>
-  		<p>Katie Peters</p>
+  		<p>{{event.sendername}}</p>
   		<h5>LOCATION</h5>
-  		<p>572 Broadway, New York, NY</p>
+  		<p>{{event.location}}</p>
   	</div>
   	<div class="col-lg-9 col-md-9">
 	  	<h5>DESCRIPTION</h5>
-  		<p>Vice Bushwick Thundercats, typewriter meh deep v cardigan fingerstache Kickstarter polaroid umami food truck. Single-origin coffee Tumblr tote bag, ugh food truck salvia Brooklyn kale chips Pitchfork meh Shoreditch distillery plaid viral beard. Beard lomo cardigan pork belly, you probably haven't heard of them irony artisan. Meditation cardigan mustache, Intelligentsia gastropub Helvetica next level art party four loko literally roof party iPhone ethical. Bicycle rights deep v lumbersexual, art party pop-up irony selvage trust fund 8-bit twee master cleanse paleo messenger bag. Actually cliche put a bird on it, post-ironic letterpress Schlitz Helvetica polaroid lomo. Synth master cleanse art party typewriter trust fund squid.</p>
+  		<p>{{event.description}}</p>
   	</div>
   </div>
 
@@ -48,46 +48,24 @@
 		<div vertical="true" class="col-lg-7 col-md-7">
 			<h4>2. Select the times at which you are [potentially] available</h4><hr>
 			<tabset type="">
-				<tab heading="{{day.day}}" ng-repeat="day in days">
+				<tab heading="{{day.dateInMS | date:'MMM dd'}}" ng-repeat="day in days">
 
 
 						<table class="response-time-table" cellspacing="0" cellpadding="0"> 
 							<tr>
-								<td>Time</td>
+								<td><h5>Time</h5></td>
 								<td class="text-center"><h5>YES</h5></td>
 								<td class="text-center"><h5>IF NEED BE</h5></td>
 								<td class="text-center"><h5>MAYBE</h5></td>
 							</tr>
 							<tr ng-repeat="time in day.times">
-								<td>{{time.value}}</td>
+								<td>{{time.time | date:"h:mm a"}}</td>
 								<td class="text-center response-cell"><button ng-class="{able: time.able}" class="response-cell-btn response-cell-btn-yes" ng-mousedown="select(time, 'able')" ng-mouseover="checkClick(time, 'able')"><h2><span class="glyphicon glyphicon-ok-sign"></span></h2></button></td>
 								<td class="text-center response-cell"><button ng-class="{ifneedbe: time.ifneedbe}" class="response-cell-btn response-cell-btn-ifneedbe" ng-mousedown="select(time, 'ifneedbe')" ng-mouseover="checkClick(time, 'ifneedbe')"><h2><span class="glyphicon glyphicon-ok-circle"></span></h2></button></td>
 								<td class="text-center response-cell"><button ng-class="{maybe: time.maybe}" class="response-cell-btn response-cell-btn-maybe" ng-mousedown="select(time, 'maybe')" ng-mouseover="checkClick(time, 'maybe')"><h2><span class="glyphicon glyphicon-question-sign"></span></h2></button></td>
 							</tr>
 						</table>
 
-
-
-
-
-
-
-					<!-- <ul class="list-unstyled list-times">
-						<li ng-repeat="time in day.times">
-							<div class="row">
-								<div class="col-lg-1 col-md-1">
-									<p>{{time}}</p>
-								</div>
-								<div class="col-lg-11 col-md-11">
-									<div class="btn-group btn-group-yesmaybe" role="group" aria-label="...">
-										<button type="button" class="btn btn-default btn-lg btn-yesmaybe"><span class="glyphicon glyphicon-ok-sign"></span></button>
-										<button type="button" class="btn btn-default btn-lg btn-yesmaybe"><span class="glyphicon glyphicon-ok-circle"></span></button>
-										<button type="button" class="btn btn-default btn-lg btn-yesmaybe"><span class="glyphicon glyphicon-question-sign"></span></button>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul> -->
 				</tab>
 			</tabset>
 			<br><br>

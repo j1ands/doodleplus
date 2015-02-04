@@ -73,14 +73,14 @@ Event.sync()
 })
 .then(function(){
   Event.bulkCreate([{
-    name: "Jordan's Birfday",
+    title: "Jordan's Birfday",
     description: "b'dass",
     location: "NJ",
     onlyDays: true,
     private: true
   },
   {
-    name: "Andy's Concert",
+    title: "Andy's Concert",
     description: "loouuuud",
     location: "BKLYN",
     onlyDays: true,

@@ -1,11 +1,32 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, time) {
+  .controller('CreateEventCtrl', function ($scope, storeEvent, Time) {
     $scope.message = function(){
       console.log('hi');
     }
 
+
+    $scope.testTouch = function(){
+      $scope.swipeTest = 'Test Works!!!';
+      console.log('swipe left works');
+    };
+    $scope.showItem = [true,false,false,false];
+
+    $scope.swipeLeft = function(){
+      var index = $scope.showItem.indexOf(true);
+      if (index!==3){
+        $scope.showItem[index]=false;
+        $scope.showItem[index+1]=true;
+      }
+    }
+    $scope.swipeRight = function(){
+      var index = $scope.showItem.indexOf(true);
+      if (index!==0){
+        $scope.showItem[index]=false;
+        $scope.showItem[index-1]=true;
+      }
+    }
 
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
@@ -55,11 +76,11 @@ angular.module('doodleplusApp')
     }
 
     $scope.genTimes =function(){
-      $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
+      $scope.times = Time.genTimes(1422898264,$scope.selected.timeIncrement);
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: $scope.times
+        time: Time.filterTimes($scope.times)
       }, function(res){
         console.log("response",res);
       });
