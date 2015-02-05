@@ -1,11 +1,18 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
   	$scope.days = [];
+    $scope.username;
+
+    Response.getOrCreateUUID();
+
+    $scope.submitResponses = function() {
+      Response.saveResponses($scope.username); 
+    }
 
     var event_id = $stateParams.event_id;
 
@@ -24,7 +31,7 @@ angular.module('doodleplusApp')
     $scope.select = function(time, response) {
     	$scope.mouseDown = true;
     	if(time.status === response) {
-    		time.status = "unable";
+    		time.status = null;
     		time[response] = false;
     	} else {
     		time.able = false;
