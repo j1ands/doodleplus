@@ -1,18 +1,17 @@
 'use strict';
 
 angular.module('doodleplusApp')
-.directive('responseChart', ['d3Service', function(d3Service, ManageEventCtrl) {
+.directive('responseChart', ['d3Service', function(d3Service) {
 	return {
 		restrict: 'EA',
-		controller: ManageEventCtrl,
-		link: function(scope, element, attrs) {
+
+		link: function(scope, element, attrs, rootscope) {
 			d3Service.d3().then(function(d3) {
 
 				var data = [{"start":"2015-08-18 18:00:00","stop":"2015-08-18 20:00:00", "user": "Biff", "status": "Yes"},{"start":"2015-08-21 06:00:00","stop":"2015-08-21 10:00:00", "user": "Ringo", "status": "If Need Be"},{"start":"2015-08-23 18:00:00","stop":"2015-08-23 23:00:00", "user": "Prince", "status": "Maybe"},{"start":"2015-08-23 20:21:00","stop":"2015-08-23 21:21:00", "user": "Charles Barkley", "status": "Yes"},{"start":"2015-08-25 17:01:00","stop":"2015-08-25 22:01:00", "user": "Abe Vigoda", "status": "If Need Be"},{"start":"2015-08-26 17:23:00","stop":"2015-08-26 23:23:00", "user": "Janet Reno", "status": "Unable"},{"start":"2015-08-26 17:52:00","stop":"2015-08-26 23:52:00", "user": "George Costanza", "status": "Yes"},{"start":"2015-08-26 21:01:00","stop":"2015-08-26 23:01:00", "user": "50 Cent", "status": "Unable"},{"start":"2015-08-27 11:23:00","stop":"2015-08-27 23:23:00", "user": "Vladimir Putin", "status": "If Need Be"}];
 				
-				scope.responses = [];
-
-
+    scope.responses = [];
+console.log(scope)
 
 				var first = d3.time.day.floor( new Date(data[0].start)),
 					last = d3.time.day.ceil( new Date(data[data.length-1].stop)),
@@ -107,10 +106,7 @@ angular.module('doodleplusApp')
 					// // }
 					});
 			});
-
-
-
-  
+ 
 // });
 				// console.log(d3.mouse(this), this.x.animVal.value, this.y.animVal.value, this.height.animVal.value )})
 			// .append("svg:title")
@@ -141,8 +137,11 @@ angular.module('doodleplusApp')
 			svg.append("g")
 			.attr("class","x top axis")
 			.call(xAxis.orient("top"));
+
 		};
 		viewBars(data);
+
+		// rootscope.$emit('responseData',theResponseData)
 	});
 }};
 }]);
