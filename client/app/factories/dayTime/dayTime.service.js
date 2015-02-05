@@ -5,6 +5,8 @@ angular.module('doodleplusApp')
     // Service logic
     // ...
     var selectedDates = [];
+    // would not be needed
+    var editedDates = [];
     var length = 0;
     function setSelected(scopeDates){
       selectedDates = scopeDates.slice();
@@ -40,6 +42,7 @@ angular.module('doodleplusApp')
     }
 
     function removeDay(scopeDates,scopeDaysView){
+      // would have to filter on an array of selectedDates.date
       var timeToRemove = selectedDates.filter(function(val){ //Finds the time to remove in ms
         return (scopeDates.indexOf(val) < 0); //returns an array. Just want the value;
       });
@@ -50,6 +53,15 @@ angular.module('doodleplusApp')
         }
       });
 
+      //would remove this block
+      var indexToRemoveTwo;
+      editedDates.forEach(function(date, index){
+        if(date == timeToRemove[0]){
+          indexToRemoveTwo = index;
+        }
+      });
+
+      editedDates.splice(indexToRemoveTwo,1);
       scopeDaysView.splice(indexToRemove,1);
     }
 
@@ -59,11 +71,35 @@ angular.module('doodleplusApp')
       var obj = serverObj;
       return obj;
     }
+
+    //and change this entirely
+    function linkDays(){
+      var newGroup;
+
+      if(selectedDates.length - editedDates.length == 1)
+      {
+        editedDates.push(selectedDates[selectedDates.length - 1]);
+      }
+      else
+      {
+        newGroup = [];
+        for(var i = selectedDates.length - 1; i > editedDates.length - 1; i--)
+        {
+          newGroup.push(selectedDates[i]);
+        }
+        editedDates = editedDates.concat(newGroup);
+      }
+
+      return newGroup || editedDates;
+    }
+
+
     // Public API here
     return {
       updateDay: updateDay,
       transform: transform,
-      setSelected: setSelected
+      setSelected: setSelected,
+      linkDays: linkDays
     };
 
 

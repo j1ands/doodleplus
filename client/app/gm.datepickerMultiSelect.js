@@ -40,6 +40,7 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
 
           /* Called when multiSelect model is updated */
           scope.$on('update', function(event, newDates) {
+            debugger;
             selectedDates = newDates;
             
             // if(newDates)
@@ -90,8 +91,8 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
     return {
       require: ['datepicker', 'ngModel'],
       link: function(scope, elem, attrs, ctrls) {
-        var selectedDates = scope.$eval(attrs.multiSelect);
-        // var selectedDates;
+        //var selectedDates = scope.$eval(attrs.multiSelect);
+        var selectedDates = [];
 
         // scope.$eval(attrs.multiSelect).forEach(function(date){
         //   selectedDates[date] = {};
@@ -104,6 +105,13 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
         });
 
         scope.$watchCollection(attrs.multiSelect, function(newVal) {
+          if(!selectedDates.length)
+          {
+            selectedDates.push({
+              date: scope.$eval(attrs.multiSelect)[0],
+              group: []
+            });
+          }
           scope.$broadcast('update', selectedDates);
         });
 

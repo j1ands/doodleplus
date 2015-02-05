@@ -45,6 +45,12 @@ angular.module('doodleplusApp')
       $scope.dateToggle.value = !$scope.dateToggle.value;
     }
 
+    $scope.calendarView = function()
+    {
+      $scope.toggleDate();
+      $scope.showToast();
+    }
+
     $scope.isMouseDown = {value:false};
 
     $scope.timeClick = function(e,index)
@@ -75,24 +81,23 @@ angular.module('doodleplusApp')
     //   $scope.dateToggle.value = !$scope.dateToggle.value;
     // }
 
-    $scope.dayView = function()
-    {
-      $scope.toggleDate();
-      // var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
-      // var currentTime = $scope.date.value.getTime();
-      // var today = currentTime;
+    // $scope.dayView = function()
+    // {
+    //   $scope.toggleDate();
+    //   // var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
+    //   // var currentTime = $scope.date.value.getTime();
+    //   // var today = currentTime;
 
-      // var dayTimes = [];
+    //   // var dayTimes = [];
 
-      // while(currentTime < today + 86400000)
-      // {
-      //   dayTimes.push(new Date(currentTime));
-      //   currentTime += increment;
-      // }
+    //   // while(currentTime < today + 86400000)
+    //   // {
+    //   //   dayTimes.push(new Date(currentTime));
+    //   //   currentTime += increment;
+    //   // }
 
-      // $scope.dayTimes = dayTimes;
-
-    }
+    //   // $scope.dayTimes = dayTimes;
+    // }
 
     // $scope.genTimes =function(){
     //   $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
@@ -128,7 +133,7 @@ angular.module('doodleplusApp')
       {
         if(!$scope.selectedDates.length)
         {
-          $mdToast.cancel();
+          $mdToast.hide();
         }
         else
         {
@@ -147,7 +152,8 @@ angular.module('doodleplusApp')
             .hideDelay(0)
             .position('top right');
       $mdToast.show(toast).then(function() {
-        $scope.dayView();
+        $scope.toggleDate();
+        console.log(dayTime.linkDays());
       });
     };  
 
