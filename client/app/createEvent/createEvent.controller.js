@@ -76,6 +76,25 @@ angular.module('doodleplusApp')
       $scope.isMouseDown.value = false;
     }
 
+    $scope.groupCheck = function()
+    {
+      //debugger;
+      //add ability to remove date from group!
+      var currentGroup = [];
+      for(var i = 0; i < $scope.selectedDates.length; i++)
+      {
+        if(!$scope.selectedDates[i].group.length)
+        {
+          currentGroup.push($scope.selectedDates[i]);
+        }
+      }
+      var dates = currentGroup.map(function(selected){return selected.date});
+      for(var j = 0; j < currentGroup.length; j++)
+      {
+        currentGroup[j].group = dates;
+      }
+    }
+
     // ceCtrl.toggleDate = function()
     // {
     //   $scope.dateToggle.value = !$scope.dateToggle.value;
@@ -133,7 +152,7 @@ angular.module('doodleplusApp')
       {
         if(!$scope.selectedDates.length)
         {
-          $mdToast.hide();
+          $mdToast.cancel();
         }
         else
         {
@@ -153,6 +172,7 @@ angular.module('doodleplusApp')
             .position('top right');
       $mdToast.show(toast).then(function() {
         $scope.toggleDate();
+        $scope.groupCheck();
         console.log(dayTime.linkDays());
       });
     };  

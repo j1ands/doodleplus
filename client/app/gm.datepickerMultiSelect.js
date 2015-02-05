@@ -40,7 +40,7 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
 
           /* Called when multiSelect model is updated */
           scope.$on('update', function(event, newDates) {
-            debugger;
+            //debugger;
             selectedDates = newDates;
             
             // if(newDates)
@@ -72,9 +72,13 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
           });
 
           function update() {
+            var dates = selectedDates.map(function(selected){return selected.date});
+
             angular.forEach(scope.rows, function(row) {
               angular.forEach(row, function(day) {
-                day.selected = selectedDates.indexOf(day.date.setHours(0, 0, 0, 0)) > -1
+                day.selected = dates.indexOf(day.date.setHours(0, 0, 0, 0)) > -1
+                //day.selected = selectedDates.map(function(selected){return selected.date}).indexOf(day.date.setHours(0,0,0,0)) > -1;
+                //var currentDate = day.date.setHours(0,0,0,0);
 
                 // day.selected = selectedDates[day.date.setHours(0,0,0,0)] != undefined;
               });
@@ -91,8 +95,11 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
     return {
       require: ['datepicker', 'ngModel'],
       link: function(scope, elem, attrs, ctrls) {
-        //var selectedDates = scope.$eval(attrs.multiSelect);
-        var selectedDates = [];
+        //debugger;
+        var selectedDates = scope.$eval(attrs.multiSelect);
+        var currentSelection = {};
+        //var currentGroup = [];
+        //var selectedDates = [];
 
         // scope.$eval(attrs.multiSelect).forEach(function(date){
         //   selectedDates[date] = {};
@@ -105,28 +112,57 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
         });
 
         scope.$watchCollection(attrs.multiSelect, function(newVal) {
-          if(!selectedDates.length)
-          {
-            selectedDates.push({
-              date: scope.$eval(attrs.multiSelect)[0],
-              group: []
-            });
-          }
+          //debugger;
           scope.$broadcast('update', selectedDates);
         });
 
         scope.$watch(attrs.ngModel, function(newVal, oldVal) {
+          var cSelection = currentSelection;
+
           if(!newVal) return;
 
           var dateVal = newVal.getTime();
 
-          if(selectedDates.indexOf(dateVal) < 0) {
-            selectedDates.push(dateVal);
-            console.log(selectedDates);
-          } else {
-            selectedDates.splice(selectedDates.indexOf(dateVal), 1);
-            console.log(selectedDates);
+          //debugger;
+          if(!selectedDates.length)
+          {
+            selectedDates.push({
+              date: dateVal,
+              group: []
+            });
+            cSelection.date = dateVal;
           }
+          else
+          {
+            var index = selectedDates.map(function(selected){return selected.date}).indexOf(dateVal);
+            if(index < 0)
+            {
+              selectedDates.push({
+                date: dateVal,
+                group: []
+              });
+              cSelection.date = dateVal;
+            } else {
+                if(cSelection.date == dateVal)
+                {
+                  selectedDates.splice(index, 1);
+                  cSelection.date = null;                  
+                }
+                else
+                {
+                  cSelection.date = dateVal;
+                }
+            }
+          }
+
+
+          // if(selectedDates.indexOf(dateVal) < 0) {
+          //   selectedDates.push(dateVal);
+          //   console.log(selectedDates);
+          // } else {
+          //   selectedDates.splice(selectedDates.indexOf(dateVal), 1);
+          //   console.log(selectedDates);
+          // }
           // if(selectedDates[dateVal] == undefined)
           // {
           //   selectedDates[dateVal] = {};
