@@ -4,28 +4,29 @@ angular.module('doodleplusApp')
 .directive('responseChart', ['d3Service', function(d3Service) {
 	return {
 		restrict: 'EA',
-
-		link: function(scope, element, attrs, rootscope) {
+		scope: {
+			onRectClick: '&'
+		},
+		link: function(scope, element, attrs) {
 			d3Service.d3().then(function(d3) {
 
 				var data = [{"start":"2015-08-18 18:00:00","stop":"2015-08-18 20:00:00", "user": "Biff", "status": "Yes"},{"start":"2015-08-21 06:00:00","stop":"2015-08-21 10:00:00", "user": "Ringo", "status": "If Need Be"},{"start":"2015-08-23 18:00:00","stop":"2015-08-23 23:00:00", "user": "Prince", "status": "Maybe"},{"start":"2015-08-23 20:21:00","stop":"2015-08-23 21:21:00", "user": "Charles Barkley", "status": "Yes"},{"start":"2015-08-25 17:01:00","stop":"2015-08-25 22:01:00", "user": "Abe Vigoda", "status": "If Need Be"},{"start":"2015-08-26 17:23:00","stop":"2015-08-26 23:23:00", "user": "Janet Reno", "status": "Unable"},{"start":"2015-08-26 17:52:00","stop":"2015-08-26 23:52:00", "user": "George Costanza", "status": "Yes"},{"start":"2015-08-26 21:01:00","stop":"2015-08-26 23:01:00", "user": "50 Cent", "status": "Unable"},{"start":"2015-08-27 11:23:00","stop":"2015-08-27 23:23:00", "user": "Vladimir Putin", "status": "If Need Be"}];
 				
-    scope.responses = [];
-console.log(scope)
+				var responses = [];
 
 				var first = d3.time.day.floor( new Date(data[0].start)),
-					last = d3.time.day.ceil( new Date(data[data.length-1].stop)),
-					dRange = [d3.min(data,function(d){
-								return d3.time.day.floor(new Date(d.start))}), 
-							d3.max(data,function(d){
-								return d3.time.day.ceil(new Date(d.stop))})];
+				last = d3.time.day.ceil( new Date(data[data.length-1].stop)),
+				dRange = [d3.min(data,function(d){
+					return d3.time.day.floor(new Date(d.start))}), 
+				d3.max(data,function(d){
+					return d3.time.day.ceil(new Date(d.stop))})];
 
-						
+
 				var m = {top: 40, right: 20, bottom: 20, left: 60},
-					width = window.innerWidth*.5,
-					height = window.innerHeight*.6,
-					numDays = ((dRange[1]-dRange[0])/(24*60*60*1000)),
-					barSize = width/numDays;
+				width = window.innerWidth*.5,
+				height = window.innerHeight*.6,
+				numDays = ((dRange[1]-dRange[0])/(24*60*60*1000)),
+				barSize = width/numDays;
 
 				var day = d3.time.format("%w"),
 				week = d3.time.format("%U"),
@@ -95,23 +96,16 @@ console.log(scope)
 					var height = Number(this.getAttribute('height'))
 					
 					if(mouse[0] > x && mouse[0] < x + width && mouse[1] > y && mouse[1] < y + height){
-					scope.responses.push(user + '' + status)
-					console.log(scope.responses)
-			}
-
-					// console.log(mouse, x, (parseFloat(x) + width), y, (parseFloat(y) + height))
-
-					// {
-					// 	console.log("this is a rect: " + user + " " + status)
-					// // }
-					});
+						responses.push({user: user, status: status});
+						console.log(user + '' + status)
+						
+					}
+				});
+				scope.onRectClick({ response: responses });
+				responses = [];
 			});
- 
-// });
-				// console.log(d3.mouse(this), this.x.animVal.value, this.y.animVal.value, this.height.animVal.value )})
-			// .append("svg:title")
-			// .text(function(d){return(d.start)+' - '+(d.stop);})
-			// .datum(function(d){return Date.parse(d)})
+
+
 			
 			
 			/*add axes and grid*/
