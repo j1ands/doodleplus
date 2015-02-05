@@ -1,28 +1,37 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams,storeEvent) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
 
   	$scope.mouseDown = false;
+  	$scope.responses = [];
+  	$scope.days = [];
+    $scope.username;
+
+    Response.getOrCreateUUID();
+
+    $scope.submitResponses = function() {
+      Response.saveResponses($scope.username); 
+    }
 
     var event_id = $stateParams.event_id;
 
-    $scope.days = [
-    	{
-    		day: "Monday",
-    		times: [{value: "8:00 PM", status: "unable", able: false, ifneedbe: false, maybe: false},
-    						{value: "8:30 PM", status: "unable"},
-    						{value: "9:00 PM", status: "unable"},
-    						{value: "9:30 PM", status: "unable"},
-    						{value: "10:00 PM", status: "unable"}
-    						]
-    	}
-    ]
+    $scope.getEvent = function(eventID) {
+    	storeEvent.getEvent(eventID, function() {
+	    	$scope.event = storeEvent.event;
+	    	$scope.times = storeEvent.event.Times;
+	    	Time.organizeByDay($scope.times);
+	    	$scope.days = Time.days;
+    	});
+    }
+
+    $scope.getEvent($stateParams.event_id);
+
 
     $scope.select = function(time, response) {
     	$scope.mouseDown = true;
     	if(time.status === response) {
-    		time.status = "unable";
+    		time.status = null;
     		time[response] = false;
     	} else {
     		time.able = false;

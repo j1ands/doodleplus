@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
@@ -13,7 +13,9 @@
       <h1>{{timeOptions}}</h1>
     </div>
  -->
-    <div class="col-lg-6 col-md-6">
+    <div ng-show="showItem[0]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6">
+      <button class="btn btn-primary" ng-click="swipeRight()" >Move To Previous Page</button>
+      <button class="btn btn-primary" ng-click="swipeLeft()" >Move To Next Page</button>
       <h4>1. Event Details</h4><hr>
       <form name="EventInfo" class="event-form" ng-submit="message()">
         <div class="form-group">
@@ -39,7 +41,9 @@
       </form>
     </div>
 
-    <div class="col-lg-6 col-md-6">
+    <div ng-show="showItem[1]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6">
+      <button class="btn btn-primary" ng-click="swipeRight()" >Move To Previous Page</button>
+      <button class="btn btn-primary" ng-click="swipeLeft()" >Move To Next Page</button>
       {{selectedDates}}
       <p>{{date.value}}</p>
       <!-- {{dayHours[selectedDates.length - 1]}} -->
@@ -67,7 +71,9 @@
   </div>
   <br><br>
   <div class="row">
-    <div class="col-lg-6">
+    <div ng-show="showItem[2]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6">
+      <button class="btn btn-primary" ng-click="swipeRight()" >Move To Previous Page</button>
+      <button class="btn btn-primary" ng-click="swipeLeft()" >Move To Next Page</button>
       <h4>3. What times are you considering?</h4><hr>
       <label for="timeIncrement">Time Increment:</label>
         <select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="selected"></select>
@@ -82,7 +88,9 @@
  -->
       </div>
 
-    <div class="col-lg-6">
+    <div ng-show="showItem[3]" hm-swipeleft="swipeLeft()" hm-swiperight="swipeRight()" class="col-lg-6">
+      <button class="btn btn-primary" ng-click="swipeRight()" >Move To Previous Page</button>
+      <button class="btn btn-primary" ng-click="swipeLeft()" >Move To Next Page</button>
       <h4>4. Invite people to participate in your event poll</h4><hr>
       <form name="invites" ng-submit="addEmail()">
         <div class="form-group">

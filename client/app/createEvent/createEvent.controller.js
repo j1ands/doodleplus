@@ -1,13 +1,35 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, time, $mdToast, $animate, dayTime) {
+  .controller('CreateEventCtrl', function ($scope, storeEvent, Time, $mdToast, $animate, dayTime) {
     $scope.message = function(){
       console.log('hi');
     }
 
     //used to check if a date was selected in the datepicker.
     $scope.oldDates = {length: 0};
+
+    $scope.testTouch = function(){
+      $scope.swipeTest = 'Test Works!!!';
+      console.log('swipe left works');
+    };
+    $scope.showItem = [true,false,false,false];
+
+    $scope.swipeLeft = function(){
+      var index = $scope.showItem.indexOf(true);
+      if (index!==3){
+        $scope.showItem[index]=false;
+        $scope.showItem[index+1]=true;
+      }
+    }
+    $scope.swipeRight = function(){
+      var index = $scope.showItem.indexOf(true);
+      if (index!==0){
+        $scope.showItem[index]=false;
+        $scope.showItem[index-1]=true;
+      }
+    }
+
     $scope.invitedEmails = [];
     $scope.eventOptions = {};
     $scope.userOptions = {};
@@ -118,16 +140,19 @@ angular.module('doodleplusApp')
     //   // $scope.dayTimes = dayTimes;
     // }
 
-    // $scope.genTimes =function(){
-    //   $scope.times = time.genTime(1422898264,$scope.selected.timeIncrement);
-    //   storeEvent.save({
-    //     event: $scope.eventOptions,
-    //     user: $scope.userOptions,
-    //     time: time.filterTimes($scope.times)
-    //   }, function(res){
-    //     console.log("response",res);
-    //   });
-    // };
+    $scope.genTimes =function(){
+      if (!$scope.emailToAdd){
+        $scope.emailToAdd = '';
+      }
+      $scope.times = Time.genTimes(1422898264,$scope.selected.timeIncrement);
+      storeEvent.save({
+        event: $scope.eventOptions,
+        user: $scope.userOptions,
+        time: Time.filterTimes($scope.times)
+      }, function(res){
+        console.log("response",res);
+      });
+    };
 
     // $scope.storeEvent = function()
     // {
