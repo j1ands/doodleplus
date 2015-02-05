@@ -87,12 +87,12 @@ function genEmail(emails,user,eventId) {
       from_name: user.name,
       to: toEmail
     };
-    mandrill_client.messages.send({message:message,async:'async'},
-        function(result){
-        console.log('messages Result!!!!!!',result);
-      },function(err){
-        console.log('A Mandrill Error has ocurred',err, err.name+ err.message);
-      });
+    // mandrill_client.messages.send({message:message,async:'async'},
+    //     function(result){
+    //     console.log('messages Result!!!!!!',result);
+    //   },function(err){
+    //     console.log('A Mandrill Error has ocurred',err, err.name+ err.message);
+    //   });
     }
   }
 

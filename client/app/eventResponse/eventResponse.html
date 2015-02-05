@@ -72,10 +72,10 @@
 			<div class="">
 				<h4>3. Submit Your Response!</h4><hr>
 				<form>
-					<label class=""> Name 
-						<input class="form-control" type="text" placeholder="Name">
-					</label> <br>
-					<button class="btn btn-primary">Submit Response</button>
+					<label for="username"> Name </label>
+					<input class="form-control" id="username" ng-model="username" type="text" placeholder="Name">
+					<br>
+					<button class="btn btn-primary" ng-click="submitResponses()">Submit Response</button>
 				</form>
 			</div>
 		</div>
