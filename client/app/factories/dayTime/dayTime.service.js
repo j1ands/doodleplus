@@ -21,7 +21,6 @@ angular.module('doodleplusApp')
         removeDay(scopeDates,scopeDaysView);
       }
       scopeDates.sort();
-      scopeDaysView = $filter('orderBy')(scopeDaysView, function(arr){return arr[0].time});
       setSelected(scopeDates);
     }
 

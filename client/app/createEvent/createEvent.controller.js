@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout) {
     $scope.message = function(){
       console.log('hi');
     }
@@ -90,6 +90,11 @@ angular.module('doodleplusApp')
     $scope.toggleDate = function()
     {
       $scope.dateToggle.value = !$scope.dateToggle.value;
+
+      if(!$scope.dateToggle.value)
+      {
+        $scope.dayHours = $filter('orderBy')($scope.dayHours, function(arr){return arr[0].time});
+      }
     }
 
     $scope.calendarView = function()
