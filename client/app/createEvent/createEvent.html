@@ -13,60 +13,75 @@
       <h1>{{timeOptions}}</h1>
     </div>
  -->
-    <div ng-show="showItem[0]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6">
+
+    <div ng-show="showItem[0]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6  md-whiteframe-z1 main-content" layout="column">
+      <!-- <h4>1. Event Details</h4><hr> -->
       <button class="btn btn-primary" ng-click="swipeRight()" >Move To Previous Page</button>
       <button class="btn btn-primary" ng-click="swipeLeft()" >Move To Next Page</button>
-      <h4>1. Event Details</h4><hr>
-      <form name="EventInfo" class="event-form" ng-submit="message()">
-        <div class="form-group">
-          <label for="title">Title:</label>
-          <input class="form-control" id="title" name="title" ng-model="eventOptions.title" type="text" placeholder="">
+      <md-toolbar class="md-accent">
+        <div class="md-toolbar-tools">
+          <span class="md-flex">1. Event Details</span>
         </div>
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea class="form-control" rows="5" id="description" name="description" ng-model="eventOptions.description" type="text" placeholder=""></textarea>
-        </div>
-        <div class="form-group">
-          <label for="location">Location:</label>
-          <input class="form-control" id="location" name="location" ng-model="eventOptions.location" type="text" placeholder="">
-        </div>
-        <div class="form-group">
-          <label for="creatorName">Your Name:</label>
-          <input class="form-control" id="creatorName" name="creatorName" ng-model="userOptions.name" type="text" placeholder="">
-        </div>
-        <div class="form-group">
-          <label for="creatorEmail">Your Email:</label>
-          <input class="form-control" id="creatorEmail" name="creatorEmail" ng-model="userOptions.email" type="email" placeholder="">
-        </div>
-      </form>
+      </md-toolbar>
+      <md-content class="md-padding" style="height: 600px;">
+        <form name="EventInfo" class="event-form" ng-submit="message()">
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input class="form-control" id="title" name="title" ng-model="eventOptions.title" type="text" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" rows="5" id="description" name="description" ng-model="eventOptions.description" type="text" placeholder=""></textarea>
+          </div>
+          <div class="form-group">
+            <label for="location">Location:</label>
+            <input class="form-control" id="location" name="location" ng-model="eventOptions.location" type="text" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="creatorName">Your Name:</label>
+            <input class="form-control" id="creatorName" name="creatorName" ng-model="userOptions.name" type="text" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="creatorEmail">Your Email:</label>
+            <input class="form-control" id="creatorEmail" name="creatorEmail" ng-model="userOptions.email" type="email" placeholder="">
+          </div>
+        </form>
+      </md-content>
     </div>
 
-    <div ng-show="showItem[1]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6">
+    <div ng-show="showItem[1]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6 md-whiteframe-z1 main-content" layout="column">
       <button class="btn btn-primary" ng-click="swipeRight()" >Move To Previous Page</button>
       <button class="btn btn-primary" ng-click="swipeLeft()" >Move To Next Page</button>
-      {{selectedDates}}
-      <p>{{date.value}}</p>
-      <!-- {{dayHours[selectedDates.length - 1]}} -->
-      <h4>2. What dates are you considering?</h4><hr>
-      <!-- would have to change this -->
-      <datepicker ng-click="showEdit()" ng-show="dateToggle.value" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
-      <table class="table table-striped table-responsive disable-text-selection" ng-hide="dateToggle.value" ng-mouseup="timeUp()">
-        <thead>
-          <tr>
-            <th class="time-input">
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true" ng-click="calendarView()"></span>
-              <!-- Select times for {{date.value.toDateString()}} -->
-              <!-- would have to add .date to selectedDates[index] -->
-              Select times for {{dateString(selectedDates[selectedDates.length - 1])}}
-            </th>
-          </tr>
-        </thead>
-        <tbody class="time-input">
-          <tr ng-mousedown="timeClick($event, $index)" ng-mouseenter="timeEnter($event, $index)" ng-repeat="time in dayHours[selectedDates.length - 1]">
-            <th class="time-input">{{::time.time | date:"h:mm a"}}</th>
-          </tr>
-        </tbody>
-      </table>
+      <md-toolbar class="md-accent">
+        <div class="md-toolbar-tools">
+          <span class="md-flex">2. What dates are you considering?</span>
+        </div>
+      </md-toolbar>     
+      <md-content class="md-padding" style="height: 600px;"> 
+        {{selectedDates}}
+        <p>{{date.value}}</p>
+        <!-- {{dayHours[selectedDates.length - 1]}} 
+        <h4> 2. What dates are you considering?</h4><hr>
+            would have to change this -->
+        <datepicker ng-click="showEdit()" ng-show="dateToggle.value" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+        <table class="table table-striped table-responsive disable-text-selection" ng-hide="dateToggle.value" ng-mouseup="timeUp()">
+          <thead>
+            <tr>
+              <th class="time-input">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true" ng-click="calendarView()"></span>
+                <!-- Select times for {{date.value.toDateString()}} -->
+                <!-- would have to add .date to selectedDates[index] -->
+                Select times for {{dateString(selectedDates[selectedDates.length - 1])}}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="time-input">
+            <tr ng-mousedown="timeClick($event, $index)" ng-mouseenter="timeEnter($event, $index)" ng-repeat="time in dayHours[selectedDates.length - 1]">
+              <th class="time-input">{{::time.time | date:"h:mm a"}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </md-content>
     </div>
   </div>
   <br><br>

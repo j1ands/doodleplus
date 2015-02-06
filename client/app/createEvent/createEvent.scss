@@ -24,6 +24,15 @@
 	}
 }
 
+.main-content {
+	@media screen and (min-width: 992px) {
+		margin-left: 25%;
+		margin-right: 25%;
+		padding-left: 0px;
+		padding-right: 0px;	
+	}
+}
+
 .disable-text-selection {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
