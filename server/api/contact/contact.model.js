@@ -22,28 +22,26 @@ module.exports = function(sequelize, DataTypes) {
         Contact.belongsTo(models.User);
         Contact.belongsToMany(models.Event, {through: 'EventContacts'});
       },
-      saveNewContacts: function(reqBody,creator,createdEvent){
-        if (reqBody.emails){
-          var individualEmail = reqBody.emails.trim().split(',');
+      saveNewContacts: function(emailsCSV,creator,createdEvent){
+        if (emailsCSV){
+          var individualEmails = emailsCSV.trim().split(',');
           var contacts = [];
-          individualEmail.forEach(function (elem) {
+          individualEmail.forEach(function(elem){
             contacts.push({
-              email: elem.trim(),
+              email: elem.trim().toLowerCase(),
               UserId: creator._id
             });
           });
           contacts.forEach(function(contact){
-            Contact.findOrCreate({where: {email: contact.email},defaults: contact })
+            Contact.findOrCreate({where: {email: contact.email},defaults: contact})
               .spread(function(contact,created){
-                if (!created) {
-                  contact.addEvent(createdEvent);
-                }
+                contact.addEvent(createdEvent);
               })
               .error(function(err){
-                console.log('err in saving contacts',err);
+                console.log('err in contacts',err);
               });
           });
-          sendEmail(individualEmail,creator,createdEvent);
+          sendEmail(individualEmails,creator,createdEvent);
         }
       }
     }

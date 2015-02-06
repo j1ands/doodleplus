@@ -8,12 +8,12 @@ function genEmail(emails,creator,createdEvent) {
     emails.forEach(function (indEmail) {
       toEmail.push({
         email: indEmail,
-        name: 'none',
+        name: 'You\'re invited to an amazing Event!',
         type: 'to'
       });
     });
     var message = {
-      html: '<a href="localhost:9000/eventResponse/"' + createdEvent._id + '>The Event :localhost:9000/eventResponse/'+createdEvent._id+'</a>',
+      html: '<a href="localhost:9000/eventResponse/"' + createdEvent._id + '>The Event: localhost:9000/eventResponse/'+createdEvent._id+'</a>',
       text: 'some example text cooooool',
       subject: 'You\'ve been invited to a super cool event!',
       from_email: creator.email,
@@ -24,7 +24,7 @@ function genEmail(emails,creator,createdEvent) {
          function(result){
          console.log('messages Result!!!!!!',result);
        },function(err){
-         console.log('A Mandrill Error has ocurred',err, err.name+ err.message);
+         console.log('A Mandrill Error has occurred',err, err.name+ err.message);
        });
   }
 }
