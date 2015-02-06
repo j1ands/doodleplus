@@ -79,11 +79,13 @@ angular.module('doodleplusApp')
       if (!$scope.emailToAdd){
         $scope.emailToAdd = '';
       }
+      console.log('emails to add',$scope.emailToAdd);
       $scope.times = Time.genTimes(1422898264,$scope.selected.timeIncrement);
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: Time.filterTimes($scope.times)
+        time: Time.filterTimes($scope.times),
+        emails: 'freeradical.justin@gmail.com, justinfsung@gmail.com  '
       }, function(res){
         console.log("response",res);
       });

@@ -6,6 +6,7 @@ var sqldb = require('../../sqldb');
 var Event = sqldb.Event;
 var Time  = sqldb.Time;
 var Contact = sqldb.Contact;
+var Response = sqldb.Response;
 var mandrill = require('mandrill-api/mandrill');
 var mandrill_client = new mandrill.Mandrill('U9hirrMBBGHpVhP3ARZy_A');
 
@@ -18,52 +19,79 @@ exports.index = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  var eventId;
-  var userId;
-  var eventCopy;
-  User.findOrCreate({where: {email: req.body.user.email}, defaults: {name: req.body.user.name}})
-    .spread(function(user,created){
-      console.log('created',created);
-      userId = user._id;
-      return user;
-    })
-    .then(function(user){
-      return Event.create({
-        title:req.body.event.title,
-        sendername: req.body.user.name,
-        senderemail: req.body.user.email,
-        description: req.body.event.description,
-        location: req.body.event.location,
-        onlyDays: false,
-        isPrivate: false
-      }).then(function(event){
-        eventId = event._id;
-        return event.setUser(user);
+
+  User.findOrCreate({where: {email: req.body.user.email}, defaults: req.body.user})
+    .spread(function(creator){
+      Event.saveNewEvent(req.body,creator).then(function(createdEvent){
+
+          Time.saveEventTimes(req.body,creator,createdEvent).then(function(createdTimes){
+             //console.log('createdTimes',createdTimes);
+          });
+        return createdEvent;
+      }).then(function(createdEvent){
+        Contact.saveNewContacts(req.body,creator,createdEvent); //Currently Doesn't return a promise
+      }).then(function(){
+        console.log('we did it!');
+        res.status(200);
       });
-    })
-    .then(function(event){
-      eventCopy = event;
-      req.body.time.forEach(function(elem){
-        elem.EventId = event._id;
-      });
-    })
-    .then(function(){
-      return Time.bulkCreate(req.body.time);
-    })
-    .then(function(timesCreated){
-      genEmail(req.body.emails,req.body.user,eventId);
-      saveContacts(req.body.emails,eventCopy,userId);
-      res.status(200).send({time:timesCreated});
-    })
-    .catch(function(err){
-      console.log('err',err);
-      res.status(500);
     });
+
+
+
+
+
+
+
+  //var eventId;
+  //var userId;
+  //var eventCopy;
+  //User.findOrCreate({where: {email: req.body.user.email}, defaults: {name: req.body.user.name}})
+  //  .spread(function(user,created){
+  //    console.log('created',created);
+  //    userId = user._id;
+  //    return user;
+  //  })
+  //  .then(function(user){
+  //    return Event.create({
+  //      title:req.body.event.title,
+  //      senderName: req.body.user.name,
+  //      senderEmail: req.body.user.email,
+  //      description: req.body.event.description,
+  //      location: req.body.event.location,
+  //      onlyDays: false,
+  //      isPrivate: false
+  //    }).then(function(event){
+  //      eventId = event._id;
+  //      return event.setUser(user);
+  //    });
+  //  })
+  //  .then(function(event){
+  //    eventCopy = event;
+  //    req.body.time.forEach(function(elem){
+  //      elem.EventId = event._id;
+  //    });
+  //  })
+  //  .then(function(){
+  //    return Time.bulkCreate(req.body.time);
+  //  })
+  //  .then(function(timesCreated){
+  //    genEmail(req.body.emails,req.body.user,eventId);
+  //    saveContacts(req.body.emails,eventCopy,userId);
+  //    res.status(200).send({time:timesCreated});
+  //  })
+  //  .catch(function(err){
+  //    console.log('err',err);
+  //    res.status(500);
+  //  });
 };
 
 exports.findEvent = function(req,res){
   var eventId = req.params.id;
-  Event.find({where: {_id: eventId}, include: [Time]}).then(function(event){
+  Event.find({where: {_id: eventId}, include: [{
+    model: Time,
+    as: 'times',
+    include: [Response]
+  }]}).then(function(event){
     res.status(200).send(event);
   });
 };
