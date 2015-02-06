@@ -72,6 +72,18 @@ angular.module('doodleplusApp')
           }.bind(this)).$promise;
       },
 
+      createRespondee: function(callback) {
+        return User.createRespondee(function(data) {
+            $cookieStore.put('token', data.token);
+            currentUser = User.getRespondee({UUID: data}, function(idObj) {
+              safeCb(callback)(idObj);
+            });
+          },
+          function(err) {
+            return safeCb(callback)(err);
+          }.bind(this)).$promise; // Not sure if we need this part?
+      },
+
       /**
        * Change password
        *

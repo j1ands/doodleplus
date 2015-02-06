@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
@@ -9,6 +9,12 @@ angular.module('doodleplusApp')
     $scope.username;
 
     Response.getOrCreateUUID();
+
+    var tryThis = function(obj) {
+        console.log("All I need to know", obj);
+    }
+
+    Auth.createRespondee(tryThis);
 
     $scope.submitResponses = function() {
       Response.saveResponses($scope.username); 

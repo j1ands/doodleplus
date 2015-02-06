@@ -60,6 +60,7 @@ exports.create = function(req, res, next) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresInMinutes: 60 * 5
       });
+      console.log("decoded:", jwt.decode(token));
       res.json({ token: token });
     })
     .catch(validationError(res));
@@ -155,3 +156,55 @@ exports.me = function(req, res, next) {
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
+
+
+
+ /* Creates a new respondee - NO login - just uses tokens
+ */
+exports.createRespondee = function(req, res) {
+  var UUID = User.generateUUID();
+  var token = jwt.sign({ UUID: UUID }, config.secrets.session, {
+      expiresInMinutes: 2
+      // expiresInMinutes: 60 * 730 // Do we want the token to expire?
+    });
+  res.json({ token: token });
+};
+
+
+/**
+ * Get a respondee's UUID 
+ */
+exports.getRespondee = function(req, res, next) {
+  var UUID = req.user.UUID;
+
+  if (!UUID) {
+    return res.send(404);
+  }
+    res.json({UUID: UUID});
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

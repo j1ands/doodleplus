@@ -17,6 +17,18 @@ angular.module('doodleplusApp')
         params: {
           id:'me'
         }
+      },
+      createRespondee: {
+        method: 'POST',
+        params: {
+          id:'respondee'
+        }
+      },
+      getRespondee: {
+        method: 'GET',
+        params: {
+          id:'respondee'
+        }
       }
 	  });
   });
