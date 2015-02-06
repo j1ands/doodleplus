@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .factory('dayTime', function () {
+  .factory('dayTime', function ($filter) {
     // Service logic
     // ...
     var selectedDates = [];
@@ -20,6 +20,8 @@ angular.module('doodleplusApp')
       } else if (scopeDates.length<length){
         removeDay(scopeDates,scopeDaysView);
       }
+      scopeDates.sort();
+      scopeDaysView = $filter('orderBy')(scopeDaysView, function(arr){return arr[0].time});
       setSelected(scopeDates);
     }
 

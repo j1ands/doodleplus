@@ -72,15 +72,9 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
           });
 
           function update() {
-            var dates = selectedDates.map(function(selected){return selected.date});
-
             angular.forEach(scope.rows, function(row) {
               angular.forEach(row, function(day) {
-                day.selected = dates.indexOf(day.date.setHours(0, 0, 0, 0)) > -1
-                //day.selected = selectedDates.map(function(selected){return selected.date}).indexOf(day.date.setHours(0,0,0,0)) > -1;
-                //var currentDate = day.date.setHours(0,0,0,0);
-
-                // day.selected = selectedDates[day.date.setHours(0,0,0,0)] != undefined;
+                day.selected = selectedDates.indexOf(day.date.setHours(0,0,0,0)) > -1;
               });
             });
             alreadyUpdated = true;
@@ -91,20 +85,14 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
       return $delegate;
     });
   })
-  .directive('multiSelect', function() {
+  .directive('multiSelect', function(dayTime) {
     return {
       require: ['datepicker', 'ngModel'],
       link: function(scope, elem, attrs, ctrls) {
         //debugger;
         var selectedDates = scope.$eval(attrs.multiSelect);
-        var currentSelection = {};
         //var currentGroup = [];
         //var selectedDates = [];
-
-        // scope.$eval(attrs.multiSelect).forEach(function(date){
-        //   selectedDates[date] = {};
-        //   selectedDates[date].date = date;
-        // })
 
         /* Called when directive is compiled */
         scope.$on('requestSelectedDates', function() {
@@ -117,52 +105,28 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
         });
 
         scope.$watch(attrs.ngModel, function(newVal, oldVal) {
-          var cSelection = currentSelection;
-
           if(!newVal) return;
-
           var dateVal = newVal.getTime();
 
           //debugger;
-          if(!selectedDates.length)
-          {
-            selectedDates.push({
-              date: dateVal,
-              group: []
-            });
-            cSelection.date = dateVal;
-          }
-          else
-          {
-            var index = selectedDates.map(function(selected){return selected.date}).indexOf(dateVal);
-            if(index < 0)
-            {
-              selectedDates.push({
-                date: dateVal,
-                group: []
-              });
-              cSelection.date = dateVal;
-            } else {
-                if(cSelection.date == dateVal)
-                {
-                  selectedDates.splice(index, 1);
-                  cSelection.date = null;                  
-                }
-                else
-                {
-                  cSelection.date = dateVal;
-                }
-            }
-          }
-
-
-          // if(selectedDates.indexOf(dateVal) < 0) {
-          //   selectedDates.push(dateVal);
-          //   console.log(selectedDates);
-          // } else {
-          //   selectedDates.splice(selectedDates.indexOf(dateVal), 1);
-          //   console.log(selectedDates);
+          // if(!selectedDates.length)
+          // {
+          //   selectedDates.push({
+          //     date: dateVal,
+          //     group: []
+          //   });
+          //   cSelection.date = dateVal;
           // }
+
+          if(selectedDates.indexOf(dateVal) < 0) {
+            selectedDates.push(dateVal);
+            var increment = scope.selected ? scope.selected.timeIncrement : 900000;
+            dayTime.updateDay(selectedDates,scope.dayHours,increment);
+            console.log(selectedDates);
+          } else {
+            selectedDates.splice(selectedDates.indexOf(dateVal), 1);
+            console.log(selectedDates);
+          }
           // if(selectedDates[dateVal] == undefined)
           // {
           //   selectedDates[dateVal] = {};

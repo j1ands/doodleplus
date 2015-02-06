@@ -1,13 +1,18 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, Time, $mdToast, $animate, dayTime) {
+  .controller('CreateEventCtrl', function ($scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout) {
     $scope.message = function(){
       console.log('hi');
     }
 
+    $scope.allDays = {};
+    $scope.allDays.value = false;
     //used to check if a date was selected in the datepicker.
     $scope.oldDates = {length: 0};
+    // $scope.selectedDateTab = {};
+    // $scope.selectedDateTab.value = 0;
+
 
     $scope.testTouch = function(){
       $scope.swipeTest = 'Test Works!!!';
@@ -53,14 +58,34 @@ angular.module('doodleplusApp')
     $scope.dateToggle = {value: true};
     $scope.dayHours = [];
 
+    $scope.allDays.call = function(tab)
+    {
+        var selectedTimes = [];
+        $scope.dayHours[tab].forEach(function(time, index){
+          if(time.selected)
+          {
+            selectedTimes.push(index);
+          }
+        })
+        $scope.selectedDates.forEach(function(date, index){
+          if(index !== tab)
+          {
+            selectedTimes.forEach(function(val){
+              $scope.dayHours[index][val].selected = true;
+            });
+          }
+        })      
+    }
+
+    $scope.$watch('allDays.value', function(newValue, oldValue){
+        $timeout(function(){
+          $scope.allDays.value = false;
+        }, 400);
+    })
+
 
     $scope.timeOptions.times = [];
 
-    $scope.updateDay = function(){
-      var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
-      dayTime.updateDay($scope.selectedDates,$scope.dayHours,increment);
-      //debugger;
-    };
 
     $scope.toggleDate = function()
     {
@@ -75,46 +100,29 @@ angular.module('doodleplusApp')
 
     $scope.isMouseDown = {value:false};
 
-    $scope.timeClick = function(e,index)
+    $scope.timeClick = function(e,index, tab)
     {
       $scope.isMouseDown.value = true;
-      angular.element(e.target).toggleClass("success");
-      var selectedIndex = $scope.selectedDates.length - 1;
-      $scope.dayHours[selectedIndex][index].selected = true;
+      //angular.element(e.target).toggleClass("success");
+      //var selectedIndex = $scope.selectedDates.length - 1;
+      //debugger;
+      $scope.dayHours[tab][index].selected = !$scope.dayHours[tab][index].selected;
     }
 
-    $scope.timeEnter = function(e, index)
+    $scope.timeEnter = function(e, index, tab)
     {
       if($scope.isMouseDown.value)
       {
-        angular.element(e.target).toggleClass("success");
-        var selectedIndex = $scope.selectedDates.length - 1;
-        $scope.dayHours[selectedIndex][index].selected = true;
+        //angular.element(e.target).toggleClass("success");
+        //var selectedIndex = $scope.selectedDates.length - 1;
+        //debugger;
+        $scope.dayHours[tab][index].selected = !$scope.dayHours[tab][index].selected;
       }
     }
 
     $scope.timeUp = function(e)
     {
       $scope.isMouseDown.value = false;
-    }
-
-    $scope.groupCheck = function()
-    {
-      //debugger;
-      //add ability to remove date from group!
-      var currentGroup = [];
-      for(var i = 0; i < $scope.selectedDates.length; i++)
-      {
-        if(!$scope.selectedDates[i].group.length)
-        {
-          currentGroup.push($scope.selectedDates[i]);
-        }
-      }
-      var dates = currentGroup.map(function(selected){return selected.date});
-      for(var j = 0; j < currentGroup.length; j++)
-      {
-        currentGroup[j].group = dates;
-      }
     }
 
     // ceCtrl.toggleDate = function()
@@ -148,7 +156,8 @@ angular.module('doodleplusApp')
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: Time.filterTimes($scope.times)
+        time: Time.filterTimes($scope.times),
+        contact: $scope.contactOptions
       }, function(res){
         console.log("response",res);
       });
@@ -169,43 +178,6 @@ angular.module('doodleplusApp')
       if ($scope.emailToAdd){
         $scope.invitedEmails.push($scope.emailToAdd);
       }
-    }
-
-    $scope.showEdit = function()
-    {
-      if($scope.oldDates.length != $scope.selectedDates.length)
-      {
-        if(!$scope.selectedDates.length)
-        {
-          $mdToast.cancel();
-        }
-        else
-        {
-          $scope.updateDay();
-          $scope.showToast();
-        }
-        $scope.oldDates.length = $scope.selectedDates.length;
-      }
-    }
-
-    $scope.showToast = function() {
-      var toast = $mdToast.simple()
-            .content($scope.selectedDates.length > 1 ? 'Click here to edit these days:' : 'Click here to edit this day:')
-            .action('EDIT')
-            .highlightAction(false)
-            .hideDelay(0)
-            .position('top right');
-      $mdToast.show(toast).then(function() {
-        $scope.toggleDate();
-        $scope.groupCheck();
-        console.log(dayTime.linkDays());
-      });
-    };  
-
-    $scope.dateString = function(str)
-    {
-      var currDate = new Date(str);
-      return currDate.toDateString();
     }
 
   });

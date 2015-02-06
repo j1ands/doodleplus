@@ -12,7 +12,11 @@ angular.module('doodleplusApp', [
   'ngMaterial',
   'hmTouchEvents'
 ])
-  .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue')
+      .accentPalette('green');
+
     $urlRouterProvider
       .otherwise('/');
 
