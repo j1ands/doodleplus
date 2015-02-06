@@ -77,7 +77,6 @@
             would have to change this -->
         <datepicker ng-show="dateToggle.value" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
         <md-tabs md-selected="selectedIndex" ng-if="!dateToggle.value">
-          {{selectedIndex}}
           <md-tab ng-repeat="day in selectedDates"  label="{{day | date:short}}">
             <md-checkbox ng-click="allDays.call(selectedIndex)" ng-model="allDays.value" aria-label="All Days" style="float:right">
               Apply times to all days?

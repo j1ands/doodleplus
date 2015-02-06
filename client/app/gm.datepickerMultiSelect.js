@@ -125,6 +125,7 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
             console.log(selectedDates);
           } else {
             selectedDates.splice(selectedDates.indexOf(dateVal), 1);
+            dayTime.updateDay(selectedDates,scope.dayHours,increment);
             console.log(selectedDates);
           }
           // if(selectedDates[dateVal] == undefined)
