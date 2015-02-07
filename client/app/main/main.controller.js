@@ -5,4 +5,5 @@ angular.module('doodleplusApp')
     $scope.createEvent = function() {
       $location.path('/createEvent');
     }
+
   });

@@ -23,3 +23,44 @@
 		}
 	}
 }
+
+.main-content {
+	margin-bottom: 25px;
+	@media screen and (min-width: 992px) {
+		margin-left: 25%;
+		margin-right: 25%;
+		padding-left: 0px;
+		padding-right: 0px;	
+	}
+}
+
+.disable-text-selection {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.animate-show {
+		max-height: 30px;
+		min-height: 0px;
+		margin-bottom: 20px;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+md-toast {
+	margin-top: 265px;
+}
