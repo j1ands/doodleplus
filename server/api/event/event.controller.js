@@ -6,6 +6,7 @@ var sqldb = require('../../sqldb');
 var User = sqldb.User;
 var Event = sqldb.Event;
 var Time  = sqldb.Time;
+var Response = sqldb.Response;
 var Contact = sqldb.Contact;
 
 // Gets list of events from the DB
@@ -32,7 +33,7 @@ exports.findEvent = function(req,res){
   var eventId = req.params.id;
   Event.find({where: {_id: eventId}, include: [{
     model: Time,
-    as: 'times',
+    // as: 'times',
     include: [Response]
   }]}).then(function(event){
     res.status(200).send(event);
