@@ -1,10 +1,17 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($scope, storeEvent, Time) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout) {
     $scope.message = function(){
       console.log('hi');
     }
+
+    $scope.allDays = {};
+    $scope.allDays.value = false;
+    //used to check if a date was selected in the datepicker.
+    $scope.oldDates = {length: 0};
+    // $scope.selectedDateTab = {};
+    // $scope.selectedDateTab.value = 0;
 
 
     $scope.testTouch = function(){
@@ -45,45 +52,115 @@ angular.module('doodleplusApp')
       timeIncrement: 86400000
     }];
     $scope.selectedDates = [];
-
+    dayTime.setSelected($scope.selectedDates.slice());
 
     $scope.date = {};
     $scope.dateToggle = {value: true};
-    $scope.dayTimes = [];
+    $scope.dayHours = [];
+
+    $scope.allDays.call = function(tab)
+    {
+        var selectedTimes = [];
+        $scope.dayHours[tab].forEach(function(time, index){
+          if(time.selected)
+          {
+            selectedTimes.push(index);
+          }
+        })
+        $scope.selectedDates.forEach(function(date, index){
+          if(index !== tab)
+          {
+            selectedTimes.forEach(function(val){
+              $scope.dayHours[index][val].selected = true;
+            });
+          }
+        })      
+    }
+
+    $scope.$watch('allDays.value', function(newValue, oldValue){
+        $timeout(function(){
+          $scope.allDays.value = false;
+        }, 400);
+    })
+
 
     $scope.timeOptions.times = [];
+
 
     $scope.toggleDate = function()
     {
       $scope.dateToggle.value = !$scope.dateToggle.value;
+
+      if(!$scope.dateToggle.value)
+      {
+        $scope.dayHours = $filter('orderBy')($scope.dayHours, function(arr){return arr[0].time});
+      }
     }
 
-    $scope.dayView = function()
+    $scope.calendarView = function()
     {
-      var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
-      var currentTime = $scope.date.value.getTime();
-      var today = currentTime;
-
-      $scope.dayTimes = [];
-
-      while(currentTime < today + 86400000)
-      {
-        $scope.dayTimes.push(new Date(currentTime));
-        currentTime += increment;
-      }
-
       $scope.toggleDate();
-    };
+      $scope.showToast();
+    }
+
+    $scope.isMouseDown = {value:false};
+
+    $scope.timeClick = function(e,index, tab)
+    {
+      $scope.isMouseDown.value = true;
+      //angular.element(e.target).toggleClass("success");
+      //var selectedIndex = $scope.selectedDates.length - 1;
+      //debugger;
+      $scope.dayHours[tab][index].selected = !$scope.dayHours[tab][index].selected;
+    }
+
+    $scope.timeEnter = function(e, index, tab)
+    {
+      if($scope.isMouseDown.value)
+      {
+        //angular.element(e.target).toggleClass("success");
+        //var selectedIndex = $scope.selectedDates.length - 1;
+        //debugger;
+        $scope.dayHours[tab][index].selected = !$scope.dayHours[tab][index].selected;
+      }
+    }
+
+    $scope.timeUp = function(e)
+    {
+      $scope.isMouseDown.value = false;
+    }
+
+    // ceCtrl.toggleDate = function()
+    // {
+    //   $scope.dateToggle.value = !$scope.dateToggle.value;
+    // }
+
+    // $scope.dayView = function()
+    // {
+    //   $scope.toggleDate();
+    //   // var increment = $scope.selected ? $scope.selected.timeIncrement : 900000;
+    //   // var currentTime = $scope.date.value.getTime();
+    //   // var today = currentTime;
+
+    //   // var dayTimes = [];
+
+    //   // while(currentTime < today + 86400000)
+    //   // {
+    //   //   dayTimes.push(new Date(currentTime));
+    //   //   currentTime += increment;
+    //   // }
+
+    //   // $scope.dayTimes = dayTimes;
+    // }
 
     $scope.genTimes =function(){
-      if (!$scope.emailToAdd){
-        $scope.emailToAdd = '';
-      }
+      console.log('emails to add',$scope.emailToAdd);
       $scope.times = Time.genTimes(1422898264,$scope.selected.timeIncrement);
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: Time.filterTimes($scope.times)
+        time: Time.filterTimes($scope.times),
+        contact: $scope.contactOptions
       }, function(res){
         console.log("response",res);
       });
@@ -105,4 +182,5 @@ angular.module('doodleplusApp')
         $scope.invitedEmails.push($scope.emailToAdd);
       }
     }
+
   });

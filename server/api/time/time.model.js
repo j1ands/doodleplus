@@ -14,6 +14,18 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models){
         Time.belongsTo(models.Event);
         Time.hasMany(models.Response);
+      },
+      saveEventTimes: function(reqBody,creator,createdEvent){
+        var times = [];
+        //console.log('createdEvent id',createdEvent);
+        reqBody.time.forEach(function(elem){
+          elem.EventId = createdEvent._id;
+        });
+        return Time.bulkCreate(reqBody.time)
+          .then(function(createdTimes){
+            return createdTimes;
+          });
+
       }
     }
   });
