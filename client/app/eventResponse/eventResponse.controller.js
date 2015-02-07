@@ -10,11 +10,11 @@ angular.module('doodleplusApp')
 
     Response.getOrCreateUUID();
 
-    var tryThis = function(obj) {
-        console.log("All I need to know", obj);
+    var setUUID = function(obj) {
+        $scope.UUID = obj.UUID;
     }
 
-    Auth.createRespondee(tryThis);
+    Auth.createRespondee(setUUID);
 
     $scope.submitResponses = function() {
       Response.saveResponses($scope.username); 
