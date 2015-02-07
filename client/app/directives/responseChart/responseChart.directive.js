@@ -19,7 +19,9 @@ angular.module('doodleplusApp')
 
 				var eventId = $stateParams.event_id;
 
+
 					storeEvent.getEvent(eventId, function() {
+						console.log("got here")
 						console.log(storeEvent.event)
 						storeEvent.event.Times.forEach(function(time){			
 							var timeData = [];
@@ -35,6 +37,7 @@ angular.module('doodleplusApp')
 							data = data.concat(timeData)
 						});
 						console.log(data)
+						console.log("GOT HERE")
 						renderChart(data);									
 					});
 
