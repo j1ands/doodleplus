@@ -19,7 +19,7 @@ angular.module('doodleplusApp')
     $scope.getEvent = function(eventID) {
     	storeEvent.getEvent(eventID, function() {
 	    	$scope.event = storeEvent.event;
-	    	$scope.times = storeEvent.event.Times;
+	    	$scope.times = storeEvent.event.times;
 	    	Time.organizeByDay($scope.times);
 	    	$scope.days = Time.days;
     	});

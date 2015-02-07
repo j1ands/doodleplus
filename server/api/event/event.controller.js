@@ -7,6 +7,7 @@ var User = sqldb.User;
 var Event = sqldb.Event;
 var Time  = sqldb.Time;
 var Contact = sqldb.Contact;
+var Response = sqldb.Response;
 
 // Gets list of events from the DB
 
@@ -17,7 +18,7 @@ exports.index = function(req, res) {
 exports.create = function(req, res) {
   User.findOrCreate({where: {email: req.body.user.email}, defaults: req.body.user})
     .spread(function(creator){
-      Event.saveNewEvent(req.body,creator).then(function(createdEvent) {
+      Event.saveNewEvent(req.body, creator).then(function(createdEvent) {
         Time.saveEventTimes(req.body, creator, createdEvent).then(function (createdTimes) {
           res.status(200).send({EventId: createdEvent});
         });
@@ -33,7 +34,9 @@ exports.findEvent = function(req,res){
   Event.find({where: {_id: eventId}, include: [{
     model: Time,
     as: 'times',
-    include: [Response]
+    include: [{
+      model: Response,
+      as: 'responses'}]
   }]}).then(function(event){
     res.status(200).send(event);
   });
