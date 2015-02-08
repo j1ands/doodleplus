@@ -83,7 +83,6 @@
         <h4> 2. What dates are you considering?</h4><hr>
             would have to change this -->
         <datepicker ng-click="updateDays()" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
-
       </md-content>
     </div>
 
@@ -104,8 +103,8 @@
             Apply times to all days
           </md-button>
         </div>
-      </md-toolbar>
-       <md-tabs md-selected="selectedIndex">
+      </md-toolbar >
+       <md-tabs ng-click="testAdding()" md-selected="selectedIndex" ng-if="showItem[2]">
          <md-tab label="No Dates Yet" ng-if="selectedDates.length===0">
            <md-content>
              <h2>No dates chosen, but have a shark instead</h2>

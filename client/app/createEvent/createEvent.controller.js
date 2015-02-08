@@ -26,7 +26,6 @@ angular.module('doodleplusApp')
           $scope.showItem[index+1]=true;
         }
       }
-      //}
     };
     $scope.showPrevPanel = function(){
       var index = $scope.showItem.indexOf(true);
@@ -143,4 +142,10 @@ angular.module('doodleplusApp')
     $scope.saveEvent = function () {
       showLastPage = true;
     };
+
+    $scope.testAdding = function(){
+      console.log('dayhours',$scope.dayHours);
+      console.log('selectedIndex',$scope.selectedIndex);
+      $scope.selectedIndex = (Math.random()>.5) ? 0: 1;
+    }
   });
