@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-.directive('responseChart', ['d3Service', function(d3Service) {
+.directive('responseChart', ['d3Service', '$stateParams', 'storeEvent', 'Time', function(d3Service, $stateParams, storeEvent, Time) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -10,8 +10,38 @@ angular.module('doodleplusApp')
 		link: function(scope, element, attrs) {
 			d3Service.d3().then(function(d3) {
 
-				var data = [{"start":"2015-08-18 18:00:00","stop":"2015-08-18 20:00:00", "user": "Biff", "status": "Yes"},{"start":"2015-08-21 06:00:00","stop":"2015-08-21 10:00:00", "user": "Ringo", "status": "If Need Be"},{"start":"2015-08-23 18:00:00","stop":"2015-08-23 23:00:00", "user": "Prince", "status": "Maybe"},{"start":"2015-08-23 20:21:00","stop":"2015-08-23 21:21:00", "user": "Charles Barkley", "status": "Yes"},{"start":"2015-08-25 17:01:00","stop":"2015-08-25 22:01:00", "user": "Abe Vigoda", "status": "If Need Be"},{"start":"2015-08-26 17:23:00","stop":"2015-08-26 23:23:00", "user": "Janet Reno", "status": "Unable"},{"start":"2015-08-26 17:52:00","stop":"2015-08-26 23:52:00", "user": "George Costanza", "status": "Yes"},{"start":"2015-08-26 21:01:00","stop":"2015-08-26 23:01:00", "user": "50 Cent", "status": "Unable"},{"start":"2015-08-27 11:23:00","stop":"2015-08-27 23:23:00", "user": "Vladimir Putin", "status": "If Need Be"}];
+				// var data = [{"start":"2015-08-18 18:00:00","stop":"2015-08-18 20:00:00", "user": "Biff", "status": "Yes"},{"start":"2015-08-21 06:00:00","stop":"2015-08-21 10:00:00", "user": "Ringo", "status": "If Need Be"},{"start":"2015-08-23 18:00:00","stop":"2015-08-23 23:00:00", "user": "Prince", "status": "Maybe"},{"start":"2015-08-23 20:21:00","stop":"2015-08-23 21:21:00", "user": "Charles Barkley", "status": "Yes"},{"start":"2015-08-25 17:01:00","stop":"2015-08-25 22:01:00", "user": "Abe Vigoda", "status": "If Need Be"},{"start":"2015-08-26 17:23:00","stop":"2015-08-26 23:23:00", "user": "Janet Reno", "status": "Unable"},{"start":"2015-08-26 17:52:00","stop":"2015-08-26 23:52:00", "user": "George Costanza", "status": "Yes"},{"start":"2015-08-26 21:01:00","stop":"2015-08-26 23:01:00", "user": "50 Cent", "status": "Unable"},{"start":"2015-08-27 11:23:00","stop":"2015-08-27 23:23:00", "user": "Vladimir Putin", "status": "If Need Be"}];
 				
+// renderChart(data);
+
+				var data = [];
+
+
+				var eventId = $stateParams.event_id;
+
+					storeEvent.getEvent(eventId, function() {
+						console.log(storeEvent.event)
+						storeEvent.event.Times.forEach(function(time){			
+							var timeData = [];
+							for (var i=0; i<time.Responses.length; i++){
+								timeData.push({
+									eventId: eventId,
+									timeId: time.Responses[i].TimeId,
+									UUID: time.Responses[i].UUID,
+									username: time.Responses[i].username,
+									status: time.Responses[i].status
+								})
+							}
+							data = data.concat(timeData)
+						});
+						console.log(data)
+						renderChart(data);									
+					});
+
+
+
+			function renderChart (data){
+
 				var responses = [];
 
 				var first = d3.time.day.floor( new Date(data[0].start)),
@@ -27,6 +57,7 @@ angular.module('doodleplusApp')
 				height = window.innerHeight*.6,
 				numDays = ((dRange[1]-dRange[0])/(24*60*60*1000)),
 				barSize = width/numDays;
+				console.log("GOT HERE")
 
 				var day = d3.time.format("%w"),
 				week = d3.time.format("%U"),
@@ -134,8 +165,7 @@ angular.module('doodleplusApp')
 
 		};
 		viewBars(data);
-
-		// rootscope.$emit('responseData',theResponseData)
+	};
 	});
 }};
 }]);

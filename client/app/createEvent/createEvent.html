@@ -83,6 +83,7 @@
         <h4> 2. What dates are you considering?</h4><hr>
             would have to change this -->
         <datepicker ng-click="updateDays()" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+
       </md-content>
     </div>
 
@@ -116,7 +117,7 @@
              <thead>
              <tr>
                <th class="time-input">
-                 <span class="glyphicon glyphicon-calendar" aria-hidden="true" ng-click="toggleDate()"></span>
+                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                  Select times for {{day | date:short}}
                </th>
              </tr>

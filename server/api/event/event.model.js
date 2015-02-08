@@ -24,20 +24,21 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models){
         Event.belongsTo(models.User);
-        Event.hasMany(models.Time);
+        Event.hasMany(models.Time, {as: 'times'});
         Event.belongsToMany(models.Contact, {through: 'EventContacts'});
       },
-      saveNewEvent: function(reqBody,creator){
+      saveNewEvent: function(reqBody, creator){ 
         var event = reqBody.event;
+        var user = creator.dataValues;
        return Event.create({
           title: event.title,
-          senderName: creator.name,
-          senderEmail: creator.email,
+          senderName: user.name,
+          senderEmail: user.email,
           description: event.description,
           location: event.location,
           onlyDays: false,
           isPrivate: false,
-          UserId: creator._id
+          UserId: user._id
         })
           .then(function(newEvent){
             //console.log('new Event',newEvent);
