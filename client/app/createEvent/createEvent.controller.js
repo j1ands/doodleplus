@@ -9,8 +9,17 @@ angular.module('doodleplusApp')
     $scope.allDays = {value: false};
     //used to check if a date was selected in the datepicker.
     $scope.oldDates = {length: 0};
+<<<<<<< HEAD
     //Panel Show Logic
     var showLastPage = false;
+=======
+
+
+    $scope.testTouch = function(){
+      $scope.swipeTest = 'Test Works!!!';
+      console.log('swipe left works');
+    };
+>>>>>>> master
     $scope.showItem = [true,false,false,false];
     $scope.showNextPanel = function(){
       if ($scope.EventInfo.$valid){
@@ -68,7 +77,7 @@ angular.module('doodleplusApp')
       $scope.dayHours = $filter('orderBy')($scope.dayHours, function(arr){return arr[0].time});
     };
 
-    $scope.allDays.call = function(tab)
+    $scope.allDays.apply = function(tab)
     {
         var selectedTimes = [];
         $scope.dayHours[tab].forEach(function(time, index){
@@ -121,17 +130,16 @@ angular.module('doodleplusApp')
 
     $scope.genTimes =function(){
       console.log('emails to add',$scope.emailToAdd);
-      $scope.times = Time.genTimes(1422898264,$scope.selected.timeIncrement);
+      var mergedTimes = [];
+      mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
-        time: Time.filterTimes($scope.times),
-        contact: $scope.contactOptions
+        time: mergedTimes
       }, function(res){
         console.log("response",res);
       });
     };
-
 
     $scope.addEmail = function(){
       if ($scope.emailToAdd){

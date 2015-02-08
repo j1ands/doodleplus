@@ -31,7 +31,7 @@ angular.module('doodleplusApp')
       timesArray.forEach(function(elem){
         if (elem.selected){
           times.push({
-            time: elem.time
+            time: elem.time.getTime()
           });
         }
       });
