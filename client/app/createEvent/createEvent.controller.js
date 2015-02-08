@@ -9,17 +9,8 @@ angular.module('doodleplusApp')
     $scope.allDays = {value: false};
     //used to check if a date was selected in the datepicker.
     $scope.oldDates = {length: 0};
-<<<<<<< HEAD
     //Panel Show Logic
     var showLastPage = false;
-=======
-
-
-    $scope.testTouch = function(){
-      $scope.swipeTest = 'Test Works!!!';
-      console.log('swipe left works');
-    };
->>>>>>> master
     $scope.showItem = [true,false,false,false];
     $scope.showNextPanel = function(){
       if ($scope.EventInfo.$valid){
