@@ -1,5 +1,6 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleContacts = require('google-contacts').GoogleContacts;
 
 exports.setup = function(User, config) {
   passport.use(new GoogleStrategy({
@@ -8,6 +9,23 @@ exports.setup = function(User, config) {
     callbackURL: config.google.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
+
+    var c = new GoogleContacts({
+      token: accessToken,
+      consumerKey: config.google.clientID,
+      consumerSecret: config.google.clientSecret
+    });
+    c.on('error', function(e){
+      console.log('error', e);
+    });
+    c.on('contactsReceived', function (contacts) {
+      console.log('contacts: ' + contacts);
+    });
+    c.getContacts(function(e){
+      console.log(e);
+    });    
+
+
     User.find({
       'google.id': profile.id
     })

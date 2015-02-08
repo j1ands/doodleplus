@@ -145,7 +145,7 @@
       <ul>
         <li ng-repeat="email in invitedEmails">{{email}}</li>
       </ul>
-      <div>
+      <div ng-controller="LoginCtrl">
         <a class="btn btn-facebook pull-left" href="" ng-click="loginOauth('facebook')">
           <i class="fa fa-facebook"></i> Facebook Contacts
         </a>

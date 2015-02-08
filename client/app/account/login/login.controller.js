@@ -24,6 +24,7 @@ angular.module('doodleplusApp')
     };
 
     $scope.loginOauth = function(provider) {
+      debugger;
       $window.location.href = '/auth/' + provider;
     };
   });

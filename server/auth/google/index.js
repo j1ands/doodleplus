@@ -11,7 +11,9 @@ router
     failureRedirect: '/signup',
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email'
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.google.com/m8/feeds'
+
     ],
     session: false
   }))
