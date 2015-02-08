@@ -25,16 +25,19 @@ angular.module('doodleplusApp')
       }
     };
 
-    Response.saveResponses = function(username) {
-      var times = storeEvent.event.Times;
+    Response.saveResponses = function(username, UUID, oldResponses) {
+      var times = storeEvent.event.times;
       var responses = [];
+
+      console.log("OLDE", oldResponses);
+      Response.remove({responses: oldResponses});
 
       times.forEach(function(time) {
         if (time.status) {
           responses.push({TimeId: time._id, 
                           status: time.status, 
-                          username: username
-                          // UUID: localStorage.UUID
+                          username: username,
+                          UUID: UUID
                         });
         }
       })

@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models){
         Time.belongsTo(models.Event);
-        Time.hasMany(models.Response);
+        Time.hasMany(models.Response, {as: 'responses'});
       },
       saveEventTimes: function(reqBody,creator,createdEvent){
         var times = [];

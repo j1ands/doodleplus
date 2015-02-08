@@ -11,6 +11,10 @@ angular.module('doodleplusApp')
 
   	storeEvent.getEvent = function(eventID, func) {
       if (Auth.getToken) {
+        storeEvent.get({id: eventID}, function(myEvent) {
+          storeEvent.event = myEvent;
+          func();
+        })
         // get event AND responses
       } else {
     		storeEvent.get({id: eventID}, function(myEvent) {

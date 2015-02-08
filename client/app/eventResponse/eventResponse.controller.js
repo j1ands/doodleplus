@@ -7,17 +7,19 @@ angular.module('doodleplusApp')
   	$scope.responses = [];
   	$scope.days = [];
     $scope.username;
-
-    Response.getOrCreateUUID();
+    $scope.oldResponses = [];
 
     var setUUID = function(obj) {
         $scope.UUID = obj.UUID;
     }
 
-    Auth.createRespondee(setUUID);
+    if (Auth.getToken()) {
+      Auth.getCurrentRespondee(setUUID)
+    } else Auth.createRespondee(setUUID);
+
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username); 
+      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses); 
     }
 
     var event_id = $stateParams.event_id;
@@ -25,9 +27,22 @@ angular.module('doodleplusApp')
     $scope.getEvent = function(eventID) {
     	storeEvent.getEvent(eventID, function() {
 	    	$scope.event = storeEvent.event;
-	    	$scope.times = storeEvent.event.Times;
-	    	Time.organizeByDay($scope.times);
-	    	$scope.days = Time.days;
+	    	$scope.times = storeEvent.event.times;
+        $scope.times.forEach(function(time) {
+          time.responses.forEach(function(response) {
+            if (response.UUID === $scope.UUID) {
+              $scope.username = response.username;
+              $scope.oldResponses.push(response);
+              time.status = response.status;
+              time[response.status] = true;
+            }
+          })
+        });
+        console.log("old times", $scope.oldResponses);
+        Time.organizeByDay($scope.times);
+        $scope.days = Time.days;
+
+
     	});
     }
 

@@ -164,7 +164,7 @@ exports.authCallback = function(req, res, next) {
 exports.createRespondee = function(req, res) {
   var UUID = User.generateUUID();
   var token = jwt.sign({ UUID: UUID }, config.secrets.session, {
-      expiresInMinutes: 2
+      expiresInMinutes: 10
       // expiresInMinutes: 60 * 730 // Do we want the token to expire?
     });
   res.json({ token: token });

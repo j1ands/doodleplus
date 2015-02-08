@@ -22,3 +22,17 @@ exports.create = function(req, res) {
   		res.status(500);
   	})
 };
+
+exports.destroy = function(req, res) {
+	var responses = req.query.responses;
+	responses.forEach(function(response) {
+		Response.destroy(response)
+			.then(function() {
+				res.status(200);
+			})
+			.catch(function(err) {
+				console.log('err', err);
+				res.status(500);
+			})
+	})
+}

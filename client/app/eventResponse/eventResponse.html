@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
-        <h2>{{event.title}}</h2>
+        <h2>{{event.title}} {{UUID}}</h2>
       </div>
     </div>
   </div>
@@ -17,10 +17,10 @@
   		<a href="" ng-click="eventdetail=false"><span class="h4">Event Details</span> <span class="h5"><span class="glyphicon glyphicon-chevron-down"></span></span></a>
   	</div>
   </div>
-  <div class="row eventdetail" ng-show="eventdetail">
+  <div class="row eventdetail animated fadeIn" ng-show="eventdetail">
   	<div class="col-lg-3 col-md-3">
   		<h5>ORGANIZER</h5>
-  		<p>{{event.sendername}}</p>
+  		<p>{{event.senderName}}</p>
   		<h5>LOCATION</h5>
   		<p>{{event.location}}</p>
   	</div>
@@ -58,7 +58,7 @@
 								<td class="text-center"><h5>IF NEED BE</h5></td>
 								<td class="text-center"><h5>MAYBE</h5></td>
 							</tr>
-							<tr ng-repeat="time in day.times">
+							<tr ng-repeat="time in day.times | orderBy:'time'">
 								<td>{{time.time | date:"h:mm a"}}</td>
 								<td class="text-center response-cell"><button ng-class="{able: time.able}" class="response-cell-btn response-cell-btn-yes" ng-mousedown="select(time, 'able')" ng-mouseover="checkClick(time, 'able')"><h2><span class="glyphicon glyphicon-ok-sign"></span></h2></button></td>
 								<td class="text-center response-cell"><button ng-class="{ifneedbe: time.ifneedbe}" class="response-cell-btn response-cell-btn-ifneedbe" ng-mousedown="select(time, 'ifneedbe')" ng-mouseover="checkClick(time, 'ifneedbe')"><h2><span class="glyphicon glyphicon-ok-circle"></span></h2></button></td>
