@@ -19,6 +19,7 @@ angular.module('doodleplusApp')
         var index = $scope.showItem.indexOf(true);
         console.log('index',index);
         if (index<2){
+          $scope.selectedIndex = 0;
           $scope.showItem[index]=false;
           $scope.showItem[index+1]=true;
         } else if (index===2 && showLastPage){
@@ -70,6 +71,7 @@ angular.module('doodleplusApp')
 
     $scope.allDays.apply = function(tab)
     {
+      console.log('selectedIndex',tab);
         var selectedTimes = [];
         $scope.dayHours[tab].forEach(function(time, index){
           if(time.selected)
@@ -143,9 +145,4 @@ angular.module('doodleplusApp')
       showLastPage = true;
     };
 
-    $scope.testAdding = function(){
-      console.log('dayhours',$scope.dayHours);
-      console.log('selectedIndex',$scope.selectedIndex);
-      $scope.selectedIndex = (Math.random()>.5) ? 0: 1;
-    }
   });
