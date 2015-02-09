@@ -42,17 +42,7 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
           scope.$on('update', function(event, newDates) {
             //debugger;
             selectedDates = newDates;
-            
-            // if(newDates)
-            // {
-            //   newDates.forEach(function(date){
-            //     if(!selectedDates[date].date)
-            //     {
-            //       selectedDates[date] = {};
-            //       selectedDates[date].date = date;
-            //     }
-            //   });
-            // }
+
 
             update();
           });
@@ -107,20 +97,9 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
         scope.$watch(attrs.ngModel, function(newVal, oldVal) {
           if(!newVal) return;
           var dateVal = newVal.getTime();
-
-          //debugger;
-          // if(!selectedDates.length)
-          // {
-          //   selectedDates.push({
-          //     date: dateVal,
-          //     group: []
-          //   });
-          //   cSelection.date = dateVal;
-          // }
-
+          var increment = scope.timeIncrement.timeIncrement;
           if(selectedDates.indexOf(dateVal) < 0) {
             selectedDates.push(dateVal);
-            var increment = scope.selected ? scope.selected.timeIncrement : 900000;
             dayTime.updateDay(selectedDates,scope.dayHours,increment);
             console.log(selectedDates);
           } else {
@@ -128,13 +107,6 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
             dayTime.updateDay(selectedDates,scope.dayHours,increment);
             console.log(selectedDates);
           }
-          // if(selectedDates[dateVal] == undefined)
-          // {
-          //   selectedDates[dateVal] = {};
-          //   selectedDates[dateVal].date = dateVal;
-          // } else {
-          //   selectedDates[dateVal] = {};
-          // }
         });
       }
     }
