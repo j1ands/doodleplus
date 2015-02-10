@@ -6,9 +6,10 @@ exports.setup = function(User, config) {
   passport.use(new GoogleStrategy({
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret,
-    callbackURL: config.google.callbackURL
+    callbackURL: config.google.callbackURL,
+    passReqToCallback: true
   },
-  function(accessToken, refreshToken, profile, done) {
+  function(req, accessToken, refreshToken, profile, done) {
 
     var c = new GoogleContacts({
       token: accessToken,
@@ -25,21 +26,18 @@ exports.setup = function(User, config) {
       console.log(e);
     });    
 
-
-    User.find({
-      'google.id': profile.id
+    User.find({where: { 'googleId': profile.id }
     })
       .then(function(user) {
         if (!user) {
-          user = User.build({
+          User.create({
             name: profile.displayName,
             email: profile.emails[0].value,
             role: 'user',
             username: profile.username,
             provider: 'google',
             google: profile._json
-          });
-          user.save()
+          })
             .then(function(user) {
               return done(null, user);
             })

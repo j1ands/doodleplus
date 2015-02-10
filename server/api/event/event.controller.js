@@ -21,7 +21,7 @@ exports.create = function(req, res) {
     .spread(function(creator){
       Event.saveNewEvent(req.body, creator).then(function(createdEvent) {
         Time.saveEventTimes(req.body, creator, createdEvent).then(function (createdTimes) {
-          res.status(200).send({EventId: createdEvent});
+          res.status(200).send({EventId: createdEvent, user: creator});
         });
       }).catch(function(err){
         console.log('Event Save Failed. Reason:',err);

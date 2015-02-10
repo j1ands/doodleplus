@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout, $location, $cookieStore) {
     $scope.message = function(){
       console.log('hi');
     }
+
+    $cookieStore.remove('user');
 
     $scope.allDays = {};
     $scope.allDays.value = false;
@@ -132,6 +134,8 @@ angular.module('doodleplusApp')
         time: mergedTimes
       }, function(res){
         console.log("response",res);
+        $cookieStore.put('user', res.user._id);
+        $location.path('/manageEvent/' + res.EventId._id);
       });
     };
 

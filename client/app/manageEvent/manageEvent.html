@@ -11,6 +11,27 @@
     <div class="col-lg-12" ng-hide="eventdetail">
       <a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
     </div>
+    <div class="col-lg-12">
+    Sharable link: <a href="http://localhost:9000/event/{{event_id}}">http://localhost:9000/event/{{event_id}}</a>
+    </div>
+    <div class="col-lg-12">
+      <form name="invites" ng-submit="addEmail()">
+        <div class="form-group">
+          <label for="emailToAdd">Add Email Addresses:</label>
+          <textarea class="form-control" rows="4" id="emailToAdd" name="emailToAdd" ng-model="emailToAdd" placeholder=""></textarea>
+        </div>
+        <button class="btn btn-primary pull-right" type="submit">Send Invite(s)</button>
+      </form>
+
+      <ul>
+        <li ng-repeat="email in invitedEmails">{{email}}</li>
+      </ul>
+      <div ng-controller="LoginCtrl">
+        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+          <i class="fa fa-google-plus"></i> Google Contacts
+        </a>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-lg-6" response-chart on-rect-click="pullData(response)"></div>

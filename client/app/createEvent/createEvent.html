@@ -10,15 +10,8 @@
     </div>
   </div>
   <div class="row">
-<!--     <div class="col-sm-12">
-      <h1>{{eventOptions}}</h1>
-      <h1>{{userOptions}}</h1>
-      <h1>{{timeOptions}}</h1>
-    </div>
- -->
 
     <div ng-show="showItem[0]" hm-swipeleft="swipeLeft()"  hm-swiperight="swipeRight()"  class="col-lg-6 col-md-6  md-whiteframe-z1 main-content" layout="column">
-      <!-- <h4>1. Event Details</h4><hr> -->
       <div layout="row" layout-sm="column" layout-align="center center" style="padding-bottom:20px;">
         <md-button flex flex-order="1" class="md-raised md-primary" ng-click="swipeRight()" >Move To Previous Page</md-button>
         <div flex flex-order="2"></div>
@@ -72,9 +65,6 @@
         </div>
       </md-toolbar>           
       <md-content class="md-padding" style="height: 600px;"> 
-        <!-- {{dayHours[selectedDates.length - 1]}} 
-        <h4> 2. What dates are you considering?</h4><hr>
-            would have to change this -->
         <datepicker ng-show="dateToggle.value" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
         <md-tabs md-selected="selectedIndex" ng-if="!dateToggle.value">
           <md-tab ng-repeat="day in selectedDates"  label="{{day | date:short}}">
@@ -105,7 +95,7 @@
       <div layout="row" layout-sm="column" layout-align="center center" style="padding-bottom:20px;">
         <md-button flex flex-order="1" class="md-raised md-primary" ng-click="swipeRight()" >Move To Previous Page</md-button>
         <div flex flex-order="2"></div>
-        <md-button flex flex-order="3" class="md-raised md-primary" ng-click="swipeLeft()" >Move To Next Page</md-button>        
+        <md-button flex flex-order="3" class="md-raised md-primary" ng-disabled="true" >Move To Next Page</md-button>        
       </div>
       <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
@@ -119,10 +109,8 @@
       </md-content>
     </div>
          
-  <!-- <br><br>
-  <div class="row"> -->
 
-    <div ng-show="showItem[3]" hm-swipeleft="swipeLeft()" hm-swiperight="swipeRight()" class="col-lg-6 col-md-6 md-whiteframe-z1 main-content" layout="column">
+<!--     <div ng-show="showItem[3]" hm-swipeleft="swipeLeft()" hm-swiperight="swipeRight()" class="col-lg-6 col-md-6 md-whiteframe-z1 main-content" layout="column">
       <div layout="row" layout-sm="column" layout-align="center center" style="padding-bottom:20px;">
         <md-button flex flex-order="1" class="md-raised md-primary" ng-click="swipeRight()" >Move To Previous Page</md-button>
         <div flex flex-order="2"></div>
@@ -155,7 +143,7 @@
       </div>
       <button class="btn btn-success btn-lg">Send Invites</button>
       </md-content>
-    </div>
+    </div> -->
 
   </div>
 </div>

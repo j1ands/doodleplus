@@ -10,7 +10,7 @@ angular.module('doodleplusApp')
     	$scope.$apply();
     };
 
-    var event_id = $stateParams.event_id;
+    $scope.event_id = $stateParams.event_id;
 
     $scope.getEvent = function(eventID) {
         storeEvent.getEvent(eventID, function() {
@@ -23,13 +23,6 @@ angular.module('doodleplusApp')
     }
 
     $scope.getEvent($stateParams.event_id);
-
-
-
-
-
-
-
 
   });
 
