@@ -24,9 +24,19 @@ angular.module('doodleplusApp')
       storeEvent.getEvent(eventID, UUID, setEventDetails);
     }
 
+<<<<<<< HEAD
     var setUUID = function(obj) {
       $scope.UUID = obj.UUID;
       $scope.getEvent($stateParams.event_id, $scope.UUID);
+=======
+    $scope.getEvent = function(eventID) {
+    	storeEvent.getEvent(eventID, function() {
+	    	$scope.event = storeEvent.event;
+	    	$scope.times = storeEvent.event.times;
+	    	Time.organizeByDay($scope.times);
+	    	$scope.days = Time.days;
+    	});
+>>>>>>> master
     }
 
     if (Auth.getToken()) {

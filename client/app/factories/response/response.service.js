@@ -11,9 +11,9 @@ angular.module('doodleplusApp')
 
     // I saw that some node module was added for UUIDs, but not sure if it can be accessed for this?
     Response.getOrCreateUUID = function() {
-      if (localStorage.UUID) {
-        return localStorage.UUID;
-      } else {
+      // if (localStorage.UUID) {
+      //   return localStorage.UUID;
+      // } else {
         var d = new Date().getTime();
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = (d + Math.random()*16)%16 | 0;
@@ -22,7 +22,7 @@ angular.module('doodleplusApp')
         });
         localStorage.UUID = uuid;
         return uuid;
-      }
+      // }
     };
 
     Response.saveResponses = function(username, UUID, oldResponses, func) {
