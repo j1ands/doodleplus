@@ -38,10 +38,8 @@ function sendEmail(emailData,createdEvent) {
   }
 }
 function textBody(phoneData,createdEvent){
-  console.log('phoneData Creator',phoneData.creator);
-  console.log('phoneData.creator',phoneData.creator.name)
   var template = 'Hello, '+ phoneData.creator.name + ' has invited you to their amazing event: '+ createdEvent.title+ '.\n' +
-    'Pleased respond by using this link localhost:9000/event/'+ createdEvent._id;
+    'Pleased respond by using this link \nhttp://localhost:9000/event/'+ createdEvent._id;
   if (createdEvent.isPrivate){
     //do something else;
   }
@@ -49,8 +47,13 @@ function textBody(phoneData,createdEvent){
 }
 
 function sendTwilText(to,from,body){
+  if (to.length===10){
+    to= '+1'+to;
+  } else {
+    to = '+' + to;
+  }
   twilClient.messages.create({
-    to: '+1'+to,
+    to: to,
     from: '7324225093',
     body: body
   },function(err,responseData){
