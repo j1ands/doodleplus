@@ -87,7 +87,7 @@ function setTokenCookie(req, res) {
   res.cookie('token', JSON.stringify(token));
   //console.log(req);
   //res.send(200, req);
-  res.redirect('/');
+  res.redirect('/manageEvent/' + req.currentUser.eventId);
 }
 
 exports.isAuthenticated = isAuthenticated;

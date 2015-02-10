@@ -23,10 +23,10 @@ angular.module('doodleplusApp')
       }
     };
 
-    $scope.loginOauth = function(provider) {
+    $scope.loginOauth = function(provider, eventId) {
       //debugger;
       var x = $cookieStore.get('user');
-      var location = '/connect/' + provider + "?user=" + x;
+      var location = '/connect/' + provider + "?user=" + x +"&event=" + eventId;
       $window.location.href = location;
     };
   });

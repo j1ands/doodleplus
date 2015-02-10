@@ -98,6 +98,7 @@ module.exports = function(sequelize, DataTypes) {
         if (user.changed('password')) {
           user.updatePassword(fn);
         }
+        return fn();
       }
     },
 

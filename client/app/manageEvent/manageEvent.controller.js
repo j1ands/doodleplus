@@ -1,8 +1,12 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
     $scope.responses = [];
+
+    var mCtrl = this;
+
+    mCtrl.currentUser = Auth.getCurrentUser();
 
     $scope.pullData = function(response){
     	$scope.responses = [];
@@ -10,7 +14,7 @@ angular.module('doodleplusApp')
     	$scope.$apply();
     };
 
-    $scope.event_id = $stateParams.event_id;
+    mCtrl.event_id = $stateParams.event_id;
 
     $scope.getEvent = function(eventID) {
         storeEvent.getEvent(eventID, function() {

@@ -12,7 +12,7 @@
       <a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
     </div>
     <div class="col-lg-12">
-    Sharable link: <a href="http://localhost:9000/event/{{event_id}}">http://localhost:9000/event/{{event_id}}</a>
+    Sharable link: <a href="http://localhost:9000/event/{{Manage.event_id}}">http://localhost:9000/event/{{Manage.event_id}}</a>
     </div>
     <div class="col-lg-12">
       <form name="invites" ng-submit="addEmail()">
@@ -20,18 +20,27 @@
           <label for="emailToAdd">Add Email Addresses:</label>
           <textarea class="form-control" rows="4" id="emailToAdd" name="emailToAdd" ng-model="emailToAdd" placeholder=""></textarea>
         </div>
-        <button class="btn btn-primary pull-right" type="submit">Send Invite(s)</button>
+        <md-button class="md-raised md-primary pull-right" type="submit">Send Invite(s)</md-button>
       </form>
+    <h4>Google Contacts:</h4>
+    <label>Search Contacts
+      <input ng-model="searchText.name" type="text" placeholder="find..."></input>
+    </label>
+    <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">
+      <a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>
+    </div>
+    <md-button class="md-raised md-primary" ng-show="Manage.currentUser.google">Finalize</md-button>
 
       <ul>
         <li ng-repeat="email in invitedEmails">{{email}}</li>
       </ul>
       <div ng-controller="LoginCtrl">
-        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google', Manage.event_id)" ng-hide="Manage.currentUser.google">
           <i class="fa fa-google-plus"></i> Google Contacts
         </a>
       </div>
     </div>
+
   </div>
   <div class="row">
     <div class="col-lg-6" response-chart on-rect-click="pullData(response)"></div>
