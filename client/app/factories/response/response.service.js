@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .factory('Response', function ($resource, storeEvent) {
+  .factory('Response', function ($resource, storeEvent, $stateParams) {
 
     var Response = $resource('/api/responses/:id',{id: '@id'}, { // Might need to be updated
       update: {
@@ -25,14 +25,19 @@ angular.module('doodleplusApp')
       }
     };
 
-    Response.saveResponses = function(username, UUID, oldResponses) {
+    Response.saveResponses = function(username, UUID, oldResponses, func) {
       var times = storeEvent.event.times;
+      var myOldResponses = oldResponses;
       var responses = [];
 
-      console.log("OLDE", oldResponses);
-      Response.remove({responses: oldResponses});
-
       times.forEach(function(time) {
+        if (time.status === "removed") {
+          time.responses.forEach(function(response) {
+            if (response.UUID === UUID) {
+              myOldResponses.push(response);
+            }
+          });
+        } else  
         if (time.status) {
           responses.push({TimeId: time._id, 
                           status: time.status, 
@@ -41,16 +46,22 @@ angular.module('doodleplusApp')
                         });
         }
       })
-      Response.save({
-        responses: responses
-      }, function(res) {
-        console.log("Responses saved!", res);
-      });
+      if (oldResponses.length > 0) {
+        Response.remove({responses: myOldResponses}, function() {
+          Response.save({
+            responses: responses
+          }, function(res) {
+            console.log("Responses saved!", res);
+          });
+        });
+      } else {
+        Response.save({
+          responses: responses
+        }, function(res) {
+          console.log("Responses saved!", res);
+        });
+      }
     }
-
-    
-
-
 
 
     return Response;

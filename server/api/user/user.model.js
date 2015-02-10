@@ -51,18 +51,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models){
         User.hasMany(models.Event);
         User.hasMany(models.Contact);
-      }, 
-
-      generateUUID: function() {
-        var d = new Date().getTime();
-        var UUID = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (d + Math.random()*16)%16 | 0;
-            d = Math.floor(d/16);
-            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-        });
-        return UUID;
       }
-
     },
     getterMethods: {
       // Public profile information

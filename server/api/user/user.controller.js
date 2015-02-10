@@ -159,32 +159,6 @@ exports.authCallback = function(req, res, next) {
 
 
 
- /* Creates a new respondee - NO login - just uses tokens
- */
-exports.createRespondee = function(req, res) {
-  var UUID = User.generateUUID();
-  var token = jwt.sign({ UUID: UUID }, config.secrets.session, {
-      expiresInMinutes: 10
-      // expiresInMinutes: 60 * 730 // Do we want the token to expire?
-    });
-  res.json({ token: token });
-};
-
-
-/**
- * Get a respondee's UUID 
- */
-exports.getRespondee = function(req, res, next) {
-  var UUID = req.user.UUID;
-
-  if (!UUID) {
-    return res.send(404);
-  }
-    res.json({UUID: UUID});
-};
-
-
-
 
 
 

@@ -9,8 +9,24 @@ angular.module('doodleplusApp')
     $scope.username;
     $scope.oldResponses = [];
 
+    var event_id = $stateParams.event_id;
+
+    var setEventDetails = function(thisEvent, username, oldResponses) {
+      $scope.event = thisEvent;
+      $scope.times = thisEvent.times;
+      Time.organizeByDay($scope.times);
+      $scope.days = Time.days;
+      $scope.username = username;
+      $scope.oldResponses = oldResponses;
+    }
+
+    $scope.getEvent = function(eventID, UUID) {
+      storeEvent.getEvent(eventID, UUID, setEventDetails);
+    }
+
     var setUUID = function(obj) {
-        $scope.UUID = obj.UUID;
+      $scope.UUID = obj.UUID;
+      $scope.getEvent($stateParams.event_id, $scope.UUID);
     }
 
     if (Auth.getToken()) {
@@ -19,40 +35,13 @@ angular.module('doodleplusApp')
 
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses); 
+      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses, setEventDetails); 
     }
-
-    var event_id = $stateParams.event_id;
-
-    $scope.getEvent = function(eventID) {
-    	storeEvent.getEvent(eventID, function() {
-	    	$scope.event = storeEvent.event;
-	    	$scope.times = storeEvent.event.times;
-        $scope.times.forEach(function(time) {
-          time.responses.forEach(function(response) {
-            if (response.UUID === $scope.UUID) {
-              $scope.username = response.username;
-              $scope.oldResponses.push(response);
-              time.status = response.status;
-              time[response.status] = true;
-            }
-          })
-        });
-        console.log("old times", $scope.oldResponses);
-        Time.organizeByDay($scope.times);
-        $scope.days = Time.days;
-
-
-    	});
-    }
-
-    $scope.getEvent($stateParams.event_id);
-
 
     $scope.select = function(time, response) {
     	$scope.mouseDown = true;
     	if(time.status === response) {
-    		time.status = null;
+    		time.status = "removed";
     		time[response] = false;
     	} else {
     		time.able = false;
@@ -76,7 +65,6 @@ angular.module('doodleplusApp')
     		time[response] = true;
 	  	}
 	  }
-
 
   });
 
