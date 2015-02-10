@@ -1,6 +1,8 @@
 'use strict';
 
 var sendEmail = require('./sendEmail').sendEmail;
+var email_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi;
+
 
 module.exports = function(sequelize, DataTypes) {
   var Contact = sequelize.define('Contact', {
@@ -22,26 +24,34 @@ module.exports = function(sequelize, DataTypes) {
         Contact.belongsTo(models.User);
         Contact.belongsToMany(models.Event, {through: 'EventContacts'});
       },
-      saveNewContacts: function(emailsCSV,creator,createdEvent){
-        if (emailsCSV){
-          var individualEmails = emailsCSV.trim().split(',');
-          var contacts = [];
-          individualEmail.forEach(function(elem){
-            contacts.push({
-              email: elem.trim().toLowerCase(),
-              UserId: creator._id
+      saveNewContacts: function(contactInfo,createdEvent){
+
+        if (contactInfo.emails){
+          var emailContacts = [];
+
+          console.log('contactInfo Emails',contactInfo.emails,typeof contactInfo.emails);
+          var emails = contactInfo.emails.toLowerCase().match(email_regex);
+          //var emails =contactInfo.emails.toLowerCase().match(email_regex);
+          console.log('emails',emails);
+          emails.forEach(function(indEmail){
+            emailContacts.push({
+              email: indEmail,
+              UserId: createdEvent.UserId
             });
           });
-          contacts.forEach(function(contact){
-            Contact.findOrCreate({where: {email: contact.email},defaults: contact})
+          var emailPromises = [];
+          emailContacts.forEach(function(contact){
+            emailPromises.push(Contact.findOrCreate({where: {email: contact.email}, defaults: contact})
               .spread(function(contact,created){
                 contact.addEvent(createdEvent);
+                //console.log('created contact',contact,created);
+                return contact;
               })
               .error(function(err){
-                console.log('err in contacts',err);
-              });
+                console.log('err in creating contact',err);
+              }));
           });
-          sendEmail(individualEmails,creator,createdEvent);
+          return emailPromises;
         }
       }
     }
