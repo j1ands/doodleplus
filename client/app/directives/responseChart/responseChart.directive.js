@@ -14,13 +14,13 @@ angular.module('doodleplusApp')
 				
 				// renderChart(data);
 
-				var data = [];
 				var days;
 				
 
-				console.log(d3.time.second(1423484100000))
 
 				var eventID = $stateParams.event_id;
+
+				var allTimes = [];
 
 				storeEvent.getEvent(eventID, function() {
 					console.log(storeEvent.event)
@@ -30,161 +30,196 @@ angular.module('doodleplusApp')
 					days = Time.days;
 					days.forEach(function(day){
 						var respondents = [];
+						var allTimes = [];
+						day.times.sort(function(a,b){
+							var timeA = a.time;
+							var timeB = b.time;
+							return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
+						});
+						console.log(day.times)
 						day.times.forEach(function(time){
 							for (var i=0; i<time.responses.length; i++){
-								respondents.push(time.responses[i].UUID)
+								respondents.push(time.responses[i].UUID);
+								allTimes.push(time.time);
 							};		
 							time.responses.sort(function(a,b){
 								var textA = a.status.toUpperCase();
 								var textB = b.status.toUpperCase();
 								return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-							})
+							});
 						})
 						day.respondents = respondents.reduce(function(accum, current) {
-				        if (accum.indexOf(current) < 0) {
-				            accum.push(current);
-				        }
-				        return accum;
-				    }, []);
+							if (accum.indexOf(current) < 0) {
+								accum.push(current);
+							}
+							return accum;
+						}, []);
+						day.allTimes = allTimes.reduce(function(accum, current) {
+							if (accum.indexOf(current) < 0) {
+								accum.push(current);
+							}
+							return accum;
+						}, []);
 
 					})
-					console.log(days)
-				});
+
+
+console.log(days[0].allTimes)
+
+
+renderChart(days[0])
+
+});
+
+
+function renderChart (dayData){
+
+
+				// var start = d3.time.day.floor(d3.time.second(dayData.dateInMS)),
+				// end = d3.time.day.ceil(d3.time.second(dayData.end)),
+				
+				var dayDataFormatted = dayData.allTimes.map(function(day){
+					return d3.time.second(day);
+				})
 
 
 
-				// 		renderChart(data);									
-				// 	});
+
+				var numResponses = dayData.respondents.length,
+				
+				responseData = [];
 
 
-// var t = new Date( 1370001284000 );
-// var formatted = t.format("dd.mm.yyyy hh:MM:ss");
+				dayData.times.forEach(function(time){
+					for (var i=0; i<time.responses.length; i++){
+						time.responses[i].index = i;
+						time.responses[i].time = time.time;
+						time.responses[i].allTimesIndex = dayData.allTimes.indexOf(time.responses[i].time);
+						responseData.push(time.responses[i]);
+					}
+				})
+
+				console.log(dayData)
+
+				var m = {top: 40, right: 20, bottom: 20, left: 60},
+				// frameWidth = Number((window.innerWidth*.5).toFixed(2)),
+				// frameHeight = Number((window.innerHeight*.6).toFixed(2)),
+				frameWidth = 800,
+				frameHeight = 800,
+				barSize = frameWidth/4
+				// barSize = frameWidth/dayData.respondents.length;
+
+				console.log(dayData.respondents.length)
+				// day = d3.time.format("%w"),
+				// hour = d3.time.format("%X"),
+				// format = d3.time.format("%Y-%m-%d %X"),
+				// timeFormat = d3.time.format("%I:%M %p %a %Y");
+
+				var yRange = function(){
+					var range = [];
+					for (var i=0; i<dayData.allTimes.length; i++){
+						range.push(i*frameHeight/dayData.allTimes.length);
+					}
+					return range;
+				}
 
 
 
-		function renderChart (data){
-			
-
-			var first = d3.time.day.floor( new Date(data[0].start)),
-			
-			last = d3.time.day.ceil( new Date(data[data.length-1].stop)),
-			
-			range = data.respondents.length;
-			
-
-			var m = {top: 40, right: 20, bottom: 20, left: 60},
-			width = window.innerWidth*.5,
-			height = window.innerHeight*.6,
-			// numDays = ((dRange[1]-dRange[0])/(24*60*60*1000)),
-			barSize = width/range;
-
-			day = d3.time.format("%w"),
-			hour = d3.time.format("%X"),
-			format = d3.time.format("%Y-%m-%d %X"),
-			timeFormat = d3.time.format("%I:%M %p %a %Y");
+				var svg = d3.select("body").append("div")
+				.attr("class","d3-container container")
+				.selectAll("svg").data(d3.range(1))
+				.enter().append("svg")
+				.attr("id","viz")
+				.attr("width",frameWidth + m.right +m.left)
+				.attr("height",frameHeight + m.top + m.bottom)
+				.append("g")
+				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
 
-			var svg = d3.select("body").append("div")
-			.attr("class","d3-container container")
-			.selectAll("svg").data(d3.range(1))
-			.enter().append("svg")
-			.attr("id","viz")
-			.attr("width",width + m.right +m.left)
-			.attr("height",height + m.top + m.bottom)
-			.append("g")
-			.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
-			function viewBars (data) {		
-				/* set up scales */
-				var x = d3.time.scale()		
-				.domain(range)
-				.range([0, width]);
-
-				var y =d3.time.scale()
-				.domain([data.times[0].time, data.times[data.times.length-1].time])
-				.range([0, height]);
-
-					var tfh = d3.time.scale()	//TwentyFourHour scale
-					.domain([d3.time.hour(new Date(2014,0,1,0,0,0)),
-						d3.time.hour(new Date(2014,0,2,0,0,0)),])
-					.range([0,height]);
+				function viewBars (data) {
 					
+
 					/* add bars to chart */
 					svg.append("g")
 					.attr("class","chart")
 					.selectAll("rect")
-					.data(data)
+					.data(responseData)
 					.enter()
 					.append("rect")
-					.attr("class","times bar")
-					.attr("x",function(d) { return x(d.times.responses[i]*barSize)}
-						)
-					.attr("y",function(d){
-							var h = hour(new Date(d.start)).split(":"), //changes datum from string, to proper Date Object, back to hour string and splits
-								yh = parseFloat(h[0])+parseFloat(h[1]/60); //time (hour and minute) as decimal
-								return y(yh);
-								;})
+					.attr("class", function(d){ return d.status + " rect" })
+					.attr("x",function(d) { return d.index*barSize })
+					.attr("y",function(d){ return frameHeight*d.allTimesIndex/dayData.allTimes.length })
 					.attr("width",barSize)
-					.attr("height",function(d){
-						var hstart = new Date(d.start),
-						hstop = new Date(d.stop);
-							return y((hstop-hstart)/3600000);	//date operations return a timestamp in miliseconds, divide to convert to hours
-						})
-					.attr("rx",3)
-					.attr("ry",3)
-					.attr("user", function(d){ return d.user})
+					.attr("height", frameHeight/dayData.allTimes.length)
+					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
-					.on('click', function(d){ 
-						// var overlap = d3.select(this).getIntersectionList("rect", null) 
-						$("rect").each(function() {
-							var mouse = d3.mouse(this)
-							var x = Number(this.getAttribute('x'))
-							var y = Number(this.getAttribute('y'))
-							var user = this.getAttribute('user')
-							var status = this.getAttribute('status')
-							var width = Number(this.getAttribute('width'))
-							var height = Number(this.getAttribute('height'))
-							
-							if(mouse[0] > x && mouse[0] < x + width && mouse[1] > y && mouse[1] < y + height){
-								responses.push({user: user, status: status});
-								console.log(user + '' + status)
-								
-							}
-						});
-						scope.onRectClick({ response: responses });
-						responses = [];
-					});
+				// .on('click', function(d){ 
+				// 	// var overlap = d3.select(this).getIntersectionList("rect", null) 
+				// 	$("rect").each(function() {
+				// 		var mouse = d3.mouse(this)
+				// 		var x = Number(this.getAttribute('x'))
+				// 		var y = Number(this.getAttribute('y'))
+				// 		var user = this.getAttribute('user')
+				// 		var status = this.getAttribute('status')
+				// 		var width = Number(this.getAttribute('width'))
+				// 		var height = Number(this.getAttribute('height'))
+
+				// 		if(mouse[0] > x && mouse[0] < x + width && mouse[1] > y && mouse[1] < y + height){
+				// 			responses.push({user: user, status: status});
+				// 			console.log(user + '' + status)
+
+				// 		}
+				// 	});
+				// 	scope.onRectClick({ response: responses });
+				// 	responses = [];
+				// });
 
 
-					
-					
-					/*add axes and grid*/
-					var yAxis = d3.svg.axis()
-					.scale(tfh)
-					.tickFormat(d3.time.format("%H:%M"));
-					var yGrid = d3.svg.axis()
-					.scale(tfh)
-					.orient("left")
-					.ticks(12);
-					var xAxis = d3.svg.axis()
-					.scale(x)
-					.tickFormat(d3.time.format("%m/%d"));
-					
-					svg.append("g")
-					.attr("class", "y left axis")
-					.call(yAxis.orient("left"));	
-					svg.append("g")
-					.attr("class","y grid")
-					.call(yGrid
-						.tickSize(height, 0, 0)
-						.tickFormat(""));
-					svg.append("g")
-					.attr("class","x top axis")
-					.call(xAxis.orient("top"));
+				//axes, scale and grid/
 
-				};
-				viewBars(data);
+				var axisWidth = 0,
+				axisHeight = frameHeight,
+				yAxisRange = yRange(),
+				yAxisScale = d3.scale.linear()
+				.domain(dayData.allTimes)
+				.range(yRange),
+				yAxis = d3.svg.axis()
+				.scale(yAxisScale)
+				.tickValues(dayData.allTimes),
+				yGrid = d3.svg.axis()
+				.scale(yAxisScale)
+				.orient("left")
+				.ticks(dayData.allTimes.length);
+
+				// var xAxis = d3.svg.axis()
+				// // .scale(x)
+				// .tickFormat(d3.time.format("%m/%d"));
+
+				svg.append("g")
+				.attr("class", "y left axis")
+				.call(yAxis.orient("left"));	
+
+				svg.append("g")
+				.attr("class","y grid")
+				.call(yGrid
+					.tickSize(frameHeight, 0, 0)
+					.tickFormat(""));
+
+				// svg.append("g")
+				// .attr("class","x top axis")
+				// .call(xAxis.orient("top"));
+
 			};
-		});
-	}};
+
+			viewBars(dayData);
+		};
+
+
+
+		//then	
+	});
+//link func
+}};
+
 }]);
