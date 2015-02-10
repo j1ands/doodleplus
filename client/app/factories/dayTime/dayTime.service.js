@@ -27,7 +27,7 @@ angular.module('doodleplusApp')
 
     function genDay(startTimeInMs,scopeDaysView,increment){
       console.log(increment);
-      var timeIncrement = increment; //30 minutes in ms
+      var timeIncrement = increment; //30 minutes in ms as default
       var dayTimeMs = 86400000; // time in a day
       var numTimesDisplay = Math.floor((dayTimeMs/timeIncrement)); //
       var dayArray = [];
@@ -35,7 +35,7 @@ angular.module('doodleplusApp')
         var timeNum = startTimeInMs+i*timeIncrement;
         // var timeStr =(new Date(timeNum).toLocaleTimeString()); maybe not useful anymore. unsure
         dayArray.push({
-          time: new Date(timeNum),
+          time: timeNum,
           selected: false
         });
       }
