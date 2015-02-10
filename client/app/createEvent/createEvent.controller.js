@@ -1,39 +1,39 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, $mdToast, $animate, dayTime, $timeout) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact) {
     $scope.message = function(){
       console.log('event');
     };
 
+    $scope.invitedEmails = [];
+    $scope.eventOptions = {
+      isPrivate: false
+    };
+    $scope.userOptions = {};
     $scope.allDays = {value: false};
     //used to check if a date was selected in the datepicker.
     $scope.oldDates = {length: 0};
+    $scope.eventOptions.isPrivate = false;
+    $scope.selectedDates = [];
+    dayTime.setSelected($scope.selectedDates.slice());
+    $scope.selectedIndex = 0;
 
+    $scope.date = {};
+    $scope.dateToggle = {value: true};
+    $scope.dayHours = [];
     //Panel Show Logic
-    var showLastPage = false;
-
-    $scope.showItem = [true,false,false,false];
-    $scope.showNextPanel = function(){
+    $scope.currentPanel = 0;
+    $scope.showNextPanel = function(currentPanel){
       if ($scope.EventInfo.$valid){
-        var index = $scope.showItem.indexOf(true);
-        console.log('index',index);
-        if (index<2){
-          $scope.selectedIndex = 0;
-          $scope.showItem[index]=false;
-          $scope.showItem[index+1]=true;
-        } else if (index===2 && showLastPage){
-          $scope.showItem[index]=false;
-          $scope.showItem[index+1]=true;
+        if (currentPanel<2){
+          $scope.currentPanel+=1;
         }
       }
     };
     $scope.showPrevPanel = function(){
-      var index = $scope.showItem.indexOf(true);
-      console.log('prev',index);
-      if (index!==0){
-        $scope.showItem[index]=false;
-        $scope.showItem[index-1]=true;
+      if ($scope.currentPanel!==0){
+        $scope.currentPanel-=1;
       }
     };
 
@@ -54,17 +54,9 @@ angular.module('doodleplusApp')
     }];
     $scope.timeIncrement = $scope.timeOptions[1];
 
-    $scope.invitedEmails = [];
-    $scope.eventOptions = {};
-    $scope.userOptions = {};
 
 
-    $scope.selectedDates = [];
-    dayTime.setSelected($scope.selectedDates.slice());
 
-    $scope.date = {};
-    $scope.dateToggle = {value: true};
-    $scope.dayHours = [];
     $scope.updateDays = function () {
       $scope.dayHours = $filter('orderBy')($scope.dayHours, function(arr){return arr[0].time});
     };
@@ -140,9 +132,34 @@ angular.module('doodleplusApp')
         $scope.invitedEmails.push($scope.emailToAdd);
       }
     };
-
+    //Creating Event & Saving contacts
     $scope.saveEvent = function () {
-      showLastPage = true;
+      var mergedTimes = [];
+      mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
+      console.log('the merged time',mergedTimes);
+      storeEvent.save({
+        event: $scope.eventOptions,
+        user: $scope.userOptions,
+        time: mergedTimes
+      }, function (res) {
+        if (!res.createdEvent._id){
+          $scope.eventFailure = true;
+          return;
+        }
+        console.log('res',res);
+        $scope.createdEvent = res.createdEvent;
+        $scope.currentPanel+=1;
+      });
+    };
+
+    $scope.addContacts = function () {
+      var contactsToAdd = {
+        eventId: $scope.createdEvent._id,
+        contacts: $scope.contacts
+      };
+      Contact.save(contactsToAdd,function(res){
+          console.log('res',res);
+      });
     };
 
   });

@@ -19,10 +19,24 @@
 .grid path {
 	stroke-width: 0;
 }
-rect.times.bar {
-	fill:#006D2C;
-	fill-opacity:0.5;
-	stroke:#006D2C;
+.able {
+	fill:#f6faaa;
 	stroke-width:1px;
 	pointer-events: all;
 }
+.ifneedbe {
+	fill:#7CD1F2;
+	stroke-width:1px;
+	pointer-events: all;
+}
+
+.maybe {
+	fill:#F2B37C;
+	stroke-width:1px;
+	pointer-events: all;
+}
+
+.rect {
+	padding: 10px;
+}
+
