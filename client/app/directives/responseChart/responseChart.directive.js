@@ -36,7 +36,7 @@ angular.module('doodleplusApp')
 							var timeB = b.time;
 							return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
 						});
-						console.log(day.times)
+
 						day.times.forEach(function(time){
 							for (var i=0; i<time.responses.length; i++){
 								respondents.push(time.responses[i].UUID);
@@ -64,22 +64,18 @@ angular.module('doodleplusApp')
 					})
 
 
-console.log(days[0].allTimes)
+					renderChart(days[0])
+
+			});
 
 
-renderChart(days[0])
-
-});
+			function renderChart (dayData){
 
 
-function renderChart (dayData){
-
-
-				// var start = d3.time.day.floor(d3.time.second(dayData.dateInMS)),
-				// end = d3.time.day.ceil(d3.time.second(dayData.end)),
+				var hour = d3.time.format("%H:%M")
 				
 				var dayDataFormatted = dayData.allTimes.map(function(day){
-					return d3.time.second(day);
+					return hour(new Date(Number(day)));
 				})
 
 
@@ -99,21 +95,14 @@ function renderChart (dayData){
 					}
 				})
 
-				console.log(dayData)
 
 				var m = {top: 40, right: 20, bottom: 20, left: 60},
-				// frameWidth = Number((window.innerWidth*.5).toFixed(2)),
-				// frameHeight = Number((window.innerHeight*.6).toFixed(2)),
-				frameWidth = 800,
-				frameHeight = 800,
-				barSize = frameWidth/4
+				frameWidth = Number((window.innerWidth*.5).toFixed(2)),
+				frameHeight = Number((window.innerHeight*.6).toFixed(2)),
+				// frameWidth = 800,
+				// frameHeight = 800,
+				barSize = frameWidth/8
 				// barSize = frameWidth/dayData.respondents.length;
-
-				console.log(dayData.respondents.length)
-				// day = d3.time.format("%w"),
-				// hour = d3.time.format("%X"),
-				// format = d3.time.format("%Y-%m-%d %X"),
-				// timeFormat = d3.time.format("%I:%M %p %a %Y");
 
 				var yRange = function(){
 					var range = [];
@@ -122,11 +111,12 @@ function renderChart (dayData){
 					}
 					return range;
 				}
+				
+				var colorCalibration = ['#6CF2A4', '#F2B37C','#7CD1F2']
 
 
-
-				var svg = d3.select("body").append("div")
-				.attr("class","d3-container container")
+				var svg = d3.select('#chart').append("div")
+				// .attr("class","d3-container container")
 				.selectAll("svg").data(d3.range(1))
 				.enter().append("svg")
 				.attr("id","viz")
@@ -136,6 +126,22 @@ function renderChart (dayData){
 				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
 
+
+				 function initCalibration(){
+				    d3.select('[role="calibration"]').select('svg')
+				      .selectAll('rect').data(colorCalibration).enter()
+				    .append('rect')
+				      .attr('width',20)
+				      .attr('height',20)
+				      .attr('x',function(d,i){
+				        return i*20;
+				      })
+				      .attr('fill',function(d){
+				        return d;
+				      });
+				  }
+
+				initCalibration();
 
 				function viewBars (data) {
 					
@@ -151,64 +157,57 @@ function renderChart (dayData){
 					.attr("x",function(d) { return d.index*barSize })
 					.attr("y",function(d){ return frameHeight*d.allTimesIndex/dayData.allTimes.length })
 					.attr("width",barSize)
-					.attr("height", frameHeight/dayData.allTimes.length)
+					.attr("height", frameHeight/dayData.allTimes.length - 1.5)
+					// .attr("rx", 1)
+					// .attr("ry", 1)
 					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
-				// .on('click', function(d){ 
-				// 	// var overlap = d3.select(this).getIntersectionList("rect", null) 
-				// 	$("rect").each(function() {
-				// 		var mouse = d3.mouse(this)
-				// 		var x = Number(this.getAttribute('x'))
-				// 		var y = Number(this.getAttribute('y'))
-				// 		var user = this.getAttribute('user')
-				// 		var status = this.getAttribute('status')
-				// 		var width = Number(this.getAttribute('width'))
-				// 		var height = Number(this.getAttribute('height'))
+					.on('click', function(d){ 
+						var responses = [];
+						$("rect").each(function() {
+							var mouse = d3.mouse(this)
+							var x = Number(this.getAttribute('x'))
+							var y = Number(this.getAttribute('y'))
+							var username = this.getAttribute('username')
+							var status = this.getAttribute('status')
+							var width = Number(this.getAttribute('width'))
+							var height = Number(this.getAttribute('height'))
 
-				// 		if(mouse[0] > x && mouse[0] < x + width && mouse[1] > y && mouse[1] < y + height){
-				// 			responses.push({user: user, status: status});
-				// 			console.log(user + '' + status)
-
-				// 		}
-				// 	});
-				// 	scope.onRectClick({ response: responses });
-				// 	responses = [];
-				// });
-
+							// if(mouse[0] > x && mouse[0] < x + width && mouse[1] > y && mouse[1] < y + height){
+							if(mouse[1] > y && mouse[1] < y + height){
+								responses.push({username: username, status: status});
+								console.log(username + '' + status)
+							}
+						});
+						scope.onRectClick({ response: responses });
+					});
 
 				//axes, scale and grid/
 
 				var axisWidth = 0,
 				axisHeight = frameHeight,
-				yAxisRange = yRange(),
-				yAxisScale = d3.scale.linear()
-				.domain(dayData.allTimes)
-				.range(yRange),
+				yAxisScale = d3.scale.ordinal()
+					.domain(dayDataFormatted)
+					.range(yRange().concat([""])),
 				yAxis = d3.svg.axis()
-				.scale(yAxisScale)
-				.tickValues(dayData.allTimes),
-				yGrid = d3.svg.axis()
-				.scale(yAxisScale)
-				.orient("left")
-				.ticks(dayData.allTimes.length);
+					.scale(yAxisScale)
+					.tickValues(dayDataFormatted)
+				// yGrid = d3.svg.axis()
+				// 	.scale(yAxisScale)
+				// 	.orient("left")
+				// 	.ticks(dayDataFormatted.length);
 
-				// var xAxis = d3.svg.axis()
-				// // .scale(x)
-				// .tickFormat(d3.time.format("%m/%d"));
 
 				svg.append("g")
-				.attr("class", "y left axis")
-				.call(yAxis.orient("left"));	
-
-				svg.append("g")
-				.attr("class","y grid")
-				.call(yGrid
-					.tickSize(frameHeight, 0, 0)
-					.tickFormat(""));
+					.attr("class", "y left axis")
+					.call(yAxis.orient("left"));	
 
 				// svg.append("g")
-				// .attr("class","x top axis")
-				// .call(xAxis.orient("top"));
+				// 	.attr("class","y grid")
+				// 	.call(yGrid
+				// 		.tickSize(0, 0)
+				// 		.tickFormat(""));
+
 
 			};
 
