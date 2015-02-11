@@ -1,37 +1,47 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
   	$scope.days = [];
     $scope.username;
-
-    Response.getOrCreateUUID();
-
-    $scope.submitResponses = function() {
-      Response.saveResponses($scope.username); 
-    }
+    $scope.oldResponses = [];
 
     var event_id = $stateParams.event_id;
 
-    $scope.getEvent = function(eventID) {
-    	storeEvent.getEvent(eventID, function() {
-	    	$scope.event = storeEvent.event;
-	    	$scope.times = storeEvent.event.times;
-	    	Time.organizeByDay($scope.times);
-	    	$scope.days = Time.days;
-    	});
+    var setEventDetails = function(thisEvent, username, oldResponses) {
+      $scope.event = thisEvent;
+      $scope.times = thisEvent.times;
+      Time.organizeByDay($scope.times);
+      $scope.days = Time.days;
+      $scope.username = username;
+      $scope.oldResponses = oldResponses;
     }
 
-    $scope.getEvent($stateParams.event_id);
+    $scope.getEvent = function(eventID, UUID) {
+      storeEvent.getEvent(eventID, UUID, setEventDetails);
+    }
 
+    var setUUID = function(obj) {
+      $scope.UUID = obj.UUID;
+      $scope.getEvent($stateParams.event_id, $scope.UUID);
+    }
+
+    if (Auth.getToken()) {
+      Auth.getCurrentRespondee(setUUID)
+    } else Auth.createRespondee(setUUID);
+
+
+    $scope.submitResponses = function() {
+      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses, setEventDetails); 
+    }
 
     $scope.select = function(time, response) {
     	$scope.mouseDown = true;
     	if(time.status === response) {
-    		time.status = null;
+    		time.status = "removed";
     		time[response] = false;
     	} else {
     		time.able = false;
@@ -55,7 +65,6 @@ angular.module('doodleplusApp')
     		time[response] = true;
 	  	}
 	  }
-
 
   });
 

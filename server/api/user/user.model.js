@@ -57,7 +57,6 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.Event);
         User.hasMany(models.Contact);
       }
-
     },
     getterMethods: {
       // Public profile information

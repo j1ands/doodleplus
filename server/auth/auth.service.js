@@ -88,6 +88,22 @@ function setTokenCookie(req, res) {
   res.redirect('/');
 }
 
+
+/**
+ * Attaches the user object to the request if authenticated
+ * Otherwise returns 403
+ */
+function isRespondee() {
+  return compose()
+    // Validate jwt
+    .use(function(req, res, next) {
+      validateJwt(req, res, next);
+    });
+}
+
+
+
+exports.isRespondee = isRespondee;
 exports.isAuthenticated = isAuthenticated;
 exports.hasRole = hasRole;
 exports.signToken = signToken;
