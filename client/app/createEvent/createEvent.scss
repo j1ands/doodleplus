@@ -60,3 +60,9 @@
   opacity: 0;
   padding: 0 10px;
 }
+
+md-content {
+  @media screen and (min-width: 700px) {
+    padding:50px;
+  }
+}

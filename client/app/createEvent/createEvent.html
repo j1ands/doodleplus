@@ -20,11 +20,11 @@
     <div  hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel()"  class="md-whiteframe-z1 main-content" layout="column">
       <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
-          <span class="md-flex">1. Event Details</span>
+          <span class="md-flex">Event Info</span>
         </div>
       </md-toolbar>
       <md-content class="md-padding" style="height: 550px;">
-        <md-switch ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private</md-switch>
+        <md-switch style="display:inline-block" popover-placement="right" popover="Private means respondees cannot see others' responses" popover-trigger="mouseenter" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private</md-switch>
         <md-input-container>
           <label for="title">Title: </label>
           <input id="title" name="title" ng-model="eventOptions.title" type="text" required>
@@ -66,7 +66,7 @@
     <div ng-show="currentPanel===1" hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel(currentPanel)"  class="md-whiteframe-z1 main-content" layout="column">
       <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
-          <span class="md-flex">2. What dates are you considering?</span>
+          <span class="md-flex">Select Dates</span>
           <label for="timeIncrement" style="float:right">Time Blocks:
             <select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="timeIncrement"></select>
           </label>
@@ -87,8 +87,8 @@
      <div ng-show="currentPanel===2" ng-mouseup="timeUp()" hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel()"  class="md-whiteframe-z1 main-content" layout="column">
       <md-toolbar class="md-accent">
         <div style="display:inline-block" class="md-toolbar-tools">
-          <span class="md-flex">3. What times are you considering?</span>
-          <md-button class="md-primary md-raised" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="float:right !important;">
+          <span class="md-flex">Select Times</span>
+          <md-button class="md-primary md-raised" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important;">
             Apply times to all days
           </md-button>
         </div>
@@ -133,10 +133,10 @@
     <div ng-show="currentPanel===3" hm-swipeleft="showNextPanel(currentPanel)" hm-swiperight="showPrevPanel()" class="md-whiteframe-z1 main-content" layout="column">
       <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
-          <span class="md-flex">4. Invite</span>
+          <span class="md-flex">Invite</span>
         </div>
       </md-toolbar>
-      <md-content class="md-padding" style="height: 550px;">
+      <md-content class="md-padding">
         <h3>Your event was Created!</h3>
         <div>
           <p>Shareable Link: <a ng-href="http://localhost:9000/event/{{createdEvent._id}}">http://localhost:9000/event/{{createdEvent._id}}</a></p>
@@ -151,15 +151,18 @@
             <label for="phoneNumbers">Phone Numbers</label>
             <textarea rows="2" id="phoneNumbers" name="phoneNumbers" ng-model="contacts.phoneNumbers" type="text"></textarea>
           </md-input-container>
-          <md-button class="md-raised md-primary" aria-label="Send Invites" hm-tap="addContacts()">Send Invites</md-button>
         </form>
         <div>
-          <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-            <i class="fa fa-google-plus"></i> Google Contacts
-          </a>
+
         </div>
+
         <div layout="row" layout-align="space-around start">
-          <md-button  style="position:absolute;bottom:0;" flex flex-order="1" class="md-raised md-primary" hm-tap="showPrevPanel()" >Select Times</md-button>
+          <md-button flex flex-order="1" class="md-raised md-primary" hm-tap="showPrevPanel()" >Select Times</md-button>
+          <div flex flex-order="2">
+            <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
+            <i class="fa fa-google-plus"></i>   Contacts  </a>
+          </div>
+          <md-button flex flex-order="3" class="md-raised md-primary" hm-tap="addContacts()" >Send Invites</md-button>
         </div>
       </md-content>
     </div>
