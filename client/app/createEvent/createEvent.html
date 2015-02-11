@@ -18,77 +18,87 @@
  -->
   <form ng-show="currentPanel===0" style=" padding: 0;" name="EventInfo" class="event-form">
     <div  hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel()"  class="md-whiteframe-z1 main-content" layout="column">
-      <md-toolbar class="md-accent">
+      <md-toolbar>
         <div class="md-toolbar-tools">
-          <span class="md-flex">Event Info</span>
+          <h1>Event Info</h1>
         </div>
       </md-toolbar>
-      <md-content class="md-padding" style="height: 550px;">
-        <md-switch style="display:inline-block" popover-placement="right" popover="Private means respondees cannot see others' responses" popover-trigger="mouseenter" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private</md-switch>
-        <md-input-container>
-          <label for="title">Title: </label>
-          <input id="title" name="title" ng-model="eventOptions.title" type="text" required>
-          <div ng-messages="EventInfo.title.$error">
-            <div ng-message="required">This is required.</div>
+      <md-content class="md-padding" style="height: 550px;" md-scroll-shrink>
+          <!--<md-checkbox style="display:inline-block" popover-placement="right" popover="Nobody can see the responses except you" popover-trigger="mouseenter" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private</md-checkbox>-->
+          <md-checkbox style="display:inline-block" ng-disabled="false" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private<md-tooltip>GAH WHY WON't this tooltip show up</md-tooltip></md-checkbox>
+        <div layout>
+          <div flex="10" layout layout-align="center center">
+            <span>md-primary</span>
           </div>
-        </md-input-container>
-        <md-input-container>
-          <label for="description">Description:</label>
-          <textarea rows="2" id="description" name="description" ng-model="eventOptions.description" type="text"></textarea>
-        </md-input-container>
-        <md-input-container>
-          <label for="location">Location:</label>
-          <input id="location" name="location" ng-model="eventOptions.location" type="text" placeholder="">
-        </md-input-container>
-        <md-input-container>
-          <label for="creatorName">Your Name:</label>
-          <input id="creatorName" name="creatorName" ng-model="userOptions.name" type="text" placeholder="" required>
-          <div ng-messages="EventInfo.creatorName.$error">
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
-        <md-input-container>
-          <label for="creatorEmail">Your Email:</label>
-          <input required id="creatorEmail" name="creatorEmail" ng-model="userOptions.email" type="email" >
-          <div ng-messages="EventInfo.creatorEmail.$error">
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
+          <md-slider flex class="md-primary" md-discrete ng-model="rating3" step="1" min="1" max="5" aria-label="rating">
+          </md-slider>
+        </div>
+          <input type="number"><span> {{timeSpec}}</span>
+          <md-input-container>
+            <label for="title">Title: </label>
+            <input id="title" name="title" ng-model="eventOptions.title" type="text" required>
+            <div ng-messages="EventInfo.title.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-input-container>
+            <label for="description">Description:</label>
+            <textarea rows="2" id="description" name="description" ng-model="eventOptions.description" type="text"></textarea>
+          </md-input-container>
+          <md-input-container>
+            <label for="location">Location:</label>
+            <input id="location" name="location" ng-model="eventOptions.location" type="text" placeholder="">
+          </md-input-container>
+          <md-input-container>
+            <label for="creatorName">Your Name:</label>
+            <input id="creatorName" name="creatorName" ng-model="userOptions.name" type="text" placeholder="" required>
+            <div ng-messages="EventInfo.creatorName.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-input-container>
+            <label for="creatorEmail">Your Email:</label>
+            <input required id="creatorEmail" name="creatorEmail" ng-model="userOptions.email" type="email" >
+            <div ng-messages="EventInfo.creatorEmail.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
       </md-content>
       <div layout="row" layout-align="space-around start" >
         <!--<md-button flex flex-order="1" ></md-button>-->
         <!--<div flex flex-order="2"></div>-->
-        <md-button type="submit" flex class="md-raised md-primary" ng-click="showNextPanel(currentPanel)" >Select Dates</md-button>
+        <md-button type="submit" flex class="md-raised md-primary md-accent" ng-click="showNextPanel(currentPanel)" >Next</md-button>
       </div>
     </div>
   </form>
 
     <div ng-show="currentPanel===1" hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel(currentPanel)"  class="md-whiteframe-z1 main-content" layout="column">
-      <md-toolbar class="md-accent">
+      <md-toolbar >
         <div class="md-toolbar-tools">
-          <span class="md-flex">Select Dates</span>
-          <label for="timeIncrement" style="float:right">Time Blocks:
-            <select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="timeIncrement"></select>
-          </label>
+          <h1>Select Dates</h1>
         </div>
+        <!--<label class="md-toolbar-tools" for="timeIncrement">Time Blocks:-->
+          <!--<select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="timeIncrement"></select>-->
+        <!--</label>-->
       </md-toolbar>
       <md-content style="height: 550px;">
-        <div style="height: 94%;">
+        <div style="height: 91%;">
           <datepicker ng-click="updateDays()" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
         </div>
-        <div style="height:4%" layout="row" layout-align="space-around start">
-          <md-button flex flex-order="1" class="md-raised md-primary" ng-click="showPrevPanel()" >Event Info</md-button>
+        <div style="clear:both"></div>
+        <div style="height:3%" layout="row" layout-align="space-around start">
+          <md-button flex flex-order="1" class="md-raised md-primary md-accent" ng-click="showPrevPanel()" >Prev</md-button>
           <div flex flex-order="2"></div>
-          <md-button flex flex-order="3" class="md-raised md-primary" ng-click="showNextPanel(currentPanel)" >Select Times</md-button>
+          <md-button flex flex-order="3" class="md-raised md-primary md-accent" ng-click="showNextPanel(currentPanel)" >Next</md-button>
         </div>
       </md-content>
     </div >
 
      <div ng-show="currentPanel===2" ng-mouseup="timeUp()" hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel()"  class="md-whiteframe-z1 main-content" layout="column">
-      <md-toolbar class="md-accent">
-        <div style="display:inline-block" class="md-toolbar-tools">
-          <span class="md-flex">Select Times</span>
-          <md-button class="md-primary md-raised" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important;">
+      <md-toolbar>
+        <div  class="md-toolbar-tools">
+          <h1>Select Times</h1>
+          <md-button class="md-accent" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important;">
             Apply times to all days
           </md-button>
         </div>
@@ -96,10 +106,11 @@
        <md-tabs ng-click="testAdding()" md-selected="selectedIndex" ng-if="currentPanel===2">
          <md-tab label="No Dates Yet" ng-if="selectedDates.length===0">
            <md-content>
+
              <h2>No dates chosen, but have a shark instead</h2>
              <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
              <div layout="row" layout-align="space-around start">
-               <md-button flex class="md-raised md-primary" hm-tap="showPrevPanel()" >Select Dates</md-button>
+               <md-button flex class="md-raised md-primary md-accent" hm-tap="showPrevPanel()" >Prev</md-button>
              </div>
            </md-content>
          </md-tab>
@@ -119,29 +130,29 @@
              </tr>
              </tbody>
            </table>
-           <div layout="row" layout-align="space-around start">
-             <md-button flex flex-order="1" class="md-raised md-primary" hm-tap="showPrevPanel()" >Select Dates</md-button>
-             <div flex flex-order="2">
-             </div>
-             <md-button flex flex-order="3" class="md-raised md-primary" hm-tap="saveEvent()" >Create Event</md-button>
-           </div>
          </md-tab>
        </md-tabs>
+       <div layout="row" layout-align="space-around start">
+         <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()">Prev</md-button>
+         <div flex flex-order="2">
+         </div>
+         <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="saveEvent()">Next</md-button>
+       </div>
     </div>
 
 
     <div ng-show="currentPanel===3" hm-swipeleft="showNextPanel(currentPanel)" hm-swiperight="showPrevPanel()" class="md-whiteframe-z1 main-content" layout="column">
-      <md-toolbar class="md-accent">
+      <md-toolbar>
         <div class="md-toolbar-tools">
           <span class="md-flex">Invite</span>
         </div>
       </md-toolbar>
-      <md-content class="md-padding">
-        <h3>Your event was Created!</h3>
+      <md-content id="created" class="md-padding">
+        <h1>Your event was Created!</h1>
         <div>
           <p>Shareable Link: <a ng-href="http://localhost:9000/event/{{createdEvent._id}}">http://localhost:9000/event/{{createdEvent._id}}</a></p>
         </div>
-        <h4>Now let's invite some people</h4>
+        <h3>Now let's invite some people</h3>
         <form name="invites" class="event-form">
           <md-input-container>
             <label for="emails">Emails</label>
@@ -157,12 +168,12 @@
         </div>
 
         <div layout="row" layout-align="space-around start">
-          <md-button flex flex-order="1" class="md-raised md-primary" hm-tap="showPrevPanel()" >Select Times</md-button>
+          <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()" >Prev</md-button>
           <div flex flex-order="2">
             <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
             <i class="fa fa-google-plus"></i>   Contacts  </a>
           </div>
-          <md-button flex flex-order="3" class="md-raised md-primary" hm-tap="addContacts()" >Send Invites</md-button>
+          <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="addContacts()" >Send Invites</md-button>
         </div>
       </md-content>
     </div>
