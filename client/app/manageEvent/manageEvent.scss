@@ -19,24 +19,31 @@
 .grid path {
 	stroke-width: 0;
 }
+
+.selected{
+	opacity: 0.6;
+}
+
+
 .able {
-	fill:#f6faaa;
-	stroke-width:1px;
+	fill: $able;
+	stroke-width: 1px;
 	pointer-events: all;
 }
 .ifneedbe {
-	fill:#7CD1F2;
-	stroke-width:1px;
+	fill: $ifneedbe;
+	stroke-width: 1px;
 	pointer-events: all;
 }
 
 .maybe {
-	fill:#F2B37C;
-	stroke-width:1px;
+	fill: $maybe;
+	stroke-width: 1px;
 	pointer-events: all;
 }
 
-.rect {
-	padding: 10px;
-}
+
+
+
+
 

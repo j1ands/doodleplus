@@ -139,6 +139,7 @@ angular.module('doodleplusApp')
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       console.log('the merged time',mergedTimes);
+      $scope.eventOptions.timeIncrement = $scope.timeIncrement;
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,

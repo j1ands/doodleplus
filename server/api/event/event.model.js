@@ -19,7 +19,8 @@ module.exports = function(sequelize, DataTypes) {
     description: DataTypes.TEXT,
     location: DataTypes.STRING,
     onlyDays: DataTypes.BOOLEAN,
-    isPrivate: DataTypes.BOOLEAN
+    isPrivate: DataTypes.BOOLEAN,
+    timeIncrement: DataTypes.BIGINT
   }, {
     classMethods: {
       associate: function(models){

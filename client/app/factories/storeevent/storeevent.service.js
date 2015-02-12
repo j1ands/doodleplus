@@ -24,7 +24,9 @@ angular.module('doodleplusApp')
             }
           })
         });
+        if(func){
   			func(thisEvent, username, oldResponses);
+      }
   		});
   	}
 
