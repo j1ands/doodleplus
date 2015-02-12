@@ -98,14 +98,19 @@ button.md-raised.md-primary.md-accent {
     font-size: 26px;
   }
 }
-#timeIncrement {
-  label {
+
+#options {
+  >  div {
+    width: 45%;
     display: inline-block;
-    select {
-      width: 50%;
-    }
   }
+  md-input-container {
+    width: 45%;
+    display: inline-block;
+  }
+
 }
+
 
 #created {
   h1 {
@@ -116,13 +121,29 @@ button.md-raised.md-primary.md-accent {
   }
 }
 
-.btn.btn-default {
+.btn.btn-default {    //This is for datepicker wells
   font-size:20px;
 }
 
-th {
+th {                  //This is for the datepicker day heading
   font-size: 25px;
 }
+
+section {
+  height:100%;
+}
+
+tbody {
+  height: 100%;
+  max-height: none !important;
+}
+
+
+
+//#timesTable {
+//  overflow: visible;
+//  height: 1000px;
+//}
 
 //md-content {
 //  @media screen and (min-width: 700px) {
