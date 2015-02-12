@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
           description: event.description,
           location: event.location,
           onlyDays: false,
-          isPrivate: false,
+          isPrivate: event.isPrivate,
           UserId: user._id
         })
           .then(function(newEvent){
