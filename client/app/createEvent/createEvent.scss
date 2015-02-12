@@ -98,6 +98,14 @@ button.md-raised.md-primary.md-accent {
     font-size: 26px;
   }
 }
+#timeIncrement {
+  label {
+    display: inline-block;
+    select {
+      width: 50%;
+    }
+  }
+}
 
 #created {
   h1 {
@@ -106,6 +114,14 @@ button.md-raised.md-primary.md-accent {
   h3 {
 
   }
+}
+
+.btn.btn-default {
+  font-size:20px;
+}
+
+th {
+  font-size: 25px;
 }
 
 //md-content {

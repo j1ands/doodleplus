@@ -25,15 +25,10 @@
       </md-toolbar>
       <md-content class="md-padding" style="height: 550px;" md-scroll-shrink>
           <!--<md-checkbox style="display:inline-block" popover-placement="right" popover="Nobody can see the responses except you" popover-trigger="mouseenter" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private</md-checkbox>-->
-          <md-checkbox style="display:inline-block" ng-disabled="false" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private<md-tooltip>GAH WHY WON't this tooltip show up</md-tooltip></md-checkbox>
-        <div layout>
-          <div flex="10" layout layout-align="center center">
-            <span>md-primary</span>
-          </div>
-          <md-slider flex class="md-primary" md-discrete ng-model="rating3" step="1" min="1" max="5" aria-label="rating">
-          </md-slider>
-        </div>
-          <input type="number"><span> {{timeSpec}}</span>
+          <md-checkbox style="display:inline-block" ng-model="eventOptions.isPrivate"  aria-label="Make Private">Make Private<md-tooltip>GAH WHY WON't this tooltip show up</md-tooltip></md-checkbox>
+          <label id="timeIncrement" for="timeIncrement">Time Blocks:
+            <select class="form-control" ng-options="timeOption.label for timeOption in timeOptions" ng-model="timeIncrement"></select>
+          </label>
           <md-input-container>
             <label for="title">Title: </label>
             <input id="title" name="title" ng-model="eventOptions.title" type="text" required>
@@ -77,9 +72,6 @@
         <div class="md-toolbar-tools">
           <h1>Select Dates</h1>
         </div>
-        <!--<label class="md-toolbar-tools" for="timeIncrement">Time Blocks:-->
-          <!--<select class="form-control" id="timeIncrement" ng-options="timeOption.label for timeOption in timeOptions" ng-model="timeIncrement"></select>-->
-        <!--</label>-->
       </md-toolbar>
       <md-content style="height: 550px;">
         <div style="height: 91%;">
@@ -126,13 +118,13 @@
              </thead>
              <tbody class="time-input">
              <tr ng-mousedown="timeClick($event, $index, selectedIndex)" ng-mouseenter="timeEnter($event, $index, selectedIndex)" ng-repeat="time in dayHours[selectedIndex]">
-               <th class="time-input" style="width:950px" ng-class="{success: time.selected}">{{::time.time | date:"h:mm a"}}</th>
+               <td class="time-input" style="width:950px" ng-class="{success: time.selected}">{{::time.time | date:"h:mm a"}}</th>
              </tr>
              </tbody>
            </table>
          </md-tab>
        </md-tabs>
-       <div layout="row" layout-align="space-around start">
+       <div ng-if="selectedDates.length!==0" layout="row" layout-align="space-around start">
          <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()">Prev</md-button>
          <div flex flex-order="2">
          </div>
