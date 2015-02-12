@@ -16,7 +16,12 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
     email: {
       type: DataTypes.STRING,
       unique: {
@@ -53,7 +58,6 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.Event);
         User.hasMany(models.Contact);
       }
-
     },
     getterMethods: {
       // Public profile information

@@ -38,39 +38,34 @@
 
   <div class="row">
 
-		<div class="col-lg-4 col-md-4">
-		  <h4>1. Select the dates on which you are [potentially] available</h4><hr>
-		  <datepicker class="datepicker datepicker-response" ng-click="" ng-model="timeOptions.date" min-date="minDate" class="well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
+		<div class="col-lg-4 col-md-4 col-sm-4 remove-for-phones">
+		  <datepicker ng-if="showCalendar" ng-click="changePage(date.value)" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" date-disabled="dateDisabled(date, mode)" show-weeks="false" multi-select='selectedDates'></datepicker>
 		</div>
-		<div class="col-lg-1 col-md-1">
+		<div class="col-lg-1 col-md-1 col-sm-1 remove-for-phones">
 		</div>
-
-		<div vertical="true" class="col-lg-7 col-md-7">
-			<h4>2. Select the times at which you are [potentially] available</h4><hr>
-			<tabset type="">
-				<tab heading="{{day.dateInMS | date:'MMM dd'}}" ng-repeat="day in days">
-
-
-						<table class="response-time-table" cellspacing="0" cellpadding="0"> 
-							<tr>
-								<td><h5>Time</h5></td>
-								<td class="text-center"><h5>YES</h5></td>
-								<td class="text-center"><h5>IF NEED BE</h5></td>
-								<td class="text-center"><h5>MAYBE</h5></td>
-							</tr>
-							<tr ng-repeat="time in day.times | orderBy:'time'">
-								<td>{{time.time | date:"h:mm a"}}</td>
-								<td class="text-center response-cell"><button ng-class="{able: time.able}" class="response-cell-btn response-cell-btn-yes" ng-mousedown="select(time, 'able')" ng-mouseover="checkClick(time, 'able')"><h2><span class="glyphicon glyphicon-ok-sign"></span></h2></button></td>
-								<td class="text-center response-cell"><button ng-class="{ifneedbe: time.ifneedbe}" class="response-cell-btn response-cell-btn-ifneedbe" ng-mousedown="select(time, 'ifneedbe')" ng-mouseover="checkClick(time, 'ifneedbe')"><h2><span class="glyphicon glyphicon-ok-circle"></span></h2></button></td>
-								<td class="text-center response-cell"><button ng-class="{maybe: time.maybe}" class="response-cell-btn response-cell-btn-maybe" ng-mousedown="select(time, 'maybe')" ng-mouseover="checkClick(time, 'maybe')"><h2><span class="glyphicon glyphicon-question-sign"></span></h2></button></td>
-							</tr>
-						</table>
-
-				</tab>
-			</tabset>
+		<div vertical="true" class="col-lg-7 col-md-7 col-sm-7">
+			<h4>When are you available?</h4><br>
+			<md-tabs ng-click="testAdding()" md-selected="selectedDay">
+				<md-tab ng-repeat="day in days"  label="{{day.dateInMS | date:'MMM dd'}}"><br>
+					<table class="response-time-table" cellspacing="0" cellpadding="0"> 
+						<tr>
+							<td><h5>Time</h5></td>
+							<td class="text-center"><h5>YES</h5></td>
+							<td class="text-center"><h5>IF NEED BE</h5></td>
+							<td class="text-center"><h5>MAYBE</h5></td>
+						</tr>
+						<tr ng-repeat="time in day.times | orderBy:'time'">
+							<td>{{time.time | date:"h:mm a"}}</td>
+							<td class="text-center response-cell"><button ng-class="{able: time.able}" class="response-cell-btn response-cell-btn-yes" ng-mousedown="selectResponse(time, 'able')" ng-mouseover="checkClick(time, 'able')"><h2><span class="glyphicon glyphicon-ok-sign"></span></h2></button></td>
+							<td class="text-center response-cell"><button ng-class="{ifneedbe: time.ifneedbe}" class="response-cell-btn response-cell-btn-ifneedbe" ng-mousedown="selectResponse(time, 'ifneedbe')" ng-mouseover="checkClick(time, 'ifneedbe')"><h2><span class="glyphicon glyphicon-ok-circle"></span></h2></button></td>
+							<td class="text-center response-cell"><button ng-class="{maybe: time.maybe}" class="response-cell-btn response-cell-btn-maybe" ng-mousedown="selectResponse(time, 'maybe')" ng-mouseover="checkClick(time, 'maybe')"><h2><span class="glyphicon glyphicon-question-sign"></span></h2></button></td>
+						</tr>
+					</table>
+				</md-tab>
+			</md-tabs>
 			<br><br>
 			<div class="">
-				<h4>3. Submit Your Response!</h4><hr>
+				<h4>Submit Your Responses</h4><hr>
 				<form>
 					<label for="username"> Name </label>
 					<input class="form-control" id="username" ng-model="username" type="text" placeholder="Name">

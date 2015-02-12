@@ -61,6 +61,7 @@ exports.create = function(req, res, next) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresInMinutes: 60 * 5
       });
+      console.log("decoded:", jwt.decode(token));
       res.json({ token: token });
     })
     .catch(validationError(res));
@@ -158,3 +159,29 @@ exports.me = function(req, res, next) {
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,13 +1,16 @@
+$break-small: 600px;
+$break-large: 1200px;
+
 .event-form {
 	padding: 0 30px 0 0;
 }
 
 #description, #emailToAdd {
-	max-width: 100%;	
+	max-width: 100%;
 }
 
 .datepicker {
-	height: 100%;
+	height: 95%;
 	table {
 		width: 100%;
 		th {
@@ -30,7 +33,7 @@
 		margin-left: 25%;
 		margin-right: 25%;
 		padding-left: 0px;
-		padding-right: 0px;	
+		padding-right: 0px;
 	}
 }
 
@@ -61,6 +64,68 @@
   padding: 0 10px;
 }
 
-md-toast {
-	margin-top: 265px;
+md-toolbar{
+  @media screen and (min-width: $break-large){
+    height: 80px;
+  }
+  @media screen and (max-width: $break-large){
+    height: 35px;
+  }
+  .md-toolbar-tools {
+    display: inline-block;
+    @media screen and (min-width: $break-large){
+      font-size: 26px;
+      font-weight: 500;
+      h1 {
+        text-align: center;
+        vertical-align: middle;
+      }
+      label {
+        display: inline;
+        select {
+          display: inline;
+          width: 50%;
+        }
+      }
+    }
+  }
 }
+
+
+button.md-raised.md-primary.md-accent {
+  @media screen and (min-width: $break-large){
+    height:45px;
+    font-size: 26px;
+  }
+}
+#timeIncrement {
+  label {
+    display: inline-block;
+    select {
+      width: 50%;
+    }
+  }
+}
+
+#created {
+  h1 {
+    text-align:center;
+  }
+  h3 {
+
+  }
+}
+
+.btn.btn-default {
+  font-size:20px;
+}
+
+th {
+  font-size: 25px;
+}
+
+//md-content {
+//  @media screen and (min-width: 700px) {
+//    padding:50px;
+//  }
+//}

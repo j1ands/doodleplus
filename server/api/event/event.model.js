@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
         Event.hasMany(models.Time, {as: 'times'});
         Event.belongsToMany(models.Contact, {through: 'EventContacts'});
       },
-      saveNewEvent: function(reqBody, creator){ 
+      saveNewEvent: function(reqBody, creator){
         var event = reqBody.event;
         var user = creator.dataValues;
        return Event.create({
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
           description: event.description,
           location: event.location,
           onlyDays: false,
-          isPrivate: false,
+          isPrivate: event.isPrivate,
           UserId: user._id
         })
           .then(function(newEvent){

@@ -1,60 +1,101 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
   	$scope.days = [];
     $scope.username;
-
-    Response.getOrCreateUUID();
-
-    $scope.submitResponses = function() {
-      Response.saveResponses($scope.username); 
-    }
+    $scope.oldResponses = [];
+    $scope.selectedDates = [];
+    $scope.showCalendar = false;
+    $scope.selectedDay = 0;
 
     var event_id = $stateParams.event_id;
 
-    $scope.getEvent = function(eventID) {
-    	storeEvent.getEvent(eventID, function() {
-	    	$scope.event = storeEvent.event;
-	    	$scope.times = storeEvent.event.times;
-	    	Time.organizeByDay($scope.times);
-	    	$scope.days = Time.days;
-    	});
+    var setEventDetails = function(thisEvent, username, oldResponses) {
+      $scope.event = thisEvent;
+      $scope.times = thisEvent.times;
+      Time.organizeByDay($scope.times);
+      $scope.days = Time.days;
+      $scope.username = username;
+      $scope.oldResponses = oldResponses;
+      $scope.showCalendar = true;
     }
 
-    $scope.getEvent($stateParams.event_id);
-
-
-    $scope.select = function(time, response) {
-    	$scope.mouseDown = true;
-    	if(time.status === response) {
-    		time.status = null;
-    		time[response] = false;
-    	} else {
-    		time.able = false;
-    		time.ifneedbe = false;
-    		time.maybe = false;
-    		time.status = response;
-    		time[response] = true;
-    	}
+    $scope.getEvent = function(eventID, UUID) {
+      storeEvent.getEvent(eventID, UUID, setEventDetails);
     }
 
-	  $scope.resetMouse = function() {
-	  	$scope.mouseDown = false;
-	  }
+    var setUUID = function(obj) {
+      $scope.UUID = obj.UUID;
+      $scope.getEvent($stateParams.event_id, $scope.UUID);
+    }
 
-	  $scope.checkClick = function(time, response) {
-	  	if ($scope.mouseDown === true) {
-	  		time.able = false;
-    		time.ifneedbe = false;
-    		time.maybe = false;
-    		time.status = response;
-    		time[response] = true;
-	  	}
-	  }
+    if (Auth.getToken()) {
+      Auth.getCurrentRespondee(setUUID)
+    } else Auth.createRespondee(setUUID);
+
+
+    $scope.submitResponses = function() {
+      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses, setEventDetails); 
+    }
+
+    $scope.selectResponse = function(time, response) {
+      $scope.mouseDown = true;
+      if(time.status === response) {
+        time.status = "removed";
+        time[response] = false;
+      } else {
+        time.able = false;
+        time.ifneedbe = false;
+        time.maybe = false;
+        time.status = response;
+        time[response] = true;
+      }
+    }
+
+    $scope.resetMouse = function() {
+      $scope.mouseDown = false;
+    }
+
+    $scope.checkClick = function(time, response) {
+      if ($scope.mouseDown === true) {
+        time.able = false;
+        time.ifneedbe = false;
+        time.maybe = false;
+        time.status = response;
+        time[response] = true;
+      }
+    }
+
+    $scope.dateDisabled = function(date, mode) {
+      var found = true;
+        var dateStr = date.toString();
+        if ($scope.days.length > 0) {
+          $scope.days.forEach(function(day) {
+            if (dateStr.search(day.date) > -1 || mode !== "day") {
+              found = false;
+              $scope.selectedDates.push(date.getTime() - 43200000);
+            }
+          });        
+        }
+      return found
+    };
+
+    $scope.changePage = function(date) {
+      // will not handle some edge cases (ex. if the days are out of order)
+      if (date) {
+        var dateStr = date.toString();
+
+        $scope.days.forEach(function(day, i) {
+          if (dateStr.search(day.date) > -1) {
+            $scope.selectedDay = i;
+          }
+        })
+      }
+    }
 
 
   });

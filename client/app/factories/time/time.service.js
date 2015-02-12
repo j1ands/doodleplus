@@ -20,7 +20,7 @@ angular.module('doodleplusApp')
         var timeNum = startTime + i * increment;
         times.push({
           time: timeNum,
-          selected: true //Should be false for production
+          selected: false //Should be false for production
         });
       }
       return times;
@@ -31,12 +31,12 @@ angular.module('doodleplusApp')
       timesArray.forEach(function(elem){
         if (elem.selected){
           times.push({
-            time: elem.time.getTime()
+            time: elem.time
           });
         }
       });
       return times;
-    }
+    };
 
     Time.organizeByDay = function(timesInMS) {
       Time.days = [];
