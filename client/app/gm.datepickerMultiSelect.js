@@ -95,6 +95,7 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
         });
 
         scope.$watch(attrs.ngModel, function(newVal, oldVal) {
+          if (attrs.ngIf === "showCalendar") return;
           if(!newVal) return;
           var dateVal = newVal.getTime();
           var increment = scope.timeIncrement.timeIncrement;
