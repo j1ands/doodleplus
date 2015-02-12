@@ -23,17 +23,17 @@
         <md-button class="md-raised md-primary pull-right" type="submit">Send Invite(s)</md-button>
       </form>
       <!-- <h4>Google Contacts:</h4> -->
-    <div class="google-contacts-search">
+    <div class="google-contacts-search" ng-show="Manage.currentUser.google">
       <input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts"></input>
     </div>
    <!-- <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">
      <a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>
    </div> -->
-   <md-list layout="column" class="google-contacts-list"> 
+   <md-list layout="column" class="google-contacts-list" ng-show="Manage.currentUser.google"> 
     	<md-item ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">
 		<md-item-content> 
 			<div class="md-tile-content" style="padding:0px;">
-				<a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact.email)">{{contact.name != "" ? contact.name : contact.email}}</a>
+				<a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact)" ng-class="{chosen:contact.selected}">{{contact.name != "" ? contact.name : contact.email}}</a>
 			</div>		
 		</md-item-content>
 	</md-item>

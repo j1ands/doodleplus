@@ -29,15 +29,34 @@ angular.module('doodleplusApp')
 
     $scope.getEvent($stateParams.event_id);
 
-    $scope.addGoogleContactToText = function(email) {
+    $scope.addGoogleContactToText = function(contact) {
+	    var index = $scope.emailToAdd.indexOf(contact.email);
 	    if($scope.emailToAdd == "")
 	    {
-		$scope.emailToAdd += email;
+		$scope.emailToAdd += contact.email;
 	    }
-
+	    else if(index > -1)
+	    {
+		    if(index == 0)
+		    {
+			    $scope.emailToAdd = $scope.emailToAdd.replace(new RegExp(contact.email + '(\, )?', 'g'), "");
+		    }
+		    else
+		    {
+			    $scope.emailToAdd = $scope.emailToAdd.replace(new RegExp('(\, )?' + contact.email, 'g'), "");
+		    }
+	    }
 	    else
 	    {
-		    $scope.emailToAdd+= ", " + email;
+		    $scope.emailToAdd+= ", " + contact.email;
+	    }
+	    if(contact.selected)
+	    {
+		    contact.selected = false;
+	    }
+	    else
+	    {
+		    contact.selected = true;
 	    }
 
     }
