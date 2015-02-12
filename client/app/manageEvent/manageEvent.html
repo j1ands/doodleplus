@@ -22,14 +22,22 @@
         </div>
         <md-button class="md-raised md-primary pull-right" type="submit">Send Invite(s)</md-button>
       </form>
-    <h4>Google Contacts:</h4>
-    <label>Search Contacts
-      <input ng-model="searchText.name" type="text" placeholder="find..."></input>
-    </label>
-    <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">
-      <a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>
+      <!-- <h4>Google Contacts:</h4> -->
+    <div class="google-contacts-search">
+      <input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts"></input>
     </div>
-    <md-button class="md-raised md-primary" ng-show="Manage.currentUser.google">Finalize</md-button>
+   <!-- <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">
+     <a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>
+   </div> -->
+   <md-list layout="column" class="google-contacts-list"> 
+    	<md-item ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">
+		<md-item-content> 
+			<div class="md-tile-content" style="padding:0px;">
+				<a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact.email)">{{contact.name != "" ? contact.name : contact.email}}</a>
+			</div>		
+		</md-item-content>
+	</md-item>
+    </md-list>
 
       <ul>
         <li ng-repeat="email in invitedEmails">{{email}}</li>

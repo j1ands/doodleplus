@@ -3,6 +3,7 @@
 angular.module('doodleplusApp')
   .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
     $scope.responses = [];
+    $scope.emailToAdd = "";
 
     var mCtrl = this;
 
@@ -28,6 +29,18 @@ angular.module('doodleplusApp')
 
     $scope.getEvent($stateParams.event_id);
 
+    $scope.addGoogleContactToText = function(email) {
+	    if($scope.emailToAdd == "")
+	    {
+		$scope.emailToAdd += email;
+	    }
+
+	    else
+	    {
+		    $scope.emailToAdd+= ", " + email;
+	    }
+
+    }
   });
 
 
