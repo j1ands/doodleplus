@@ -73,6 +73,7 @@ angular.module('doodleplusApp')
           }
         });
         $scope.selectedDates.forEach(function(date, index){
+          console.log("WAAA", $scope.selectedDates);
           if(index !== tab)
           {
             selectedTimes.forEach(function(val){
