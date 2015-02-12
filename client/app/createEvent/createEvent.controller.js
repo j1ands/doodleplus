@@ -25,7 +25,7 @@ angular.module('doodleplusApp')
     //Panel Show Logic
     $scope.currentPanel = 0;
     $scope.showNextPanel = function(currentPanel){
-      if ($scope.EventInfo.$valid){
+      if (!$scope.EventInfo.$valid){
         if (currentPanel<2){
           $scope.currentPanel+=1;
         }
@@ -53,6 +53,7 @@ angular.module('doodleplusApp')
       timeIncrement: 86400000
     }];
     $scope.timeIncrement = $scope.timeOptions[1];
+    $scope.rating3 =3;
 
 
 
@@ -72,6 +73,7 @@ angular.module('doodleplusApp')
           }
         });
         $scope.selectedDates.forEach(function(date, index){
+          console.log("WAAA", $scope.selectedDates);
           if(index !== tab)
           {
             selectedTimes.forEach(function(val){

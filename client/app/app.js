@@ -14,8 +14,8 @@ angular.module('doodleplusApp', [
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
     $mdThemingProvider.theme('default')
-      .primaryPalette('blue')
-      .accentPalette('green');
+      .primaryPalette('green')
+      .accentPalette('deep-purple');
 
     $urlRouterProvider
       .otherwise('/');

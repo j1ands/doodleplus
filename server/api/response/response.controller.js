@@ -28,20 +28,20 @@ exports.create = function(req, res) {
 exports.destroy = function(req, res) {
 	var responses = req.query.responses;
 	if (responses) {
-		if (typeof responses === Array) {
-			var destroyArr = [];
-			responses.forEach(function(response) {
-				destroyArr.push(response._id)
-			});
-			Response.destroy({where: {id: {in: destroyArr}}})
-				.then(function() {
-					res.status(200).send();
-				})
-				.catch(function(err) {
-					res.status(500).send(err);
-				});
-		} 
-		else {
+		// if (typeof responses === Array) {
+		// 	var destroyArr = [];
+		// 	responses.forEach(function(response) {
+		// 		destroyArr.push(response._id)
+		// 	});
+		// 	Response.destroy({where: {id: {in: destroyArr}}})
+		// 		.then(function() {
+		// 			res.status(200).send();
+		// 		})
+		// 		.catch(function(err) {
+		// 			res.status(500).send(err);
+		// 		});
+		// } 
+		// else {
 			Response.destroy({id: responses._id})
 				.then(function(resp) {
 					res.status(200).send();
@@ -49,7 +49,7 @@ exports.destroy = function(req, res) {
 				.catch(function(err) {
 					res.status(500).send(err);
 				});
-		}
+		// }
 
 		
 	} else res.status(200);
