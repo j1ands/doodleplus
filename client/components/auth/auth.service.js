@@ -14,9 +14,10 @@ angular.module('doodleplusApp')
 
     currentUser = {};
 
-    if ($cookieStore.get('token')) {
-      currentUser = User.get();
-    }
+    //Commented out temporarily
+    // if ($cookieStore.get('token')) {
+    //   currentUser = User.get();
+    // }
 
     return {
 
@@ -67,10 +68,29 @@ angular.module('doodleplusApp')
             return safeCb(callback)(null, user);
           },
           function(err) {
-            this.logout();
+            this.logout(); // Auth.logout()
             return safeCb(callback)(err);
           }.bind(this)).$promise;
       },
+
+      getCurrentRespondee: function(callback) {
+        var token = $cookieStore.get('token');
+        return $http.get('/api/respondee', {UUID: token}).success(function(idObj) {
+            safeCb(callback)(idObj);
+          }).error(function(err) {
+            return safeCb(callback)(err);
+          });
+      },
+
+      createRespondee: function(callback) {
+        return $http.post('/api/respondee').success(function(data) {
+            $cookieStore.put('token', data.token);
+            return Auth.getCurrentRespondee(callback);
+          }).error(function(err) {
+            return safeCb(callback)(err);
+          });
+      },
+
 
       /**
        * Change password
