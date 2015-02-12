@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 600px) {
 	.navbar-nav li a, .navbar-brand {
 		padding-top: 30px;
 	}
@@ -10,5 +10,11 @@
 	.navbar-btn {
 		padding-top: 15px !important;
 	}
-	
+
+}
+
+.navbar {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 }
