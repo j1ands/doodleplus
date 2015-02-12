@@ -1,24 +1,41 @@
-
-
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>LET'S!</h1>
-    <p class="lead">Find a time for your awesome event</p>
-  </div>
-</header>
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-    <br><br>
-     <button class="btn btn-success btn-lg center-block" hm-tap="createEvent()" ng-click="createEvent()">LET'S go</button>
-    </div>
+<div class="fullscreen">
+  <div class="fullscreen-overlay">
   </div>
 </div>
 
-<footer class="footer">
+  <header class="hero-unit" id="banner">
+    <div class="container">
+      <span class="h1">find the best time for your</span><br>
+<!--         <div class="rotating-word-block">
+          <span>dinner party</span>
+          <span>epic road trip</span>
+          <span>ping pong tournament</span>
+          <span>next event</span>
+        </div> -->
+      <div class="rotating-word-block-container">
+        <ul class="rotating-word-block">
+          <li>next event</li>
+          <li>dinner party</li>
+          <li>ping pong tournament</li>
+          <li>epic road trip</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div layout="row" layout-align="center center">
+    <md-input-container class="home-input-field">
+      <label for="title">Event Title: </label>
+      <input id="title" name="title" ng-model="eventOptions.title" type="text">
+    </md-input-container>
+    <md-button class="md-button md-button-colored btn-lg" aria-label="Create Event" hm-tap="createEvent()" ng-click="createEvent()">
+      Get Started
+    </md-button>
+  </div>
+
+<!-- <footer class="footer">
   <div class="container">
       <p>Created using Angular Fullstack v2.0.13 |
          <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
   </div>
-</footer>
+</footer> -->

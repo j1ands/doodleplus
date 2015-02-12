@@ -1,14 +1,31 @@
-@media (min-width: 768px) {
-	.navbar-nav li a, .navbar-brand {
-		padding-top: 30px;
+	.navbar-brand {
+		color: white !important;
+		font-size: 60px;
+		font-family: 'Stalemate', cursive;
 	}
 
-	.navbar-brand {
-		font-size: 24px;
+	.navbar-default {
+		background-color: rgba(255, 255, 255, 0.2);
+		border: 0px;
 	}
+
+@media (min-width: 768px) {
+	.navbar-nav li a, .navbar-brand {
+		padding-top: 37px;
+	}
+
 
 	.navbar-btn {
 		padding-top: 15px !important;
 	}
+
 	
+}
+
+@media (max-width: 768px) {
+	.navbar-brand {
+		color: white !important;
+		font-size: 50px;
+		padding-top: 22px;
+	}
 }

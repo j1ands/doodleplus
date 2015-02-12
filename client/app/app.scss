@@ -7,8 +7,21 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 
 /**
- * App-wide Styles
+ * App-wide Styless
  */
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.md-button-colored {
+	background-color: #7265D6;
+}
+
+.md-button {
+	border-radius: 0px !important;
+	color: white !important;
+}
 
 h5, .h5 {
 	font-weight: bold;
