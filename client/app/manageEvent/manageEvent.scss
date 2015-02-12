@@ -19,6 +19,12 @@
 .grid path {
 	stroke-width: 0;
 }
+
+.selected{
+	opacity: 0.6;
+}
+
+
 .able {
 	fill: $able;
 	stroke-width: 1px;
