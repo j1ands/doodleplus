@@ -14,7 +14,7 @@ angular.module('doodleplusApp')
 
     currentUser = {};
 
-    //usertoken instead of token
+   // check for both to set req.head consistently
     if ($cookieStore.get('usertoken')) {
        currentUser = User.get();
     }
@@ -83,9 +83,10 @@ angular.module('doodleplusApp')
       },
 
       createRespondee: function(callback) {
+	var auth = this;
         return $http.post('/api/respondee').success(function(data) {
             $cookieStore.put('token', data.token);
-            return Auth.getCurrentRespondee(callback);
+            return auth.getCurrentRespondee(callback);
           }).error(function(err) {
             return safeCb(callback)(err);
           });
@@ -180,7 +181,9 @@ angular.module('doodleplusApp')
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-        return $cookieStore.get('usertoken');
+	var usertoken = $cookieStore.get('usertoken');
+        var returned = (typeof usertoken != 'undefined') ? usertoken : $cookieStore.get('token');
+	return returned;
       }
     };
   });
