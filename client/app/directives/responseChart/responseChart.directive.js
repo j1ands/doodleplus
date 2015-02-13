@@ -63,8 +63,6 @@ renderChart(days[0])
 
 function renderChart (dayData){
 
-	console.log(dayData)
-
 	var hour = d3.time.format("%H:%M")
 
 	var dayDataFormatted = dayData.allTimes.map(function(day){
@@ -145,26 +143,12 @@ function renderChart (dayData){
 					.attr("y",function(d){ return frameHeight*d.allTimesIndex/dayData.allTimes.length })
 					.attr("width",barSize)
 					.attr("height", frameHeight/dayData.allTimes.length - 1.5)
-					// .attr("rx", 1)
-					// .attr("ry", 1)
 					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
 					.on('click', function(d){ 
-
-						$("rect").each(function() {
-							responseStatus.selectTime.call(this);
-						});
-						$("rect").each(function() {
-							responseStatus.loadStatus.call(this);	
-						});
-					
-						var responses = responseStatus.generateStatus();
-
-						console.log(responses);
-
+						var responses = responseStatus.displayStatus.call(this);
 						scope.onRectClick({ response: responses });
 					});
-
 
 				//axes, scale and grid/
 
