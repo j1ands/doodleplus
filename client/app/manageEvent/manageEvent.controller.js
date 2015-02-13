@@ -5,6 +5,7 @@ angular.module('doodleplusApp')
 	  
     $scope.responses = [];
     $scope.emailToAdd = "";
+    
     socket.liveResponse(function(){
 	    alert('hey doggy');
     });

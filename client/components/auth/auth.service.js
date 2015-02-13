@@ -75,9 +75,7 @@ angular.module('doodleplusApp')
 
       getCurrentRespondee: function(callback) {
         var token = $cookieStore.get('token');
-	console.log(token);
         return $http.get('/api/respondee', {UUID:token}).success(function(idObj) {
-		console.log("hooray");
             safeCb(callback)(idObj);
           }).error(function(err) {
 		  console.log("noo");
@@ -183,7 +181,9 @@ angular.module('doodleplusApp')
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-        return $cookieStore.get('usertoken');
+        var usertoken = $cookieStore.get('usertoken');
+        var returned = (typeof usertoken != 'undefined') ? usertoken : $cookieStore.get('token');
+        return returned;
       }
     };
   });
