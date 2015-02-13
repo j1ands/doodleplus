@@ -51,7 +51,6 @@
         </md-input-container>
       </md-content>
       <div layout="row" layout-align="space-around start" >
-        <md-button ng-if="isPhone" type="submit" flex class="md-raised md-primary md-accent" hm-tap="showNextPanel(currentPanel)">Next</md-button>
         <md-button type="submit" flex class="md-raised md-primary md-accent" ng-click="showNextPanel(currentPanel)">Next</md-button>
       </div>
     </div>
@@ -69,7 +68,7 @@
           <datepicker ng-click="updateDays()" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
         </div>
         <div style="clear:both"></div>
-        <div style="height:5%" layout="row" layout-align="space-around start">
+        <div style="height:3%" layout="row" layout-align="space-around start">
           <md-button flex flex-order="1" class="md-raised md-primary md-accent" ng-click="showPrevPanel()" >Prev</md-button>
           <div flex flex-order="2"></div>
           <md-button flex flex-order="3" class="md-raised md-primary md-accent" ng-click="showNextPanel(currentPanel)" >Next</md-button>
@@ -93,7 +92,7 @@
              <h2>No dates chosen, but have a shark instead</h2>
              <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
              <div layout="row" layout-align="space-around start">
-               <md-button flex class="md-raised md-primary md-accent" hm-tap="showPrevPanel()" >Prev</md-button>
+               <md-button flex class="md-raised md-primary md-accent" ng-click="showPrevPanel()" >Prev</md-button>
              </div>
            </md-content>
          </md-tab>
@@ -116,10 +115,10 @@
          </md-tab>
        </md-tabs>
        <div ng-if="selectedDates.length!==0" layout="row" layout-align="space-around start">
-         <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()">Prev</md-button>
+         <md-button flex flex-order="1" class="md-raised md-primary md-accent" ng-click="showPrevPanel()">Prev</md-button>
          <div flex flex-order="2">
          </div>
-         <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="saveEvent()">Next</md-button>
+         <md-button flex flex-order="3" class="md-raised md-primary md-accent" ng-click="saveEvent()">Next</md-button>
        </div>
     </div>
 
@@ -151,12 +150,12 @@
         </div>
 
         <div layout="row" layout-align="space-around start">
-          <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()" >Prev</md-button>
+          <md-button flex flex-order="1" class="md-raised md-primary md-accent" ng-click="showPrevPanel()" >Prev</md-button>
           <div flex flex-order="2">
             <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
             <i class="fa fa-google-plus"></i>   Contacts  </a>
           </div>
-          <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="addContacts()" >Send Invites</md-button>
+          <md-button flex flex-order="3" class="md-raised md-primary md-accent" ng-click="addContacts()" >Send Invites</md-button>
         </div>
       </md-content>
     </div>
