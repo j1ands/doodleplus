@@ -84,7 +84,7 @@ function setTokenCookie(req, res) {
     });
   }
   var token = signToken(req.user._id, req.user.role);
-  res.cookie('token', JSON.stringify(token));
+  res.cookie('usertoken', JSON.stringify(token));
   //console.log(req);
   //res.send(200, req);
   res.redirect('/manageEvent/' + req.currentUser.eventId);

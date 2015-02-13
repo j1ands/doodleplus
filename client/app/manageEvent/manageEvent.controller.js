@@ -2,6 +2,7 @@
 
 angular.module('doodleplusApp')
   .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
+	  
     $scope.responses = [];
     $scope.emailToAdd = "";
 

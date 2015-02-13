@@ -6,6 +6,7 @@ angular.module('doodleplusApp')
       console.log('event');
     };
     
+    var ceCtrl = this;
     $cookieStore.remove('user');
     $scope.invitedEmails = [];
     $scope.eventOptions = {
@@ -25,8 +26,9 @@ angular.module('doodleplusApp')
     $scope.dayHours = [];
     //Panel Show Logic
     $scope.currentPanel = 0;
+    
     $scope.showNextPanel = function(currentPanel){
-      if (!$scope.EventInfo.$valid){
+      if ($scope.EventInfo.$valid){
         if (currentPanel<2){
           $scope.currentPanel+=1;
         }
@@ -151,8 +153,9 @@ angular.module('doodleplusApp')
           $scope.eventFailure = true;
           return;
         }
+	$cookieStore.put('user', res.user._id);
         console.log('res',res);
-        $scope.createdEvent = res.createdEvent;
+        ceCtrl.createdEvent = res.createdEvent;
         $scope.currentPanel+=1;
       });
     };

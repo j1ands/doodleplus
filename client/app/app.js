@@ -13,6 +13,30 @@ angular.module('doodleplusApp', [
   'hmTouchEvents'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
+  $mdThemingProvider.definePalette('gRed', {
+      '50': 'c23321',
+      '100': 'c23321',
+      '200': 'c23321',
+      '300': 'c23321',
+      '400': 'c23321',
+      '500': 'c23321',
+      '600': 'c23321',
+      '700': 'c23321',
+      '800': 'c23321',
+      '900': 'c23321',
+      'A100': 'c23321',
+      'A200': 'c23321',
+      'A400': 'c23321',
+      'A700': 'c23321',
+  	'contrastDefaultColor': 'light',
+  	'contrastDarkColors': ['50','100','200','300','400','A100'],
+  	'contrastLightColors': undefined
+  });
+
+  $mdThemingProvider.theme('google')
+	  .primaryPalette('gRed')
+	  .accentPalette('red');
+
     $mdThemingProvider.theme('default')
       .primaryPalette('green')
       .accentPalette('deep-purple');
@@ -30,8 +54,8 @@ angular.module('doodleplusApp', [
       // Add authorization token to headers
       request: function(config) {
         config.headers = config.headers || {};
-        if ($cookieStore.get('token')) {
-          config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+        if ($cookieStore.get('usertoken')) {
+          config.headers.Authorization = 'Bearer ' + $cookieStore.get('usertoken');
         }
         return config;
       },
@@ -41,7 +65,7 @@ angular.module('doodleplusApp', [
         if (response.status === 401) {
           (state || (state = $injector.get('$state'))).go('login');
           // remove any stale tokens
-          $cookieStore.remove('token');
+          $cookieStore.remove('usertoken');
           return $q.reject(response);
         }
         else {

@@ -1,5 +1,6 @@
 <div  layout="column" flex>
  <form ng-show="currentPanel===0" style=" padding: 0;" name="EventInfo" class="event-form">
+	 w:
     <div  hm-swipeleft="showNextPanel(currentPanel)"  hm-swiperight="showPrevPanel()"  class="md-whiteframe-z1 main-content" layout="column">
       <md-toolbar>
         <div class="md-toolbar-tools">
@@ -70,8 +71,8 @@
       <md-toolbar>
         <div  class="md-toolbar-tools">
           <h1>Select Times</h1>
-          <md-button class="md-accent" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important;">
-            Apply times to all days
+          <md-button class="md-raised md-accent md-default-theme" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important; margin-top:-38px;">
+	  Apply times to all days
           </md-button>
         </div>
       </md-toolbar >
@@ -108,7 +109,7 @@
          <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()">Prev</md-button>
          <div flex flex-order="2">
          </div>
-         <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="saveEvent()">Next</md-button>
+         <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="saveEvent()">Create!</md-button>
        </div>
     </div>
 
@@ -119,11 +120,19 @@
         </div>
       </md-toolbar>
       <md-content id="created" class="md-padding">
-        <h1>Your event was Created!</h1>
-        <div>
-          <p>Shareable Link: <a ng-href="http://localhost:9000/event/{{createdEvent._id}}">http://localhost:9000/event/{{createdEvent._id}}</a></p>
-        </div>
-        <h3>Now let's invite some people</h3>
+       	<h1 flex flex-order="1">Your event was Created!</h1>
+	<md-toolbar class="md-primary md-hue-3" style="height:100%; min-height:0px">
+	        <div layout="row" layout-margin>
+			<h4 flex flex-order="1" layout="row" layout-align="left center">Shareable Link: <a ng-href="http://localhost:9000/event/{{Create.createdEvent._id}}">http://localhost:9000/event/{{Create.createdEvent._id}}</a></h4>
+       		</div>
+	</md-toolbar>
+	<div layout="row" layout-margin ng-controller="LoginCtrl">
+ 		<md-button flex flex-order="3" md-theme="google" class="md-raised md-primary" ng-click="loginOauth('google', Create.createdEvent._id)">
+        		<i class="fa fa-google-plus"></i> Add Contacts
+		</md-button>
+        	<h2 flex flex-order="1">Invite some people</h2>
+		<h2 flex flex-order="2" style="text-align:center">OR</h2>
+	</div>
         <form name="invites" class="event-form">
           <md-input-container>
             <label for="emails">Emails</label>
@@ -137,12 +146,7 @@
         <div>
         </div>
         <div layout="row" layout-align="space-around start">
-          <md-button flex flex-order="1" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()" >Prev</md-button>
-          <div flex flex-order="2">
-            <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-            <i class="fa fa-google-plus"></i>   Contacts  </a>
-          </div>
-          <md-button flex flex-order="3" class="md-raised md-primary md-accent" hm-tap="addContacts()" >Send Invites</md-button>
+         <md-button class="md-raised md-primary md-accent" hm-tap="addContacts()" >Send Invites</md-button>
         </div>
       </md-content>
     </div>

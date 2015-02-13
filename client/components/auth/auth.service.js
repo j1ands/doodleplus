@@ -14,10 +14,10 @@ angular.module('doodleplusApp')
 
     currentUser = {};
 
-    //Commented out temporarily
-    // if ($cookieStore.get('token')) {
-    //   currentUser = User.get();
-    // }
+    //usertoken instead of token
+    if ($cookieStore.get('usertoken')) {
+       currentUser = User.get();
+    }
 
     return {
 
@@ -34,7 +34,7 @@ angular.module('doodleplusApp')
           password: user.password
         })
         .then(function(res) {
-          $cookieStore.put('token', res.data.token);
+          $cookieStore.put('usertoken', res.data.token);
           currentUser = User.get();
           safeCb(callback)();
           return res.data;
@@ -49,7 +49,7 @@ angular.module('doodleplusApp')
        * Delete access token and user info
        */
       logout: function() {
-        $cookieStore.remove('token');
+        $cookieStore.remove('usertoken');
         currentUser = {};
       },
 
@@ -63,7 +63,7 @@ angular.module('doodleplusApp')
       createUser: function(user, callback) {
         return User.save(user,
           function(data) {
-            $cookieStore.put('token', data.token);
+            $cookieStore.put('usertoken', data.token);
             currentUser = User.get();
             return safeCb(callback)(null, user);
           },
@@ -180,7 +180,7 @@ angular.module('doodleplusApp')
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-        return $cookieStore.get('token');
+        return $cookieStore.get('usertoken');
       }
     };
   });
