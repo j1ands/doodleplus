@@ -10,7 +10,7 @@ angular.module('doodleplusApp', [
   'd3',
   'gm.datepickerMultiSelect',
   'ngMaterial',
-  'hmTouchEvents'
+  'ngTouch'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
     $mdThemingProvider.theme('default')
