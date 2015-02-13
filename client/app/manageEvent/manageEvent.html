@@ -7,6 +7,61 @@
     </div>
   </div>
 
+
+<div id="timesTable" ng-mouseup="timeUp()" class="md-whiteframe-z1 main-content" layout="column">
+      <md-toolbar>
+        <div  class="md-toolbar-tools">
+          <h1>{{event.title}}</h1>
+          <md-button class="md-accent" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important;">
+            Apply times to all days
+          </md-button>
+        </div>
+      </md-toolbar >
+       <md-tabs ng-click="testAdding()" md-selected="selectedIndex" ng-if="currentPanel===2">
+         <md-tab label="No Dates Yet" ng-if="selectedDates.length===0">
+           <md-content>
+
+             <h2>No dates chosen, but have a shark instead</h2>
+             <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
+             <div layout="row" layout-align="space-around start">
+               <md-button flex class="md-raised md-primary md-accent" hm-tap="showPrevPanel()" >Prev</md-button>
+             </div>
+           </md-content>
+         </md-tab>
+         <md-tab ng-repeat="day in selectedDates"  label="{{::day | date:short}}">
+           <table class="table table-striped table-responsive disable-text-selection">
+             <thead>
+             <tr>
+               <th class="time-input">
+                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                 Select times for {{::day | date:short}}
+               </th>
+             </tr>
+             </thead>
+             <tbody class="time-input">
+             <tr ng-mousedown="timeClick($event, $index, selectedIndex)" ng-mouseenter="timeEnter($event, $index, selectedIndex)" ng-repeat="time in dayHours[selectedIndex]">
+               <td class="time-input" style="width:950px" ng-class="{success: time.selected}">{{::time.time | date:"h:mm a"}}</th>
+             </tr>
+             </tbody>
+           </table>
+         </md-tab>
+       </md-tabs>
+
+
+
+
+       <div ng-if="selectedDates.length!==0" layout="row" layout-align="space-around start">
+         <md-button flex flex-order="1" id="prev" class="md-raised md-primary md-accent" hm-tap="showPrevPanel()">Prev</md-button>
+         <div flex flex-order="2">
+         </div>
+         <md-button flex flex-order="3" id="next" class="md-raised md-primary md-accent" hm-tap="saveEvent()">Next</md-button>
+       </div>
+    </div>
+
+
+
+
+
   <div class="row">
     <div class="col-lg-12" ng-hide="eventdetail">
       <a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
@@ -20,7 +75,16 @@
 
   <div class="row">
 
-    <div id="chart" class="col-lg-8" response-chart on-rect-click="pullData(response)"></div>
+
+      <md-tabs md-selected="selectedIndex" ng-if="isDays.value">
+          <md-tab ng-repeat="day in days"
+                  label="{{$index}}">
+          <div id="chart" class="col-lg-8" response-chart on-rect-click="pullData(response)" day="day"></div>
+          </md-tab>
+      </md-tabs>
+
+
+
     <div class="col-lg-4">
         <ul>
         <li ng-repeat="response in responses"> {{ response.username }}  {{ response.status }}</li>
@@ -28,5 +92,22 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  

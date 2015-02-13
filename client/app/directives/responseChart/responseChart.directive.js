@@ -1,93 +1,52 @@
 'use strict';
 
 angular.module('doodleplusApp')
-.directive('responseChart', ['d3Service', '$stateParams', 'storeEvent', 'Time', 'responseStatus', function(d3Service, $stateParams, storeEvent, Time, responseStatus) {
+.directive('responseChart', ['d3Service', '$stateParams', 'responseStatus', 'responseChartData', function(d3Service, $stateParams, responseStatus, responseChartData) {
 	return {
 		restrict: 'EA',
 		scope: {
-			onRectClick: '&'
+			onRectClick: '&',
+			day: '='
 		},
 		link: function(scope, element, attrs) {
-
-			// scope.responseStatus = responseStatus;
-			console.log(responseStatus)
-
 			d3Service.d3().then(function(d3) {
 
-				var days;
 				var eventID = $stateParams.event_id;
 
-				storeEvent.getEvent(eventID, null, function() {
-					var event = storeEvent.event;
-					var times = storeEvent.event.times;
-					Time.organizeByDay(times);
-					days = Time.days;
-					days.forEach(function(day){
-						var allRespondents = [];
-						var allTimes = [];
+				// responseChartData.generateResponseData(eventID)
+				// 	.then (renderChart);
 
-						day.times.sort(function(a,b){ 		//sort event times
-							var timeA = a.time;
-							var timeB = b.time;
-							return (timeA < timeB) ? -1 : (timeA > timeB) ? 1 : 0;
-						});
-						day.times.forEach(function(time){	//extract all UUIDs and times to reduce
-							for (var i=0; i<time.responses.length; i++){
-								allRespondents.push(time.responses[i].UUID);
-								allTimes.push(time.time);
-							};		
-							time.responses.sort(function(a,b){  //sort responses by status
-								var textA = a.status.toUpperCase();
-								var textB = b.status.toUpperCase();
-								return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-							});
-						})
-						day.allRespondents = allRespondents.reduce(function(accum, current) {  //reduce respondent UUIDs
-							if (accum.indexOf(current) < 0) {
-								accum.push(current);
-							}
-							return accum;
-						}, []);
-						day.allTimes = allTimes.reduce(function(accum, current) {  //reduce times
-							if (accum.indexOf(current) < 0) {
-								accum.push(current);
-							}
-							return accum;
-						}, []);
+				renderChart(scope.day);
 
+				function renderChart (day){
+
+
+					var dayData = day;
+					console.log(dayData)
+
+					var hour = d3.time.format("%H:%M")
+
+					var dayDataFormatted = dayData.allTimes.map(function(day){
+						return hour(new Date(Number(day)));
 					})
 
-renderChart(days[0])
+					var numResponses = dayData.allRespondents.length,
 
-});
+					responseData = [];
 
-function renderChart (dayData){
+					dayData.times.forEach(function(time){
+						for (var i=0; i<time.responses.length; i++){
+							time.responses[i].index = i;
+							time.responses[i].time = time.time;
+							time.responses[i].allTimesIndex = dayData.allTimes.indexOf(time.responses[i].time);
+							responseData.push(time.responses[i]);
+						}
+					})
 
-	var hour = d3.time.format("%H:%M")
-
-	var dayDataFormatted = dayData.allTimes.map(function(day){
-		return hour(new Date(Number(day)));
-	})
-
-	var numResponses = dayData.allRespondents.length,
-
-	responseData = [];
-
-	console.log(dayData)
-
-	dayData.times.forEach(function(time){
-		for (var i=0; i<time.responses.length; i++){
-			time.responses[i].index = i;
-			time.responses[i].time = time.time;
-			time.responses[i].allTimesIndex = dayData.allTimes.indexOf(time.responses[i].time);
-			responseData.push(time.responses[i]);
-		}
-	})
-
-	var m = {top: 40, right: 20, bottom: 20, left: 60},
-	frameWidth = Number((window.innerWidth*.6).toFixed(2)),
-	frameHeight = Number((window.innerHeight*.7).toFixed(2)),
-	barSize = frameWidth/8
+					var m = {top: 40, right: 20, bottom: 20, left: 60},
+					frameWidth = Number((window.innerWidth*.6).toFixed(2)),
+					frameHeight = Number((window.innerHeight*.7).toFixed(2)),
+					barSize = frameWidth/8
 				// barSize = frameWidth/dayData.allRespondents.length;
 
 				var yRange = function(){
@@ -141,14 +100,17 @@ function renderChart (dayData){
 					.attr("time", function(d){ return d.time })
 					.attr("x",function(d) { return d.index*barSize })
 					.attr("y",function(d){ return frameHeight*d.allTimesIndex/dayData.allTimes.length })
-					.attr("width",barSize)
-					.attr("height", frameHeight/dayData.allTimes.length - 1.5)
+					.attr("rx", 1)
+					.attr("ry", 1)
+					.attr("width",barSize - 1)
+					.attr("height", frameHeight/dayData.allTimes.length - 1)
 					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
 					.on('click', function(d){ 
 						var responses = responseStatus.displayStatus.call(this);
 						scope.onRectClick({ response: responses });
 					});
+
 
 				//axes, scale and grid/
 
@@ -171,3 +133,4 @@ function renderChart (dayData){
 	});
 }};
 }]);
+

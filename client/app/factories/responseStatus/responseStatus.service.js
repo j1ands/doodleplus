@@ -51,7 +51,6 @@ angular.module('doodleplusApp')
       rows.push(el.time)
       if (!hash[el.UUID]){
         hash[el.UUID] = el;
-        console.log(hash)
         hash[el.UUID].superStatus = el.status;
         hash[el.UUID].num = 1;
       } else {

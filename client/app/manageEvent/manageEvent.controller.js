@@ -1,36 +1,39 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, responseChartData) {
+    
     var responseArray = [];
     $scope.responses = [];
+    $scope.days = [];
+
+    $scope.isDays = {
+        value: false
+    };
+    $scope.$watch("days", function(newVal, oldVal){
+        if(newVal.length){
+            $scope.isDays.value = true;
+        }
+    })
+
+var eventID = $stateParams.event_id;
+
+responseChartData.generateResponseData(eventID)
+                    .then (function(days){
+                        $scope.days = days.days;
+                        console.log(days)
+                    });
+
+
+    $scope.respondents = [];
+
+
 
     $scope.pullData = function(response){
     	$scope.responses = [];
         $scope.responses = response;
     	$scope.$apply();
     };
-
-    var event_id = $stateParams.event_id;
-
-    $scope.getEvent = function(eventID) {
-        storeEvent.getEvent(eventID, function() {
-            $scope.event = storeEvent.event;
-            $scope.times = storeEvent.event.Times;
-            Time.organizeByDay($scope.times);
-            $scope.days = Time.days;
-            console.log(Time.days)
-        });
-    }
-
-    $scope.getEvent($stateParams.event_id);
-
-
-
-
-
-
-
 
   });
 
