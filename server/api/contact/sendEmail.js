@@ -49,8 +49,10 @@ function textBody(phoneData,createdEvent){
 function sendTwilText(to,from,body){
   if (to.length===10){
     to= '+1'+to;
-  } else {
+  } else if (to.length===11) {
     to = '+' + to;
+  } else {
+    throw "number not correct";
   }
   twilClient.messages.create({
     to: to,
