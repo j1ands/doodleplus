@@ -5,6 +5,8 @@ angular.module('doodleplusApp')
     $scope.message = function(){
       console.log('event');
     };
+
+    $scope.isPhone = typeof window.orientation !== 'undefined';
     $scope.invitedEmails = [];
     $scope.eventOptions = {
       isPrivate: false,
@@ -25,7 +27,7 @@ angular.module('doodleplusApp')
     //Panel Show Logic
     $scope.currentPanel = 0;
     $scope.showNextPanel = function(currentPanel){
-      if (!$scope.EventInfo.$valid){
+      if ($scope.EventInfo.$valid){
         if (currentPanel<2){
           $scope.currentPanel+=1;
         }
@@ -53,7 +55,6 @@ angular.module('doodleplusApp')
       timeIncrement: 86400000
     }];
     $scope.timeIncrement = $scope.timeOptions[1];
-    $scope.rating3 =3;
 
 
 
@@ -139,6 +140,7 @@ angular.module('doodleplusApp')
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       console.log('the merged time',mergedTimes);
+      $scope.eventOptions.timeIncrement = $scope.timeIncrement;
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
