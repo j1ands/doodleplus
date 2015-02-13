@@ -2,40 +2,28 @@
   <div class="fullscreen-overlay">
   </div>
 </div>
+<div layout="column" id="banner" layout-align="center center">
+  <h1 id="banner-tagline">find the best time for your</h1>
+  <div class="rotating-word-block-container">
+    <ul class="rotating-word-block">
+      <li>next event</li>
+      <li>dinner party</li>
+      <li>ping pong tournament</li>
+      <li>epic road trip</li>
+    </ul>
+  </div>
 
-  <header class="hero-unit" id="banner">
-    <div class="container">
-      <span class="h1">find the best time for your</span><br>
-<!--         <div class="rotating-word-block">
-          <span>dinner party</span>
-          <span>epic road trip</span>
-          <span>ping pong tournament</span>
-          <span>next event</span>
-        </div> -->
-      <div class="rotating-word-block-container">
-        <ul class="rotating-word-block">
-          <li>next event</li>
-          <li>dinner party</li>
-          <li>ping pong tournament</li>
-          <li>epic road trip</li>
-        </ul>
-      </div>
-    </div>
-  </header>
-
-  <div layout="row" layout-align="center center">
-    <md-input-container class="home-input-field">
+  <div layout="row" layout-md="column" layout-sm="column" layout-align="center center">
+    <md-input-container class="home-input-field" flex="70" flex-md="100" flex-sm="100">
       <label for="title">Event Title: </label>
       <input id="title" name="title" ng-model="eventOptions.title" type="text">
     </md-input-container>
-    <md-button class="md-button md-button-colored btn-lg" aria-label="Create Event" hm-tap="createEvent()" ng-click="createEvent()">
+    <md-button class="md-button md-cornered md-button-colored btn-lg home-input-button" aria-label="Create Event" hm-tap="createEvent(eventOptions.title)" ng-click="createEvent(eventOptions.title)" flex>
       Get Started
     </md-button>
   </div>
+</div>
 
-<!-- <footer class="footer">
-  <div class="container">
-      <p>Created using Angular Fullstack v2.0.13 |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
-</footer> -->
+<footer class="footer">
+      <p>By <a href="https://github.com/Ataraxic" target="_blank">Justin Sung</a>, <a href="https://github.com/katiepeters" target="_blank"> Katie Peters</a>, <a href="https://github.com/awatt" target="_blank">Andy Watt</a>, and <a href="https://github.com/j1ands" target="_blank">Jordan Landau</a></p>
+</footer>

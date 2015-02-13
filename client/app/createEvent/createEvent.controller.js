@@ -5,10 +5,10 @@ angular.module('doodleplusApp')
     $scope.message = function(){
       console.log('event');
     };
-
     $scope.invitedEmails = [];
     $scope.eventOptions = {
-      isPrivate: false
+      isPrivate: false,
+      title: storeEvent.title
     };
     $scope.userOptions = {};
     $scope.allDays = {value: false};
