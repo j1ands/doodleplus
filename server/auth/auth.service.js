@@ -99,6 +99,7 @@ function isRespondee() {
   return compose()
     // Validate jwt
     .use(function(req, res, next) {
+	    console.log(req.body);
       validateJwt(req, res, next);
     });
 }

@@ -7,6 +7,10 @@
  var router = express.Router();
 
  router.post('/', controller.createRespondee);
- router.get('/', auth.isRespondee(), controller.getRespondee);
+ router.get('/:id', function(req, res, next) {
+	 console.log("hey");
+	 console.log(req.params);
+	 next();
+ }, auth.isRespondee(), controller.getRespondee);
 
  module.exports = router;

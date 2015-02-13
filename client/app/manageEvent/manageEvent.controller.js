@@ -1,10 +1,13 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth, socket) {
 	  
     $scope.responses = [];
     $scope.emailToAdd = "";
+    socket.liveResponse(function(){
+	    alert('hey doggy');
+    });
 
     var mCtrl = this;
 

@@ -75,17 +75,21 @@ angular.module('doodleplusApp')
 
       getCurrentRespondee: function(callback) {
         var token = $cookieStore.get('token');
-        return $http.get('/api/respondee', {UUID: token}).success(function(idObj) {
+	console.log(token);
+        return $http.get('/api/respondee', {UUID:token}).success(function(idObj) {
+		console.log("hooray");
             safeCb(callback)(idObj);
           }).error(function(err) {
+		  console.log("noo");
             return safeCb(callback)(err);
           });
       },
 
       createRespondee: function(callback) {
+	var auth = this;	      
         return $http.post('/api/respondee').success(function(data) {
             $cookieStore.put('token', data.token);
-            return Auth.getCurrentRespondee(callback);
+            return auth.getCurrentRespondee(callback);
           }).error(function(err) {
             return safeCb(callback)(err);
           });
@@ -145,7 +149,6 @@ angular.module('doodleplusApp')
         if (arguments.length === 0) {
           return currentUser.hasOwnProperty('role');
         }
-
         return this.getCurrentUser(null)
           .then(function(user) {
             var is = user.hasOwnProperty('role');
