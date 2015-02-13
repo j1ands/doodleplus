@@ -13,7 +13,8 @@ angular.module('doodleplusApp')
     var height = Number(this.getAttribute('height'))
     
 
-    if(mouse[1] > y && mouse[1] < y + height){
+    if(mouse[1] > y && mouse[1] < y + height + 1.5){
+
       if(this.classList.contains('selected')){
         this.classList.remove('selected');
         
@@ -56,6 +57,8 @@ angular.module('doodleplusApp')
           hash[el.UUID].num++;
         }
       });
+
+    responses = [];
     
   allRows = rows.reduce(function(accum, current) {  //reduce times
                     if (accum.indexOf(current) < 0) {
