@@ -65,8 +65,8 @@ angular.module('doodleplusApp')
 				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');		
 
 				function viewBars (day) {
-
 					/* add bars to chart */
+					var theDate = day.date;
 					svg.append("g")
 					.attr("class","chart")
 					.selectAll("rect")
@@ -78,6 +78,7 @@ angular.module('doodleplusApp')
 					.attr("class", function(d){ return d.status + " rect" })
 					.attr("UUID", function(d){ return d.UUID })
 					.attr("time", function(d){ return d.time })
+					.attr("date", theDate)
 					.attr("x",function(d) { return d.index*barSize })
 					.attr("y",function(d){ return frameHeight*d.allTimesIndex/day.allTimes.length })
 					.attr("rx", 1)
@@ -87,7 +88,8 @@ angular.module('doodleplusApp')
 					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
 					.on('click', function(d){ 
-						var responses = responseStatus.displayStatus.call(this);
+		
+						var responses = responseStatus.displayStatus.call(this, d.time,theDate);
 						scope.onRectClick({ response: responses });
 					});
 

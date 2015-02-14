@@ -18,26 +18,20 @@
     </svg>
   </div>
 
-  <div class="row">
-
-      <md-tabs md-selected="selectedIndex" ng-if="isDays.value">
-          <md-tab ng-repeat="day in days" label="{{$index + 1}}">
-
-          <div id="chart-{{$index}}" response-chart on-rect-click="pullData(response)" day="day" day-num="$index" ng-if="selectedIndex == $index"></div>
-
+  <div class="row" id="dayChart" >
+      <md-tabs md-selected="selectedIndex" >
+          <md-tab ng-repeat="day in days" label="{{day.date}}" ng-mousedown="changeDay(selectedIndex,$index)" ng-if="isDays.value">
+            <md-content>
+            <div id="chart-{{$index}}" response-chart on-rect-click="pullData(response)" day="day" day-num="$index"></div>
+            </md-content>
           </md-tab>
-
-
- 
-
       </md-tabs>
 
-    </md-tab>
-  </md-tabs>
-
-           <ul>
-        <li ng-repeat="response in responses"> {{ response.username }}  {{ response.status }}</li>
+    <div class="status-list">
+      <ul>
+        <li ng-repeat="response in responses[currentIndex]"> {{ response.username }}  {{ response.status }}</li>
       </ul>
+    </div>
 
   </div>
 </div>

@@ -5,9 +5,11 @@ angular.module('doodleplusApp')
 
   var responses = [];
 
-  var displayStatus = function(){
+  var displayStatus = function(time,date){
+    var thisTime = time;
+    var thisDate = date;
     $("rect").each(function() {
-      selectTime.call(this);
+      selectTime.call(this, thisTime, thisDate);
     });
     $("rect").each(function() {
       loadStatus.call(this); 
@@ -16,18 +18,15 @@ angular.module('doodleplusApp')
   }
 
   //manage rect classes for selected timeslots
-  var selectTime =  function() {
-    var mouse = d3.mouse(this)
-    var x = Number(this.getAttribute('x'))
-    var y = Number(this.getAttribute('y'))
-    var width = Number(this.getAttribute('width'))
-    var height = Number(this.getAttribute('height'))
-    if(mouse[1] > y && mouse[1] < y + height + 1.5){
+  var selectTime =  function(time,date) {
+    var thisTime = this.getAttribute('time');
+    var thisDate = this.getAttribute('date');
+    if (thisTime === time  && thisDate === date){
       if(this.classList.contains('selected')){
         this.classList.remove('selected');
       } else {
         this.classList.add('selected');
-      }  
+      }   
     }
   }
 
