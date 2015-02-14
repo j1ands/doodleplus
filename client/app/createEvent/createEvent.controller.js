@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore) {
     $scope.message = function(){
       console.log('event');
     };
 
+    var ceCtrl = this;
     $scope.isPhone = typeof window.orientation !== 'undefined';
     $scope.invitedEmails = [];
     $scope.eventOptions = {
@@ -26,6 +27,7 @@ angular.module('doodleplusApp')
     $scope.dayHours = [];
     //Panel Show Logic
     $scope.currentPanel = 0;
+    
     $scope.showNextPanel = function(currentPanel){
       if ($scope.EventInfo.$valid){
         if (currentPanel<2){
@@ -127,6 +129,8 @@ angular.module('doodleplusApp')
         time: mergedTimes
       }, function(res){
         console.log("response",res);
+        $cookieStore.put('user', res.user._id);
+        $location.path('/manageEvent/' + res.createdEvent._id);
       });
     };
 
@@ -150,8 +154,10 @@ angular.module('doodleplusApp')
           $scope.eventFailure = true;
           return;
         }
+	       
+        $cookieStore.put('user', res.user._id);
         console.log('res',res);
-        $scope.createdEvent = res.createdEvent;
+        ceCtrl.createdEvent = res.createdEvent;
         $scope.currentPanel+=1;
       });
     };

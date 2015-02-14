@@ -98,8 +98,6 @@ angular.module('doodleplusApp')
     }
 
 
-
-
     // var getPosition = function getPosition(element) {
     //     var xPosition = 0;
     //     var yPosition = 0;
@@ -145,17 +143,6 @@ angular.module('doodleplusApp')
       $(window).scroll(sticky_relocate);
       sticky_relocate();
     });
-
-
-
-
-
-
-
-
-
-
-
 
 
 

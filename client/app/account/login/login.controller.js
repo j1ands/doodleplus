@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('LoginCtrl', function($scope, Auth, $state, $window) {
+  .controller('LoginCtrl', function($scope, Auth, $state, $window, $cookieStore) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -23,7 +23,10 @@ angular.module('doodleplusApp')
       }
     };
 
-    $scope.loginOauth = function(provider) {
-      $window.location.href = '/auth/' + provider;
+    $scope.loginOauth = function(provider, eventId) {
+      debugger;
+      var x = $cookieStore.get('user');
+      var location = '/connect/' + provider + "?user=" + x +"&event=" + eventId;
+      $window.location.href = location;
     };
   });
