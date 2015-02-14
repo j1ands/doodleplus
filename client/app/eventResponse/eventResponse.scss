@@ -35,8 +35,8 @@
 .response-cell-btn {
 	height: 100%;
 	width: 100%;
-	background-color: #F9F8F8;
-	border: solid 1px #ccc;
+	background-color: $lightgray;
+	border: solid 1px $darkgray;
 	border-radius: 0px;
 	color: #D8D5D5;
 	display: block;
@@ -47,17 +47,17 @@
 }
 
 .able, .able:hover {
-	background-color: #6CF2A4;
+	background-color: $able;
 	color: white;
 }
 
 .ifneedbe, .ifneedbe:hover {
-	background-color: #7CD1F2;
+	background-color: $ifneedbe;
 	color: white;
 }
 
 .maybe, .maybe:hover {
-	background-color: #F2B37C;
+	background-color: $maybe;
 	color: white;
 }
 
@@ -86,4 +86,11 @@
 	.remove-for-phones {
 		display: none;
 	}
+}
+
+#stick {
+	position: fixed;
+	top: 0px;
+	z-index: 20000;
+	border-bottom: solid 1px $darkgray;
 }

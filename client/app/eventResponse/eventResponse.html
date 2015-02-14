@@ -1,14 +1,12 @@
-<div ng-if="showCalendar" class="container" ng-mouseleave="resetMouse()" ng-mouseup="resetMouse()">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="page-header">
+<div layout="column" ng-mouseleave="resetMouse()" ng-mouseup="resetMouse()">
+  <div layout="row">
+      <div class="page-header" flex>
         <h2>{{event.title}}</h2>
       </div>
-    </div>
   </div>
 
-  <div class="row">
-  	<div class="col-lg-12" ng-hide="eventdetail">
+  <div layout="row" flex>
+  	<div ng-hide="eventdetail" flex>
   		<a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Event Details</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
   	</div>
   </div>
@@ -39,13 +37,13 @@
   <div class="row">
 
 		<div class="col-lg-4 col-md-4 col-sm-4 remove-for-phones">
-		  <datepicker ng-click="changePage(date.value)" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" date-disabled="dateDisabled(date, mode)" show-weeks="false" multi-select='selectedDates'></datepicker>
+		  <datepicker ng-if="showCalendar" ng-click="changePage(date.value)" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" date-disabled="dateDisabled(date, mode)" show-weeks="false" multi-select='selectedDates'></datepicker>
 		</div>
 		<div class="col-lg-1 col-md-1 col-sm-1 remove-for-phones">
 		</div>
 		<div vertical="true" class="col-lg-7 col-md-7 col-sm-7">
 			<h4>When are you available?</h4><br>
-			<md-tabs ng-click="testAdding()" md-selected="selectedDay">
+			<md-tabs class="md-tabs-transparent" ng-click="testAdding()" md-selected="selectedDay">
 				<md-tab ng-repeat="day in days"  label="{{day.dateInMS | date:'MMM dd'}}"><br>
 					<table class="response-time-table" cellspacing="0" cellpadding="0"> 
 						<tr>
@@ -68,7 +66,7 @@
 				<h4>Submit Your Responses</h4><hr>
 				<form>
 					<label for="username"> Name </label>
-					<input class="form-control" id="username" ng-model="username" type="text" placeholder="Name">
+					<input class="form-control" id="username" ng-model="username.name" type="text" placeholder="Name">
 					<br>
 					<button class="btn btn-primary" ng-click="submitResponses()">Submit Response</button>
 				</form>

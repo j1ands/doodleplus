@@ -10,9 +10,12 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styless
  */
 
-$able: #6CF2A4;
-$ifneedbe: #7CD1F2;
-$maybe: #F2B37C;
+$able: #88CF69;
+$ifneedbe: #023152;
+$maybe: #7265D6;
+$lightgray: #F9F8F8;
+$mediumgray: #F9F8F8;
+$darkgray: #ccc;
 
 body {
 	font-family: 'Open Sans', sans-serif;
@@ -24,6 +27,26 @@ body {
 
 .md-button {
 	color: white !important;
+}
+
+md-tabs-ink-bar {
+	height: 4px;
+}
+
+.md-tabs-transparent {
+	section {
+		background-color: white !important;
+		md-tab-label {
+			color: black !important;
+		}
+		md-tab.active{
+			font-weight: 700;
+		}
+		md-tabs-ink-bar {
+			color: black;
+			background-color: black;
+		}
+	}
 }
 
 

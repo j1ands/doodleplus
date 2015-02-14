@@ -6,7 +6,7 @@ angular.module('doodleplusApp')
   	$scope.mouseDown = false;
   	$scope.responses = [];
   	$scope.days = [];
-    $scope.username;
+    $scope.username = {};
     $scope.oldResponses = [];
     $scope.selectedDates = [];
     $scope.showCalendar = false;
@@ -19,7 +19,7 @@ angular.module('doodleplusApp')
       $scope.times = thisEvent.times;
       Time.organizeByDay($scope.times);
       $scope.days = Time.days;
-      $scope.username = username;
+      $scope.username.name = username;
       $scope.oldResponses = oldResponses;
       $scope.showCalendar = true;
     }
@@ -39,7 +39,7 @@ angular.module('doodleplusApp')
 
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses, setEventDetails); 
+      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, setEventDetails); 
     }
 
     $scope.selectResponse = function(time, response) {
@@ -96,6 +96,67 @@ angular.module('doodleplusApp')
         })
       }
     }
+
+
+
+
+    // var getPosition = function getPosition(element) {
+    //     var xPosition = 0;
+    //     var yPosition = 0;
+        
+    //     while(element) {
+    //         xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+    //         yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+    //         element = element.offsetParent;
+    //     }
+    //     return { x: xPosition, y: yPosition };
+    // }
+
+    // var doSomething = function() {
+    //   var myElement = document.querySelector(".md-tabs-transparent");     
+    //   var position = getPosition(myElement);
+    //   alert("The image is located at: " + position.x + ", " + position.y);
+    // }
+
+    // doSomething();
+
+    var count = 0;
+    var findOffset = function() {
+      if (count < 3) {
+        var div_top = $('.md-header').offset().top;
+        $scope.div_top = div_top;
+        count++;
+      }
+    }
+
+    findOffset();
+
+    function sticky_relocate() {
+      var window_top = $(window).scrollTop();
+      findOffset();
+      if (window_top > $scope.div_top) {
+        $('.md-header').attr('id', 'stick');
+      } else {
+        $('.md-header').removeAttr('id', 'stick');
+      }
+    }
+
+    $(function() {
+      $(window).scroll(sticky_relocate);
+      sticky_relocate();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   });
