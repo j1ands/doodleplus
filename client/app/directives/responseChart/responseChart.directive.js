@@ -14,14 +14,12 @@ angular.module('doodleplusApp')
 
 				var eventID = $stateParams.event_id;
 
-				// responseChartData.generateResponseData(eventID)
-				// 	.then (renderChart);
+				
 
 				renderChart(scope.day);
 
-				function renderChart (day){
 
-					var day = day;
+				function renderChart (day){
 
 					var hour = d3.time.format("%H:%M")
 
@@ -64,24 +62,7 @@ angular.module('doodleplusApp')
 				.attr("width",frameWidth + m.right +m.left)
 				.attr("height",frameHeight + m.top + m.bottom)
 				.append("g")
-				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
-
-
-				function initCalibration(){
-					d3.select('[role="calibration"]').select('svg')
-					.selectAll('rect').data(colorCalibration).enter()
-					.append('rect')
-					.attr('width',20)
-					.attr('height',20)
-					.attr('x',function(d,i){
-						return i*20;
-					})
-					.attr('fill',function(d){
-						return d;
-					});
-				}
-
-				initCalibration();			
+				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');		
 
 				function viewBars (day) {
 
@@ -92,6 +73,8 @@ angular.module('doodleplusApp')
 					.data(responseData)
 					.enter()
 					.append("rect")
+					// .transition()
+					// .duration(1000)
 					.attr("class", function(d){ return d.status + " rect" })
 					.attr("UUID", function(d){ return d.UUID })
 					.attr("time", function(d){ return d.time })
