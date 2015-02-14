@@ -29,11 +29,16 @@ $break-large: 1200px;
 
 .main-content {
 	margin-bottom: 25px;
-	@media screen and (min-width: 992px) {
-		margin-left: 25%;
-		margin-right: 25%;
-		padding-left: 0px;
-		padding-right: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+
+	@media screen and (min-width: 1457px) {
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+	@media screen and (min-width: 1154px) {
+		margin-left: 12%;
+		margin-right: 12%;
 	}
 }
 
@@ -152,4 +157,40 @@ tbody {
 //}
 .google-btn {
 	background-color:red;
+}
+.title-response {
+	@media screen and (max-width: 881px) {
+	font-size: 30px;
+	}
+}
+.prompt-response {
+	@media screen and (max-width: 881px) {
+	font-size: 20px;
+	}
+
+	@media screen and (max-width: 629px) {
+	font-size: 16px;
+	font-weight: 600;
+	}
+}
+.google-text {
+	@media screen and (max-width: 462px) {
+		font-size: 9px;
+	}
+}
+.link-text {
+	@media screen and (max-width: 755px) {
+		font-size: 16px;
+	}
+	@media screen and (max-width: 693px){
+		font-size:14px;
+	}
+	@media screen and (max-width: 567px) {
+		font-size:12px;
+	}
+	@media screen and (max-width : 493px) {
+		font-size: 16px;
+		display: block;
+		text-align: center;
+	}
 }
