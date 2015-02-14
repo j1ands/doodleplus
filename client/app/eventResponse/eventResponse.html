@@ -1,4 +1,4 @@
-<div ng-if="showCalendar" class="container" ng-mouseleave="resetMouse()" ng-mouseup="resetMouse()">
+<div class="container" ng-mouseleave="resetMouse()" ng-mouseup="resetMouse()">
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
@@ -39,7 +39,7 @@
   <div class="row">
 
 		<div class="col-lg-4 col-md-4 col-sm-4 remove-for-phones">
-		  <datepicker ng-click="changePage(date.value)" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" date-disabled="dateDisabled(date, mode)" show-weeks="false" multi-select='selectedDates'></datepicker>
+		  <datepicker ng-if="showCalendar" ng-click="changePage(date.value)" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" date-disabled="dateDisabled(date, mode)" show-weeks="false" multi-select='selectedDates'></datepicker>
 		</div>
 		<div class="col-lg-1 col-md-1 col-sm-1 remove-for-phones">
 		</div>
@@ -68,7 +68,7 @@
 				<h4>Submit Your Responses</h4><hr>
 				<form>
 					<label for="username"> Name </label>
-					<input class="form-control" id="username" ng-model="username" type="text" placeholder="Name">
+					<input class="form-control" id="username" ng-model="username.name" type="text" placeholder="Name">
 					<br>
 					<button class="btn btn-primary" ng-click="submitResponses()">Submit Response</button>
 				</form>

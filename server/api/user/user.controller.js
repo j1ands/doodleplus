@@ -39,7 +39,8 @@ exports.index = function(req, res) {
       'name',
       'email',
       'role',
-      'provider'
+      'provider',
+      'facebook'
     ]
   })
     .then(function(users) {
@@ -138,7 +139,9 @@ exports.me = function(req, res, next) {
       'name',
       'email',
       'role',
-      'provider'
+      'provider',
+      'facebook',
+      'google'
     ]
   })
     .then(function(user) { // don't ever give out the password or salt

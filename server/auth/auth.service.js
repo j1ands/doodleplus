@@ -84,8 +84,10 @@ function setTokenCookie(req, res) {
     });
   }
   var token = signToken(req.user._id, req.user.role);
-  res.cookie('token', JSON.stringify(token));
-  res.redirect('/');
+  res.cookie('usertoken', JSON.stringify(token));
+  //console.log(req);
+  //res.send(200, req);
+  res.redirect('/manageEvent/' + req.currentUser.eventId);
 }
 
 
@@ -97,8 +99,20 @@ function isRespondee() {
   return compose()
     // Validate jwt
     .use(function(req, res, next) {
-      validateJwt(req, res, next);
-    });
+      var jwtString = req.cookies.token;
+
+      if(jwtString)
+      {
+        jwtString = jwtString.substr(1);
+        jwtString = jwtString.substring(0,jwtString.length-1);    
+      }
+
+      jwt.verify(jwtString, 'doodleplus-secret', {secret: 'doodleplus-secret'}, function(err, decoded) {
+        if (err) return res.send(404, "Refresh page!");
+        req.user = decoded;
+        next();
+      });
+  });
 }
 
 

@@ -11,6 +11,44 @@
     <div class="col-lg-12" ng-hide="eventdetail">
       <a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
     </div>
+    <div class="col-lg-12">
+    Sharable link: <a href="http://localhost:9000/event/{{Manage.event_id}}">http://localhost:9000/event/{{Manage.event_id}}</a>
+    </div>
+    <div class="col-lg-12">
+      <form name="invites" ng-submit="addEmail()">
+        <div class="form-group">
+          <label for="emailToAdd">Add Email Addresses:</label>
+          <textarea class="form-control" rows="4" id="emailToAdd" name="emailToAdd" ng-model="emailToAdd" placeholder=""></textarea>
+        </div>
+        <md-button class="md-raised md-primary pull-right" type="submit">Send Invite(s)</md-button>
+      </form>
+      <!-- <h4>Google Contacts:</h4> -->
+    <div class="google-contacts-search" ng-show="Manage.currentUser.google">
+      <input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts"></input>
+    </div>
+   <!-- <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">
+     <a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>
+   </div> -->
+   <md-list layout="column" class="google-contacts-list" ng-show="Manage.currentUser.google"> 
+    	<md-item ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">
+		<md-item-content> 
+			<div class="md-tile-content" style="padding:0px;">
+				<a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact)" ng-class="{chosen:contact.selected}">{{contact.name != "" ? contact.name : contact.email}}</a>
+			</div>		
+		</md-item-content>
+	</md-item>
+    </md-list>
+
+      <ul>
+        <li ng-repeat="email in invitedEmails">{{email}}</li>
+      </ul>
+      <div ng-controller="LoginCtrl">
+        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google', Manage.event_id)" ng-hide="Manage.currentUser.google">
+          <i class="fa fa-google-plus"></i> Google Contacts
+        </a>
+      </div>
+    </div>
+
   </div>
 
   <div class="calibration" role="calibration">

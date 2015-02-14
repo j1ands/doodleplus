@@ -3,14 +3,15 @@
 angular.module('doodleplusApp')
   .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
 
-  	$scope.mouseDown = false;
-  	$scope.responses = [];
-  	$scope.days = [];
-    $scope.username;
-    $scope.oldResponses = [];
-    $scope.selectedDates = [];
-    $scope.showCalendar = false;
-    $scope.selectedDay = 0;
+  
+  $scope.mouseDown = false;
+  $scope.responses = [];
+  $scope.days = [];
+  $scope.username = {};
+  $scope.oldResponses = [];
+  $scope.selectedDates = [];
+  $scope.showCalendar = false;
+  $scope.selectedDay = 0;
 
     var event_id = $stateParams.event_id;
 
@@ -19,7 +20,7 @@ angular.module('doodleplusApp')
       $scope.times = thisEvent.times;
       Time.organizeByDay($scope.times);
       $scope.days = Time.days;
-      $scope.username = username;
+      $scope.username.name = username;
       $scope.oldResponses = oldResponses;
       $scope.showCalendar = true;
     }
@@ -39,7 +40,7 @@ angular.module('doodleplusApp')
 
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username, $scope.UUID, $scope.oldResponses, setEventDetails); 
+      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, setEventDetails); 
     }
 
     $scope.selectResponse = function(time, response) {
@@ -96,7 +97,6 @@ angular.module('doodleplusApp')
         })
       }
     }
-
 
   });
 
