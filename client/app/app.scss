@@ -7,12 +7,24 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 
 /**
- * App-wide Styles
+ * App-wide Styless
  */
 
 $able: #6CF2A4;
 $ifneedbe: #7CD1F2;
 $maybe: #F2B37C;
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.md-button-colored {
+	background-color: #7265D6;
+}
+
+.md-button {
+	color: white !important;
+}
 
 
 h5, .h5 {
@@ -23,12 +35,12 @@ a:hover {
 	text-decoration: none;
 }
 
-.browsehappy {
+/*.browsehappy {
     margin: 0.2em 0;
     background: #ccc;
     color: #000;
     padding: 0.2em 0;
-}
+}*/
 
 th.time-input {
 	width: 550px;
