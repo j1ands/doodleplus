@@ -6,6 +6,6 @@ angular.module('doodleplusApp')
       .state('manageEvent', {
         url: '/manageEvent/:event_id',
         templateUrl: 'app/manageEvent/manageEvent.html',
-        controller: 'ManageEventCtrl'
+        controller: 'ManageEventCtrl as Manage'
       });
   });

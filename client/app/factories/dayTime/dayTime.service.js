@@ -49,7 +49,7 @@ angular.module('doodleplusApp')
       });
       var indexToRemove;
       scopeDaysView.forEach(function(dayArray, index){
-        if (dayArray[0].time.getTime()===timeToRemove[0]){
+        if (dayArray[0].time===timeToRemove[0]){
           indexToRemove = index;
         }
       });

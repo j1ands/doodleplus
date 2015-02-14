@@ -40,22 +40,25 @@ angular.module('doodleplusApp')
 
     Time.organizeByDay = function(timesInMS) {
       Time.days = [];
-      timesInMS.forEach(function(time) {
-        var timeInMS = Number(time.time);
-        var convertedTime = new Date(timeInMS).toDateString();
-        var dayFound = false;
-        if (Time.days.length > 0) {
-          Time.days.forEach(function(day) {
-            if (day.date === convertedTime) {
-              day.times.push(time);
-              dayFound = true;
-            }
-          });
-        }
-        if (dayFound === false) {
-          Time.days.push({date: convertedTime, dateInMS: time.time, times: [time]});
-        }
-      });
+      if(timesInMS)
+      {
+        timesInMS.forEach(function(time) {
+          var timeInMS = Number(time.time);
+          var convertedTime = new Date(timeInMS).toDateString();
+          var dayFound = false;
+          if (Time.days.length > 0) {
+            Time.days.forEach(function(day) {
+              if (day.date === convertedTime) {
+                day.times.push(time);
+                dayFound = true;
+              }
+            });
+          }
+          if (dayFound === false) {
+            Time.days.push({date: convertedTime, dateInMS: time.time, times: [time]});
+          }
+        });
+      }
     }
 
 

@@ -20,11 +20,12 @@ exports.create = function(req, res) {
   User.findOrCreate({where: {email: req.body.user.email}, defaults: req.body.user})
     .spread(function(creator){
       Event.saveNewEvent(req.body, creator).then(function(createdEvent) {
-       Time.saveEventTimes(req.body, creator, createdEvent).then(function (createdTimes) {
-          res.status(200).send({createdEvent: createdEvent});
-        }).catch(function(err){
+        Time.saveEventTimes(req.body, creator, createdEvent).then(function (createdTimes) {
+          res.status(200).send({createdEvent: createdEvent, user: creator});
+        })
+        .catch(function(err){
          console.log('err',err);
-       });
+        });
       }).catch(function(err){
         console.log('Event Save Failed. Reason:',err);
         res.status(500);

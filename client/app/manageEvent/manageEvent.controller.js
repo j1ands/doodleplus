@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
     var responseArray = [];
     $scope.responses = [];
+    $scope.emailToAdd = "";
+
+    var mCtrl = this;
+
+    mCtrl.currentUser = Auth.getCurrentUser();
 
     $scope.pullData = function(response){
     	$scope.responses = [];
@@ -11,7 +16,7 @@ angular.module('doodleplusApp')
     	$scope.$apply();
     };
 
-    var event_id = $stateParams.event_id;
+    mCtrl.event_id = $stateParams.event_id;
 
     $scope.getEvent = function(eventID) {
         storeEvent.getEvent(eventID, function() {
@@ -25,13 +30,37 @@ angular.module('doodleplusApp')
 
     $scope.getEvent($stateParams.event_id);
 
+    $scope.addGoogleContactToText = function(contact) {
+	    var index = $scope.emailToAdd.indexOf(contact.email);
+	    if($scope.emailToAdd == "")
+	    {
+		$scope.emailToAdd += contact.email;
+	    }
+	    else if(index > -1)
+	    {
+		    if(index == 0)
+		    {
+			    $scope.emailToAdd = $scope.emailToAdd.replace(new RegExp(contact.email + '(\, )?', 'g'), "");
+		    }
+		    else
+		    {
+			    $scope.emailToAdd = $scope.emailToAdd.replace(new RegExp('(\, )?' + contact.email, 'g'), "");
+		    }
+	    }
+	    else
+	    {
+		    $scope.emailToAdd+= ", " + contact.email;
+	    }
+	    if(contact.selected)
+	    {
+		    contact.selected = false;
+	    }
+	    else
+	    {
+		    contact.selected = true;
+	    }
 
-
-
-
-
-
-
+    }
   });
 
 
