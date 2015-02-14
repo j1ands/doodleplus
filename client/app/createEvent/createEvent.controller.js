@@ -5,9 +5,9 @@ angular.module('doodleplusApp')
     $scope.message = function(){
       console.log('event');
     };
-    
+
     var ceCtrl = this;
-    $cookieStore.remove('user');
+    $scope.isPhone = typeof window.orientation !== 'undefined';
     $scope.invitedEmails = [];
     $scope.eventOptions = {
       isPrivate: false
@@ -56,7 +56,6 @@ angular.module('doodleplusApp')
       timeIncrement: 86400000
     }];
     $scope.timeIncrement = $scope.timeOptions[1];
-    $scope.rating3 =3;
 
 
 
@@ -144,6 +143,7 @@ angular.module('doodleplusApp')
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       console.log('the merged time',mergedTimes);
+      $scope.eventOptions.timeIncrement = $scope.timeIncrement;
       storeEvent.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
@@ -153,7 +153,8 @@ angular.module('doodleplusApp')
           $scope.eventFailure = true;
           return;
         }
-	$cookieStore.put('user', res.user._id);
+	       
+        $cookieStore.put('user', res.user._id);
         console.log('res',res);
         ceCtrl.createdEvent = res.createdEvent;
         $scope.currentPanel+=1;

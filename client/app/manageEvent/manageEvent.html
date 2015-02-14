@@ -1,4 +1,4 @@
-<div class="container" ng-mouseleave="resetMouse()" ng-mouseup="resetMouse()">
+<div class="container">
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
@@ -50,7 +50,21 @@
     </div>
 
   </div>
-  <div class="row">
-    <div class="col-lg-6" response-chart on-rect-click="pullData(response)"></div>
-    <div class="col-lg-6" ng-repeat="response in responses"> {{ response.user }}  {{ response.status }}</div>
+
+  <div class="calibration" role="calibration">
+    <svg width="240" height="34">
+    </svg>
   </div>
+
+  <div class="row">
+
+    <div id="chart" class="col-lg-8" response-chart on-rect-click="pullData(response)"></div>
+    <div class="col-lg-4">
+        <ul>
+        <li ng-repeat="response in responses"> {{ response.username }}  {{ response.status }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+ 
+ 

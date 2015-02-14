@@ -10,7 +10,7 @@ angular.module('doodleplusApp', [
   'd3',
   'gm.datepickerMultiSelect',
   'ngMaterial',
-  'hmTouchEvents'
+  'ngTouch'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
   $mdThemingProvider.definePalette('gRed', {
@@ -65,6 +65,7 @@ angular.module('doodleplusApp', [
         if (response.status === 401) {
           (state || (state = $injector.get('$state'))).go('login');
           // remove any stale tokens
+          // possibly add remove for respondee 'token'
           $cookieStore.remove('usertoken');
           return $q.reject(response);
         }

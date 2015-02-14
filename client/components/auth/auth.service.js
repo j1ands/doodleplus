@@ -83,7 +83,8 @@ angular.module('doodleplusApp')
       },
 
       createRespondee: function(callback) {
-	var auth = this;
+
+        var auth = this;
         return $http.post('/api/respondee').success(function(data) {
             $cookieStore.put('token', data.token);
             return auth.getCurrentRespondee(callback);
@@ -181,9 +182,9 @@ angular.module('doodleplusApp')
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-	var usertoken = $cookieStore.get('usertoken');
+        var usertoken = $cookieStore.get('usertoken');
         var returned = (typeof usertoken != 'undefined') ? usertoken : $cookieStore.get('token');
-	return returned;
+        return returned;
       }
     };
   });

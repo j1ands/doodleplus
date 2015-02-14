@@ -2,7 +2,7 @@
 
 angular.module('doodleplusApp')
   .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
-	  
+    var responseArray = [];
     $scope.responses = [];
     $scope.emailToAdd = "";
 
@@ -12,7 +12,7 @@ angular.module('doodleplusApp')
 
     $scope.pullData = function(response){
     	$scope.responses = [];
-    	$scope.responses = response;
+        $scope.responses = response;
     	$scope.$apply();
     };
 
