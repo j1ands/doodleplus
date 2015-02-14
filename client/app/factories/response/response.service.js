@@ -39,6 +39,7 @@ angular.module('doodleplusApp')
           });
         } else  
         if (time.status) {
+	console.log("HEY USER:", username);
           responses.push({TimeId: time._id, 
                           status: time.status, 
                           username: username,
