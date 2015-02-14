@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth, $cookieStore) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
