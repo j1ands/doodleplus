@@ -2,13 +2,10 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="page-header">
-        <h2>{{event.title}}</h2>
+        <h2>{{eventTitle}}</h2>
       </div>
     </div>
   </div>
-
-
-
 
   <div class="row">
     <div class="col-lg-12" ng-hide="eventdetail">
@@ -23,15 +20,16 @@
 
   <div class="row">
 
-
       <md-tabs md-selected="selectedIndex" ng-if="isDays.value">
-          <md-tab ng-repeat="day in days"
-                  label="{{$index}}">
-          <div id="chart" class="col-lg-8" response-chart on-rect-click="pullData(response)" day="day"></div>
+          <md-tab ng-repeat="day in days" label="{{$index + 1}}">
+
+          <div id="chart-{{$index}}" class="col-lg-8" response-chart on-rect-click="pullData(response)" day="day" day-num="$index" ng-class="{'ng-hide': selectedIndex !== $index}"></div>
+
           </md-tab>
       </md-tabs>
 
-
+    </md-tab>
+  </md-tabs>
 
     <div class="col-lg-4">
         <ul>

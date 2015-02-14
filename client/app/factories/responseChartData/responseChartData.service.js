@@ -11,6 +11,7 @@ angular.module('doodleplusApp')
       Time.organizeByDay(times);
       var days = Time.days;
       days.forEach(function(day){
+        day.eventTitle = storeEvent.event.title;
         var allRespondents = [];
         var allTimes = [];
 
