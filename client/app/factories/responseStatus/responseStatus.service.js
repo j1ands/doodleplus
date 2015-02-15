@@ -12,7 +12,7 @@ angular.module('doodleplusApp')
       selectTime.call(this, thisTime, thisDate);
     });
     $("rect").each(function() {
-      loadStatus.call(this); 
+      loadStatus.call(this,thisDate); 
     } );
     return generateStatus();
   }
@@ -31,12 +31,13 @@ angular.module('doodleplusApp')
   }
 
   //extract response data from rects of selected rows
-  var loadStatus = function(){
+  var loadStatus = function(thisDate){
     var UUID = this.getAttribute('UUID')
     var username = this.getAttribute('username')
     var status = this.getAttribute('status')
     var time = Number(this.getAttribute('time'))
-    if (this.classList.contains('selected')){
+    var date = this.getAttribute('date');
+    if (this.classList.contains('selected') && thisDate === date){
       responses.push({username: username, status: status, UUID: UUID, time: time});
     }
   }

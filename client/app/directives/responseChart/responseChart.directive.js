@@ -39,10 +39,15 @@ angular.module('doodleplusApp')
 						}
 					})
 
-					var m = {top: 40, right: 20, bottom: 20, left: 60},
-					frameWidth = Number((window.innerWidth*.6).toFixed(2)),
-					frameHeight = Number((window.innerHeight*.7).toFixed(2)),
+					// var m = {top: 40, right: 20, bottom: 20, left: 60},
+					// frameWidth = Number((window.innerWidth*.6).toFixed(2)),
+					// frameHeight = Number((window.innerHeight*.7).toFixed(2)),
+					// barSize = frameWidth/numResponses;
+					var m = {top: 40, right: 60, bottom: 20, left: 60},
+					frameWidth = parseInt(d3.select('#dayChart').style('width'))-m.left - m.right,
+					frameHeight = parseInt(d3.select('#dayChart').style('height'))*9,
 					barSize = frameWidth/numResponses;
+					console.log('frameheight',frameHeight,frameWidth, 'numResponses', numResponses);
 
 				var yRange = function(){
 					var range = [];
@@ -66,6 +71,7 @@ angular.module('doodleplusApp')
 
 				function viewBars (day) {
 					/* add bars to chart */
+					console.log('the day',day);
 					var theDate = day.date;
 					svg.append("g")
 					.attr("class","chart")
@@ -73,8 +79,6 @@ angular.module('doodleplusApp')
 					.data(responseData)
 					.enter()
 					.append("rect")
-					// .transition()
-					// .duration(1000)
 					.attr("class", function(d){ return d.status + " rect" })
 					.attr("UUID", function(d){ return d.UUID })
 					.attr("time", function(d){ return d.time })
