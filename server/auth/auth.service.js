@@ -87,7 +87,7 @@ function setTokenCookie(req, res) {
   res.cookie('usertoken', JSON.stringify(token));
   //console.log(req);
   //res.send(200, req);
-  res.redirect('/manageEvent/' + req.currentUser.eventId);
+  res.redirect('/manageEvent/' + req.currentUser.eventId + "/" + req.currentUser.userId);
 }
 
 
@@ -108,7 +108,7 @@ function isRespondee() {
       }
 
       jwt.verify(jwtString, 'doodleplus-secret', {secret: 'doodleplus-secret'}, function(err, decoded) {
-        if (err) return res.send(404, "Refresh page!");
+        if (err) return res.status(401).send("Refresh page!");
         req.user = decoded;
         next();
       });

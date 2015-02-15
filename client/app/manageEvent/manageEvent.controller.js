@@ -18,8 +18,8 @@ angular.module('doodleplusApp')
 
     mCtrl.event_id = $stateParams.event_id;
 
-    $scope.getEvent = function(eventID) {
-        storeEvent.getEvent(eventID, function() {
+    $scope.getEvent = function(eventObj) {
+        storeEvent.getEvent(eventObj, null, true, false, function() {
             $scope.event = storeEvent.event;
             $scope.times = storeEvent.event.Times;
             Time.organizeByDay($scope.times);
@@ -28,7 +28,7 @@ angular.module('doodleplusApp')
         });
     }
 
-    $scope.getEvent($stateParams.event_id);
+    $scope.getEvent({event_id: $stateParams.event_id, user_id: $stateParams.user_id});
 
     $scope.addGoogleContactToText = function(contact) {
 	    var index = $scope.emailToAdd.indexOf(contact.email);

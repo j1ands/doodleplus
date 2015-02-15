@@ -17,7 +17,7 @@ angular.module('doodleplusApp')
 				var days;
 				var eventID = $stateParams.event_id;
 
-				storeEvent.getEvent(eventID, null, function() {
+				storeEvent.getEvent(eventID, null, false, false, function() {
 					var event = storeEvent.event;
 					var times = storeEvent.event.times;
 					Time.organizeByDay(times);

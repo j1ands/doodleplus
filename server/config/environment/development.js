@@ -8,7 +8,7 @@ module.exports = {
     uri: 'mongodb://localhost/doodleplus-dev'
   },
   sequelize: {
-    uri: 'postgres://justin:1234@localhost/doodleplus',
+	  uri: 'postgres://justin:1234@localhost/doodleplus',
     options: {
       logging: false,
       define: {
