@@ -87,7 +87,7 @@ function setTokenCookie(req, res) {
   res.cookie('usertoken', JSON.stringify(token));
   //console.log(req);
   //res.send(200, req);
-  res.redirect('/manageEvent/' + req.currentUser.eventId);
+  res.redirect('/manageEvent/' + req.currentUser.eventId + "/" + req.currentUser.userId);
 }
 
 
