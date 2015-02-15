@@ -60,13 +60,14 @@ angular.module('doodleplusApp', [
         return config;
       },
 
-      // Intercept 401s and redirect you to login
+      // Intercept 401s and redirect you to main
       responseError: function(response) {
         if (response.status === 401) {
-          (state || (state = $injector.get('$state'))).go('login');
+          (state || (state = $injector.get('$state'))).go('main');
           // remove any stale tokens
           // possibly add remove for respondee 'token'
-          $cookieStore.remove('token');
+
+	  $cookieStore.remove('token');
           $cookieStore.remove('usertoken');
           return $q.reject(response);
         }
