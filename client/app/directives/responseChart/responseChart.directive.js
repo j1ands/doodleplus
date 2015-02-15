@@ -92,10 +92,14 @@ angular.module('doodleplusApp')
 					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
 					.on('click', function(d){ 
-		
 						var responses = responseStatus.displayStatus.call(this, d.time,theDate);
 						scope.onRectClick({ response: responses });
-					});
+					})
+					// .on('touch', function(d){ 
+					// 	// d3.event.preventDefault();
+					// 	var responses = responseStatus.displayStatus.call(this, d.time,theDate);
+					// 	scope.onRectClick({ response: responses });
+					// });;
 
 
 				//axes, scale and grid/
