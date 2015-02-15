@@ -19,7 +19,7 @@ angular.module('doodleplusApp')
     mCtrl.event_id = $stateParams.event_id;
 
     $scope.getEvent = function(eventObj) {
-        storeEvent.getEvent(eventObj, null, true, function() {
+        storeEvent.getEvent(eventObj, null, true, false, function() {
             $scope.event = storeEvent.event;
             $scope.times = storeEvent.event.Times;
             Time.organizeByDay($scope.times);

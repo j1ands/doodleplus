@@ -9,11 +9,18 @@ angular.module('doodleplusApp')
   		}
   	});
 
-  	storeEvent.getEvent = function(eventID, UUID, isAdmin, func) {
+  	storeEvent.getEvent = function(eventID, UUID, isAdmin, isRespondee, func) {
       		var oldResponses = [];
   	      var username;
-	      var eventObj = eventID;
 	      var manage = isAdmin;
+		var response = isRespondee;
+		var eventObj = {};
+		if(isAdmin){
+			eventObj.event_id = eventID.event_id;
+			eventObj.user_id = eventID.user_id;
+		} else {
+			eventObj.event_id = eventID;
+		}
 	        storeEvent.get({id: eventObj.event_id}, function(thisEvent) {
 			if(manage){
 				if(eventObj.user_id == thisEvent.UserId){
@@ -21,6 +28,9 @@ angular.module('doodleplusApp')
 				}
 			} else {
 				storeEvent.event = thisEvent;
+				if(response){
+					thisEvent.UserId = null;
+				}
 			}
             thisEvent.times.forEach(function(time) {
               time.responses.forEach(function(response) {
