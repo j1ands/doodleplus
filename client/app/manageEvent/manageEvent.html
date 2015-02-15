@@ -1,20 +1,26 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="page-header">
-        <h2>{{event.title}}</h2>
-      </div>
-    </div>
-  </div>
+<div layout="column" flex>
 
-  <div class="row">
-    <div class="col-lg-12" ng-hide="eventdetail">
+  <div class="md-whiteframe-z1 main-content" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{eventTitle}}</h2>
+      </div>
+    </md-toolbar>
+    <md-content class="md-padding">
+    <p>Description: asdf</p>
+        Sharable link: <a href="http://localhost:9000/event/{{Manage.event_id}}">http://localhost:9000/event/{{Manage.event_id}}</a>
+    </md-content>
+  </div>
+</div>
+
+
+    <div ng-hide="eventdetail">
       <a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
     </div>
-    <div class="col-lg-12">
+    <div>
     Sharable link: <a href="http://localhost:9000/event/{{Manage.event_id}}">http://localhost:9000/event/{{Manage.event_id}}</a>
     </div>
-    <div class="col-lg-12">
+
       <form name="invites" ng-submit="addEmail()">
         <div class="form-group">
           <label for="emailToAdd">Add Email Addresses:</label>
@@ -48,23 +54,83 @@
         </a>
       </div>
     </div>
-
   </div>
 
-  <div class="calibration" role="calibration">
-    <svg width="240" height="34">
-    </svg>
-  </div>
-
-  <div class="row">
-
-    <div id="chart" class="col-lg-8" response-chart on-rect-click="pullData(response)"></div>
-    <div class="col-lg-4">
-        <ul>
-        <li ng-repeat="response in responses"> {{ response.username }}  {{ response.status }}</li>
-      </ul>
+  <div class="md-whiteframe-z1 main-content" layout="column">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Current Responses</h2>
+      </div>
+    </md-toolbar>
+    <div flex id="dayChart" >
+      <md-tabs md-selected="selectedIndex" >
+          <md-tab ng-repeat="day in days" label="{{day.date}}" ng-mousedown="changeDay(selectedIndex,$index)" ng-if="isDays.value">
+            <md-content>
+            <div id="chart-{{$index}}" response-chart on-rect-click="pullData(response)" day="day" day-num="$index"></div>
+            </md-content>
+          </md-tab>
+      </md-tabs>
     </div>
   </div>
+
+<!--     <div class="status-list">
+      <ul>
+        <li ng-repeat="response in responses[currentIndex]"> {{ response.username }}  {{ response.superStatus }}</li>
+      </ul>
+    </div>
+ --> 
+<div class="md-whiteframe-z1 main-content" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Selected Responses</h2>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div ng-if="currentPanel===2 && responses[currentIndex].length===0">
+      <h2 style="text-align: center">No Times chosen, but have a shark instead</h2>
+      <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
+    </div>
+    <md-list>
+      <md-item ng-repeat="response in responses[currentIndex]">
+        <md-item-content>
+          <div class="md-tile-left">
+            <h3>{{response.username}}</h3>
+          </div>
+          <div class="md-tile-content">
+            <p>{{response.superStatus}}</p>
+          </div>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-content>
 </div>
+
+
+<footer class="site-footer">
+  <md-button class="md-primary md-raised" ng-click="currentPanel=2">
+    See Responses
+  </md-button>
+</div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  

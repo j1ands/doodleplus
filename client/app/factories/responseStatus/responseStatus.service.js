@@ -5,39 +5,39 @@ angular.module('doodleplusApp')
 
   var responses = [];
 
-  var displayStatus = function(){
+  var displayStatus = function(time,date){
+    var thisTime = time;
+    var thisDate = date;
     $("rect").each(function() {
-      selectTime.call(this);
+      selectTime.call(this, thisTime, thisDate);
     });
     $("rect").each(function() {
-      loadStatus.call(this); 
+      loadStatus.call(this,thisDate); 
     } );
     return generateStatus();
   }
 
   //manage rect classes for selected timeslots
-  var selectTime =  function() {
-    var mouse = d3.mouse(this)
-    var x = Number(this.getAttribute('x'))
-    var y = Number(this.getAttribute('y'))
-    var width = Number(this.getAttribute('width'))
-    var height = Number(this.getAttribute('height'))
-    if(mouse[1] > y && mouse[1] < y + height + 1.5){
+  var selectTime =  function(time,date) {
+    var thisTime = this.getAttribute('time');
+    var thisDate = this.getAttribute('date');
+    if (thisTime === time  && thisDate === date){
       if(this.classList.contains('selected')){
         this.classList.remove('selected');
       } else {
         this.classList.add('selected');
-      }  
+      }   
     }
   }
 
   //extract response data from rects of selected rows
-  var loadStatus = function(){
+  var loadStatus = function(thisDate){
     var UUID = this.getAttribute('UUID')
     var username = this.getAttribute('username')
     var status = this.getAttribute('status')
     var time = Number(this.getAttribute('time'))
-    if (this.classList.contains('selected')){
+    var date = this.getAttribute('date');
+    if (this.classList.contains('selected') && thisDate === date){
       responses.push({username: username, status: status, UUID: UUID, time: time});
     }
   }
@@ -51,7 +51,6 @@ angular.module('doodleplusApp')
       rows.push(el.time)
       if (!hash[el.UUID]){
         hash[el.UUID] = el;
-        console.log(hash)
         hash[el.UUID].superStatus = el.status;
         hash[el.UUID].num = 1;
       } else {
