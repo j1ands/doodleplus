@@ -7,6 +7,7 @@ angular.module('doodleplusApp')
     $scope.responses = [];
     $scope.emailToAdd = "";
     $scope.currentPanel = 0;
+    $scope.isPhone = typeof window.orientation !== 'undefined';
     $scope.changePanel = function(number){
       $scope.currentPanel = number;
     };
