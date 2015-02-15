@@ -14,7 +14,7 @@ angular.module('doodleplusApp')
 
 				var eventID = $stateParams.event_id;
 
-				
+
 
 				renderChart(scope.day);
 
@@ -45,7 +45,7 @@ angular.module('doodleplusApp')
 					// barSize = frameWidth/numResponses;
 					var m = {top: 40, right: 60, bottom: 20, left: 60},
 					frameWidth = parseInt(d3.select('#dayChart').style('width'))-m.left - m.right,
-					frameHeight = parseInt(d3.select('#dayChart').style('height'))*9,
+					frameHeight = parseInt(d3.select('#dayChart').style('height'))*15,
 					barSize = frameWidth/numResponses;
 					console.log('frameheight',frameHeight,frameWidth, 'numResponses', numResponses);
 
@@ -56,7 +56,7 @@ angular.module('doodleplusApp')
 					}
 					return range;
 				}
-				
+
 				var colorCalibration = ['#6CF2A4', '#F2B37C','#7CD1F2']
 
 				var svg = d3.select('#chart-' + scope.dayNum).append("div")
@@ -67,7 +67,7 @@ angular.module('doodleplusApp')
 				.attr("width",frameWidth + m.right +m.left)
 				.attr("height",frameHeight + m.top + m.bottom)
 				.append("g")
-				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');		
+				.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
 				function viewBars (day) {
 					/* add bars to chart */
@@ -91,11 +91,11 @@ angular.module('doodleplusApp')
 					.attr("height", frameHeight/day.allTimes.length - 1)
 					.attr("username", function(d){ return d.username})
 					.attr("status", function(d){ return d.status})
-					.on('click', function(d){ 
+					.on('click', function(d){
 						var responses = responseStatus.displayStatus.call(this, d.time,theDate);
 						scope.onRectClick({ response: responses });
 					})
-					// .on('touch', function(d){ 
+					// .on('touch', function(d){
 					// 	// d3.event.preventDefault();
 					// 	var responses = responseStatus.displayStatus.call(this, d.time,theDate);
 					// 	scope.onRectClick({ response: responses });
@@ -115,7 +115,7 @@ angular.module('doodleplusApp')
 
 				svg.append("g")
 				.attr("class", "y left axis")
-				.call(yAxis.orient("left"));	
+				.call(yAxis.orient("left"));
 			};
 
 			viewBars(day);

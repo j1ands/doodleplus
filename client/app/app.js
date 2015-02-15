@@ -10,7 +10,8 @@ angular.module('doodleplusApp', [
   'd3',
   'gm.datepickerMultiSelect',
   'ngMaterial',
-  'ngTouch'
+  'ngTouch',
+  'ng-mfb'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
   $mdThemingProvider.definePalette('gRed', {

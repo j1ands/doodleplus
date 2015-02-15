@@ -2,11 +2,15 @@
 
 angular.module('doodleplusApp')
 
-  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, responseChartData, Auth) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, responseChartData, Auth, Contact) {
     var responseArray = [];
     $scope.responses = [];
     $scope.emailToAdd = "";
     $scope.currentPanel = 0;
+    $scope.isPhone = typeof window.orientation !== 'undefined';
+    $scope.changePanel = function(number){
+      $scope.currentPanel = number;
+    };
 
     var mCtrl = this;
 
@@ -21,8 +25,9 @@ angular.module('doodleplusApp')
     $scope.$watch("days", function(newVal, oldVal){
         if(newVal.length){
             $scope.isDays.value = true;
-            console.log($scope.days)
             $scope.eventTitle = $scope.days[0].eventTitle;
+            $scope.event = $scope.days[0].event;
+          console.log('event on scope',$scope.event);
         }
     })
 
@@ -31,11 +36,10 @@ angular.module('doodleplusApp')
     responseChartData.generateResponseData(eventID)
         .then (function(days){
             $scope.days = days.days;
-            $scope.responses = []
+            $scope.responses = [];
             days.days.forEach(function(elem,idx){
                 $scope.responses[idx] = [];
-            })
-            // console.log('response',$scope.responses);
+            });
     });
 
 
@@ -44,17 +48,14 @@ angular.module('doodleplusApp')
     $scope.pullData = function(response){
         console.log('pullData response',response);
         $scope.responses[$scope.currentIndex] = response;
-        console.log(response) 
         $scope.$apply();
     };
 
     $scope.changeDay = function(curInd,selInd){
-        console.log('curInd',curInd,'selInd',selInd);
         $scope.currentIndex = curInd;
-        console.log('responses',$scope.responses[$scope.currentIndex]);
-    }
+    };
 
-        mCtrl.event_id = $stateParams.event_id;
+    mCtrl.event_id = $stateParams.event_id;
 
     // $scope.getEvent = function(eventID) {
     //     storeEvent.getEvent(eventID, function() {
@@ -98,6 +99,22 @@ angular.module('doodleplusApp')
             contact.selected = true;
         }
     }
+
+    $scope.addContacts = function () {
+      var contactsToAdd = {
+        eventId: $scope.event._id,
+        contacts: $scope.contacts
+      };
+      Contact.save(contactsToAdd,function(res){
+        console.log('res',res);
+      });
+    };
+
+    $scope.editEvent = function(){ //Needs to be worked on
+
+    }
+
+
 
 
 });

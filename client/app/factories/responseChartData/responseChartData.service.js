@@ -11,6 +11,7 @@ angular.module('doodleplusApp')
       Time.organizeByDay(times);
       var days = Time.days;
       days.forEach(function(day){
+        day.event = event;
         day.eventTitle = storeEvent.event.title;
         var allRespondents = [];
         var allTimes = [];
@@ -24,7 +25,7 @@ angular.module('doodleplusApp')
           for (var i=0; i<time.responses.length; i++){
             allRespondents.push(time.responses[i].UUID);
             allTimes.push(time.time);
-          };    
+          };
           time.responses.sort(function(a,b){  //sort responses by status
             var textA = a.status.toUpperCase();
             var textB = b.status.toUpperCase();
@@ -46,7 +47,7 @@ angular.module('doodleplusApp')
       });
     var dayObj = {};
     dayObj.days = days;
-    daysDeferral.resolve(dayObj)
+    daysDeferral.resolve(dayObj);
     });
   return daysDeferral.promise;
   };

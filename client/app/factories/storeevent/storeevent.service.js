@@ -28,7 +28,7 @@ angular.module('doodleplusApp')
       			func(thisEvent, username, oldResponses);
           }
   		});
-  	}
+  	};
 
     return storeEvent;
 

@@ -8,7 +8,7 @@
           <h1>Event Info</h1>
         </div>
       </md-toolbar>
-      <md-content class="md-padding" md-scroll-shrink>
+      <md-content class="md-padding" >
         <div id="options">
           <div flex="50" id="timeIncrement" class="form-group">
             <label  for="timeIncrement">Time Blocks:</label>
@@ -129,18 +129,18 @@
       </md-toolbar>
       <md-content id="created" class="md-padding">
        	<h1 flex flex-order="1" class="title-response">Your event was Created!</h1>
-	<md-toolbar class="md-primary md-hue-3" style="height:100%; min-height:0px">
+	      <md-toolbar class="md-primary md-hue-3" style="height:100%; min-height:0px">
 	        <div layout="row" layout-margin>
-			<h4 flex flex-order="1" layout="row" layout-align="left center" class="link-text">Shareable Link:  <a ng-href="http://localhost:9000/event/{{Create.createdEvent._id}}" class="link-text">http://localhost:9000/event/{{Create.createdEvent._id}}</a></h4>
+			      <h4 flex flex-order="1" layout="row" layout-align="left center" class="link-text">Shareable Link:  <a ng-href="http://localhost:9000/event/{{Create.createdEvent._id}}" class="link-text">http://localhost:9000/event/{{Create.createdEvent._id}}</a></h4>
        		</div>
-	</md-toolbar>
-	<div layout="row" layout-margin ng-controller="LoginCtrl">
- 		<md-button flex flex-order="3" md-theme="google" class="md-raised md-primary google-text" ng-click="loginOauth('google', Create.createdEvent._id)">
-        		<i class="fa fa-google-plus"></i> Add Contacts
-		</md-button>
-        	<h2 flex flex-order="1" class="prompt-response">Invite some people</h2>
-		<h2 flex flex-order="2" class="prompt-response" style="text-align:center">OR</h2>
-	</div>
+	      </md-toolbar>
+	      <div layout="row" layout-margin ng-controller="LoginCtrl">
+          <md-button flex flex-order="3" md-theme="google" class="md-raised md-primary google-text" ng-click="loginOauth('google', Create.createdEvent._id)">
+            <i class="fa fa-google-plus"></i> Add Contacts
+          </md-button>
+          <h2 flex flex-order="1" class="prompt-response">Invite some people</h2>
+          <h2 flex flex-order="2" class="prompt-response" style="text-align:center">OR</h2>
+      	</div>
         <form name="invites" class="event-form">
           <md-input-container>
             <label for="emails">Emails</label>
@@ -151,8 +151,6 @@
             <textarea rows="2" id="phoneNumbers" name="phoneNumbers" ng-model="contacts.phoneNumbers" type="text"></textarea>
           </md-input-container>
         </form>
-        <div>
-        </div>
         <div layout="row" layout-align="space-around start">
          <md-button class="md-raised md-primary md-accent" hm-tap="addContacts()" >Send Invites</md-button>
         </div>
