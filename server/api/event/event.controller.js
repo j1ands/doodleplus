@@ -42,8 +42,27 @@ exports.findEvent = function(req,res){
       model: Response,
       as: 'responses'}]
   }]}).then(function(event){
+    event.adminURL = null;
     res.status(200).send(event);
   });
+};
+
+exports.findManageEvent = function(req,res){
+  var admin = req.params.admin;
+  Event.find({where: {adminURL: admin}, include: [{
+    model: Time,
+    as: 'times',
+    include: [{
+      model: Response,
+      as: 'responses'}]
+    }]
+  })
+  .then(function(event){
+    res.status(200).send(event);
+  })
+  .catch(function(err){
+    res.status(401).send("Invalid URL");
+  })
 };
 
 

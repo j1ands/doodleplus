@@ -20,7 +20,12 @@ module.exports = function(sequelize, DataTypes) {
     location: DataTypes.STRING,
     onlyDays: DataTypes.BOOLEAN,
     isPrivate: DataTypes.BOOLEAN,
-    timeIncrement: DataTypes.BIGINT
+    timeIncrement: DataTypes.BIGINT,
+    adminURL: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
+    }
   }, {
     classMethods: {
       associate: function(models){
