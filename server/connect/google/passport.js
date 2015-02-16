@@ -17,34 +17,36 @@ exports.setup = function(User, config) {
       consumerSecret: config.google.clientSecret
     });
 
+    console.log("DONE", done);
 
       if(!req.currentUser)
       {
-        User.find({where: { 'googleId': profile.id }
-        })
-          .then(function(user) {
-            if (!user) {
-              User.create({
-                name: profile.displayName,
-                email: profile.emails[0].value,
-                role: 'user',
-                username: profile.username,
-                provider: 'google',
-                google: profile._json
-              })
-                .then(function(user) {
-                  return done(null, user);
-                })
-                .catch(function(err) {
-                  return done(err);
-                });
-            } else {
-              return done(null, user);
-            }
-          })
-          .catch(function(err) {
-            return done(err);
-          });        
+        // User.find({where: { 'googleId': profile.id }
+        // })
+        //   .then(function(user) {
+        //     if (!user) {
+        //       User.create({
+        //         name: profile.displayName,
+        //         email: profile.emails[0].value,
+        //         role: 'user',
+        //         username: profile.username,
+        //         provider: 'google',
+        //         google: profile._json
+        //       })
+        //         .then(function(user) {
+        //           return done(null, user);
+        //         })
+        //         .catch(function(err) {
+        //           return done(err);
+        //         });
+        //     } else {
+        //       return done(null, user);
+        //     }
+        //   })
+        //   .catch(function(err) {
+        //     return done(err);
+        //   }); 
+        return done("Invalid request");       
       }
       else
       {
@@ -64,15 +66,17 @@ exports.setup = function(User, config) {
             }
             else
             {
-              var googleProfile = profile._json;
-              googleProfile.contacts = contacts;
-              user.setDataValue('google', googleProfile);
-              user.setDataValue('googleId', profile.id);
-              user.save()
-              .then(function(savedUser){
-                req.user = savedUser;
-                return done(null, savedUser);
-              });
+              // var googleProfile = profile._json;
+              // googleProfile.contacts = contacts;
+              // user.setDataValue('google', googleProfile);
+              // user.setDataValue('googleId', profile.id);
+              // user.save()
+              // .then(function(savedUser){
+                req.user = user;
+                req.contacts = contacts;
+                //res.status(205).json({contacts: contacts});
+                return done(null, contacts);
+              // });
             }
           });
 
