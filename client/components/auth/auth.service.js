@@ -188,9 +188,10 @@ angular.module('doodleplusApp')
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-        var usertoken = $cookieStore.get('usertoken');
-        var returned = (typeof usertoken != 'undefined') ? usertoken : $cookieStore.get('token');
-        return returned;
+        return $cookieStore.get('usertoken');
+      },
+      getRespondeeToken: function() {
+        return $cookieStore.get('token');
       },
 
       checkUserToken: function() {

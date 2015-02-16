@@ -42,7 +42,7 @@ angular.module('doodleplusApp')
       $scope.getEvent($stateParams.event_id, $scope.UUID);
     };
 
-    if (Auth.getToken()) {
+    if (Auth.getRespondeeToken()) {
       Auth.getCurrentRespondee(setUUID)
     } else
     {
