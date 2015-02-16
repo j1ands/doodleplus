@@ -40,8 +40,8 @@
 		<div vertical="true" layout="column" flex>
 			<h2>When are you available?</h2><br>
 			<md-tabs class="md-tabs-transparent" md-selected="selectedDay.index">
-				<md-tab ng-repeat="day in days" label="{{day.dateInMS | date:'MMM dd'}}"><br>
-					<table class="response-time-table" cellspacing="0" cellpadding="0"> 
+				<md-tab ng-repeat="day in days | orderBy:'dateInMS'" label="{{day.dateInMS | date:'MMM dd'}}"><br>
+					<table class="response-time-table" cellspacing="0" cellpadding="0">
 						<tr>
 							<td><h5>Time</h5></td>
 							<td class="text-center"><h5>YES</h5></td>

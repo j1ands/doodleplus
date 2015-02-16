@@ -29,7 +29,6 @@ angular.module('doodleplusApp')
       var times = storeEvent.event.times;
       var myOldResponses = oldResponses;
       var responses = [];
-
       times.forEach(function(time) {
         if (time.status === "removed") {
           time.responses.forEach(function(response) {
@@ -61,8 +60,8 @@ angular.module('doodleplusApp')
           console.log("Responses saved!", res);
         });
       }
-    }
-
+      func();
+    };
 
     return Response;
   });
