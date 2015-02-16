@@ -9,6 +9,7 @@ var Time  = sqldb.Time;
 var Response = sqldb.Response;
 var Contact = sqldb.Contact;
 var Response = sqldb.Response;
+var sendEmail = require('./sendEmails').sendEmail;
 
 // Gets list of events from the DB
 
@@ -20,11 +21,12 @@ exports.create = function(req, res) {
   User.findOrCreate({where: {email: req.body.user.email}, defaults: req.body.user})
     .spread(function(creator){
       Event.saveNewEvent(req.body, creator).then(function(createdEvent) {
+        sendEmail(createdEvent,creator);
         Time.saveEventTimes(req.body, creator, createdEvent).then(function (createdTimes) {
           res.status(200).send({createdEvent: createdEvent, user: creator});
         })
         .catch(function(err){
-         console.log('err',err);
+          console.log('err',err);
         });
       }).catch(function(err){
         console.log('Event Save Failed. Reason:',err);
@@ -63,6 +65,28 @@ exports.findManageEvent = function(req,res){
   .catch(function(err){
     res.status(401).send("Invalid URL");
   })
+};
+
+exports.update = function(req,res){
+  console.log('req.params',req.params);
+  console.log('body',req.body);
+  var admin = req.params.admin;
+  Event.find({where: {adminURL: admin}})
+    .then(function(event){
+      console.log('findEvent',event);
+      event.description = req.body.event.description;
+      event.title = req.body.event.title;
+      event.location = req.body.event.location;
+      event.save()
+        .then(function(savedEvent){
+          savedEvent.success=true;
+          res.status(200).send({event: savedEvent,success: true});
+        })
+        .catch(function(err){
+          console.log('error saving',err);
+          res.status(401).send({success:false});
+        });
+    });
 };
 
 
