@@ -65,4 +65,26 @@ exports.findManageEvent = function(req,res){
   })
 };
 
+exports.update = function(req,res){
+  console.log('req.params',req.params);
+  console.log('body',req.body);
+  var admin = req.params.admin;
+  Event.find({where: {adminURL: admin}})
+    .then(function(event){
+      console.log('findEvent',event);
+      event.description = req.body.event.description;
+      event.title = req.body.event.title;
+      event.location = req.body.event.location;
+      event.save()
+        .then(function(savedEvent){
+          savedEvent.success=true;
+          res.status(200).send({event: savedEvent,success: true});
+        })
+        .catch(function(err){
+          console.log('error saving',err);
+          res.status(401).send({success:false});
+        });
+    });
+};
+
 
