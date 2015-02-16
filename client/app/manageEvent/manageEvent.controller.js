@@ -2,7 +2,7 @@
 
 angular.module('doodleplusApp')
 
-  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact,manageEvent,$timeout) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact,manageEvent,$timeout,$mdToast) {
     var responseArray = [];
     $scope.responses = [];
     $scope.emailToAdd = "";
@@ -96,12 +96,21 @@ angular.module('doodleplusApp')
       Contact.save(contactsToAdd,function(res){
       });
     };
+    var openToast =  function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Event Updated')
+          .position('top right')
+          .hideDelay(3000)
+      );
+    };
 
     $scope.editEvent = function(){ //Needs to be worked on
       console.log('manageEvent',manageEvent);
       manageEvent.save({adminURL: admin},{event: $scope.event},function(res){
         console.log('updateRes',res);
         if (res.success){
+          openToast();
           $scope.event = res.event;
           $scope.updated = 'Event Updated!';
           $timeout(function(){
