@@ -13,6 +13,7 @@ angular.module('doodleplusApp')
     $scope.showCalendar = false;
     $scope.selectedDay = {index: 0};
 
+    console.log($stateParams);
     var event_id = $stateParams.event_id;
 
     var setEventDetails = function(thisEvent, username, oldResponses) {

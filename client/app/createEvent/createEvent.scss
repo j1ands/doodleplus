@@ -2,7 +2,7 @@ $break-small: 600px;
 $break-large: 1200px;
 
 .event-form {
-	padding: 0 30px 0 0;
+	/*padding: 0 30px 0 0;*/
 }
 
 #description, #emailToAdd {
@@ -108,18 +108,7 @@ button.md-raised.md-primary.md-accent {
   }
 }
 
-#options {
-  >  div {
-    width: 45%;
-    display: inline-block;
-  }
-  md-input-container {
-    width: 45%;
-    display: inline-block;
-  }
-
-}
-
+/*`*/
 
 #created {
   h1 {
@@ -190,4 +179,23 @@ tbody {
 		display: block;
 		text-align: center;
 	}
+}
+
+.container-narrow {
+	width: 700px;
+}
+
+@media screen and (max-width: 768px) {
+	.container-narrow {
+		width: 100%;
+	}
+}
+
+.input-container-with-message {
+	padding-bottom: 14px;
+}
+
+#checkbox {
+	padding-top: 10px;
+	margin-bottom: 0px;
 }
