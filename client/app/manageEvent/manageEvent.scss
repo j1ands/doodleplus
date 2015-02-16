@@ -21,7 +21,7 @@
 }
 
 .selected{
-	opacity: 0.6;
+	opacity: 0.2;
 }
 
 .color-key {
@@ -30,6 +30,13 @@
   text-align: center;
 }
 
+.name-tile {
+  width: 25%;
+  text-align: center;
+  font-size: 12px;
+  border: solid 1px white;
+  padding-bottom: 8px;
+}
 
 .able {
 	fill: $able;
