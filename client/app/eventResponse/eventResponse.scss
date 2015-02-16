@@ -1,14 +1,11 @@
-/*.datepicker-response {
-	tr {
-		height: 40px !important;
-		padding:
-		button {
-			height: 100% !important;
-		}
-	}
-}*/
 .eventdetail {
 	padding: 15px 0 0 0;
+}
+
+@media screen and (max-width: 600px) {
+	.eventdetail {
+			display: block;
+	}
 }
 
 .response-time-table {
@@ -43,7 +40,7 @@
 }
 
 .response-cell-btn:hover {
-	background-color: #F2F0F0;
+	background-color: $mediumgray;
 }
 
 .able, .able:hover {
@@ -62,11 +59,11 @@
 }
 
 .unable {
-	background-color: #F9F8F8;
+	background-color: $lightgray;
 }
 
 .unable:hover {
-	background-color: #F2F0F0;
+	background-color: $mediumgray;
 }
 
 .list-times {
@@ -82,15 +79,49 @@
 	width: 33%;
 }
 
-@media screen and (max-width: 768px) {
-	.remove-for-phones {
-		display: none;
-	}
-}
-
 #stick {
 	position: fixed;
 	top: 0px;
 	z-index: 20000;
 	border-bottom: solid 1px $darkgray;
 }
+
+
+.datepicker-sm {
+	margin: 20px 0 0 0;
+	table {
+		width: 100%;
+		th {
+			font-size: 20px;
+			font-weight: 400;
+			button {
+				width: 100%;
+			}
+		}
+		tr {
+			height: 60px;
+			button {
+				height: 60px;
+			}
+		}
+		td {
+			width: 14%;
+		}
+	}
+	.btn {
+		padding: 0px;
+
+	}
+	.btn.btn-default {    //This is for datepicker wells
+	  font-size:20px;
+	}
+	.btn.btn-info {    //This is for datepicker wells
+	  background-color: $primary;
+	  border-color: $primarydk;
+	}
+}
+
+
+
+
+

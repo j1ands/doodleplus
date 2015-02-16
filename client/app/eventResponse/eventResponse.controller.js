@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('doodleplusApp')
   .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
 
@@ -10,7 +11,7 @@ angular.module('doodleplusApp')
     $scope.oldResponses = [];
     $scope.selectedDates = [];
     $scope.showCalendar = false;
-    $scope.selectedDay = 0;
+    $scope.selectedDay = {index: 0};
 
     var event_id = $stateParams.event_id;
 
@@ -91,32 +92,11 @@ angular.module('doodleplusApp')
 
         $scope.days.forEach(function(day, i) {
           if (dateStr.search(day.date) > -1) {
-            $scope.selectedDay = i;
+            $scope.selectedDay.index = i;
           }
         })
       }
     }
-
-
-    // var getPosition = function getPosition(element) {
-    //     var xPosition = 0;
-    //     var yPosition = 0;
-        
-    //     while(element) {
-    //         xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-    //         yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-    //         element = element.offsetParent;
-    //     }
-    //     return { x: xPosition, y: yPosition };
-    // }
-
-    // var doSomething = function() {
-    //   var myElement = document.querySelector(".md-tabs-transparent");     
-    //   var position = getPosition(myElement);
-    //   alert("The image is located at: " + position.x + ", " + position.y);
-    // }
-
-    // doSomething();
 
     var count = 0;
     var findOffset = function() {
@@ -143,7 +123,6 @@ angular.module('doodleplusApp')
       $(window).scroll(sticky_relocate);
       sticky_relocate();
     });
-
 
 
   });
