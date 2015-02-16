@@ -45,10 +45,10 @@ angular.module('doodleplusApp')
 
 					var m = {top: 40, right: 60, bottom: 20, left: 60},
 					frameWidth = parseInt(d3.select('#dayChart').style('width'))-m.left - m.right,
-					frameHeight = parseInt(d3.select('#dayChart').style('height'))*15,
+					frameHeight = parseInt(d3.select('#dayChart').style('height'))*15;
 
 
-angular.element( "#indiv-status-chart" ).empty();
+// angular.element( "#indiv-status-chart" ).empty();
 
 				var svg = d3.select('#indiv-status-chart').append("div")
 				.attr("class","d3-container container")

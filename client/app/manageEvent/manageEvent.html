@@ -125,11 +125,12 @@
         <h2>Current Responses</h2>
         <span>
           <h4>
-            <table class="color-key" width="300" border="0" cellspacing="0" cellpadding="0">       
+            <table class="color-key" width="400" border="0" cellspacing="0" cellpadding="0">       
                 <tr>
-                  <td width="30%" class="able">&nbsp;ABLE</td> 
-                  <td width="40%" class="ifneedbe">&nbsp;IF NEED BE</td> 
-                  <td width="30%" class="maybe">&nbsp;MAYBE</td> 
+                  <td width="22%" class="able">&nbsp;ABLE</td> 
+                  <td width="34%" class="ifneedbe">&nbsp;IF NEED BE</td> 
+                  <td width="22%" class="maybe">&nbsp;MAYBE</td>
+                  <td width="22%" class="unable" style="color: #000000">&nbsp;UNABLE</td>  
                 </tr>
             </table>
           </h4>
@@ -194,7 +195,7 @@
 
       <md-item ng-repeat="response in responses[currentIndex]">
         <md-item-content>
-          <div class="md-tile-left {{response.status}}">
+          <div class="md-tile-left {{response.superStatus}}">
             <h2>{{response.username}}</h2>
           </div>
 <!--           <div class="md-tile-content">
