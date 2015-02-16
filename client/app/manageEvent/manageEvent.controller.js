@@ -28,7 +28,6 @@ angular.module('doodleplusApp')
             $scope.isDays.value = true;
             $scope.eventTitle = $scope.days[0].eventTitle;
             $scope.event = $scope.days[0].event;
-          console.log('event on scope',$scope.event);
         }
     })
 
@@ -48,7 +47,6 @@ angular.module('doodleplusApp')
     $scope.respondents = [];
 
     $scope.pullData = function(response){
-        console.log('pullData response',response);
         $scope.responses[$scope.currentIndex] = response;
         $scope.$apply();
     };
@@ -96,7 +94,6 @@ angular.module('doodleplusApp')
         contacts: $scope.contacts
       };
       Contact.save(contactsToAdd,function(res){
-        console.log('res',res);
       });
     };
 

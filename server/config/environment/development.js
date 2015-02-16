@@ -17,5 +17,5 @@ module.exports = {
     }
   },
 
-  seedDB: false
+  seedDB: true
 };

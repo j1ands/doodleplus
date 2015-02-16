@@ -163,25 +163,24 @@
         </span>
     </div>
   </md-toolbar>
-  <md-content>
+  <!-- <md-content>
     <div ng-if="currentPanel===1 && responses[currentIndex].length===0">
       <h2 style="text-align: center">No Times chosen, but have a shark instead</h2>
       <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
     </div>
-
  <div id="indiv-status-chart" indiv-status-chart selected="responses[currentIndex]"></div>
 
-</md-content>
+</md-content> -->
 
 
 
 
 
-   <!--  <md-list>
+<!--     <md-list>
 
       <md-item> -->
       <!-- This section is for testing styling -->
-        <!-- <md-item-content>
+<!--         <md-item-content>
           <div class="md-tile-left">
             <h2>Respondent's Name</h2>
           </div>
@@ -190,21 +189,21 @@
             <h3> Status</h3>
           </div>
         </md-item-content>
-      </md-item>End of section for testing styling 
+      </md-item>End of section for testing styling  -->
 
       <md-item ng-repeat="response in responses[currentIndex]">
         <md-item-content>
-          <div class="md-tile-left">
+          <div class="md-tile-left {{response.status}}">
             <h2>{{response.username}}</h2>
           </div>
-          <div class="md-tile-content">
+<!--           <div class="md-tile-content">
             <h3>Status:</h3>
             <h3>{{response.superStatus}}</h3>
-          </div>
+          </div> -->
         </md-item-content>
       </md-item>
     </md-list>
-  </md-content> -->
+  </md-content>
 
 
 </div>
