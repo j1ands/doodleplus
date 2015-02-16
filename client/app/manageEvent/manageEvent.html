@@ -149,7 +149,7 @@
 <div ng-show="currentPanel===1" class="md-whiteframe-z1 main-content" layout="column">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>Selected Responses</h2>
+      <h2>Individual Response Status Over Selected Times</h2>
         <span>
           <h4>
             <table class="color-key" width="300" border="0" cellspacing="0" cellpadding="0">       
@@ -169,10 +169,19 @@
       <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
     </div>
 
-    <md-list>
+ <div id="indiv-status-chart" indiv-status-chart selected="responses[currentIndex]"></div>
 
-      <md-item><!-- This section is for testing styling -->
-        <md-item-content>
+</md-content>
+
+
+
+
+
+   <!--  <md-list>
+
+      <md-item> -->
+      <!-- This section is for testing styling -->
+        <!-- <md-item-content>
           <div class="md-tile-left">
             <h2>Respondent's Name</h2>
           </div>
@@ -181,7 +190,7 @@
             <h3> Status</h3>
           </div>
         </md-item-content>
-      </md-item><!--End of section for testing styling -->
+      </md-item>End of section for testing styling 
 
       <md-item ng-repeat="response in responses[currentIndex]">
         <md-item-content>
@@ -195,7 +204,9 @@
         </md-item-content>
       </md-item>
     </md-list>
-  </md-content>
+  </md-content> -->
+
+
 </div>
 
 </div>

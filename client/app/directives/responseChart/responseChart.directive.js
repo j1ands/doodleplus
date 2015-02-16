@@ -21,6 +21,8 @@ angular.module('doodleplusApp')
 
 				function renderChart (day){
 
+					console.log(day)
+
 					var hour = d3.time.format("%H:%M")
 
 					var dayDataFormatted = day.allTimes.map(function(day){
@@ -39,6 +41,8 @@ angular.module('doodleplusApp')
 						}
 					})
 
+					console.log(responseData)
+
 					// var m = {top: 40, right: 20, bottom: 20, left: 60},
 					// frameWidth = Number((window.innerWidth*.6).toFixed(2)),
 					// frameHeight = Number((window.innerHeight*.7).toFixed(2)),
@@ -56,8 +60,6 @@ angular.module('doodleplusApp')
 					}
 					return range;
 				}
-
-				var colorCalibration = ['#6CF2A4', '#F2B37C','#7CD1F2']
 
 				var svg = d3.select('#chart-' + scope.dayNum).append("div")
 				.attr("class","d3-container container")
