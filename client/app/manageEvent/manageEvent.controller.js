@@ -2,7 +2,7 @@
 
 angular.module('doodleplusApp')
 
-  .controller('ManageEventCtrl', function ($scope, $stateParams, storeEvent, Time, Response, responseChartData, Auth, Contact) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact) {
     var responseArray = [];
     $scope.responses = [];
     $scope.emailToAdd = "";
@@ -16,6 +16,7 @@ angular.module('doodleplusApp')
 
     mCtrl.currentUser = Auth.getCurrentUser();
 
+    mCtrl.event = {};
     $scope.days = [];
     $scope.currentIndex = 0;
     $scope.isDays = {
@@ -31,10 +32,11 @@ angular.module('doodleplusApp')
         }
     })
 
-    var eventID = $stateParams.event_id;
+    var admin = $stateParams.admin;
 
-    responseChartData.generateResponseData(eventID)
+    responseChartData.generateResponseData(admin)
         .then (function(days){
+            mCtrl.event.id = days.eventID;
             $scope.days = days.days;
             $scope.responses = [];
             days.days.forEach(function(elem,idx){
@@ -54,20 +56,6 @@ angular.module('doodleplusApp')
     $scope.changeDay = function(curInd,selInd){
         $scope.currentIndex = curInd;
     };
-
-    mCtrl.event_id = $stateParams.event_id;
-
-    // $scope.getEvent = function(eventID) {
-    //     storeEvent.getEvent(eventID, function() {
-    //         $scope.event = storeEvent.event;
-    //         $scope.times = storeEvent.event.Times;
-    //         Time.organizeByDay($scope.times);
-    //         $scope.days = Time.days;
-    //         console.log(Time.days)
-    //     });
-    // }
-
-    // $scope.getEvent($stateParams.event_id);
 
     $scope.addGoogleContactToText = function(contact) {
         var index = $scope.emailToAdd.indexOf(contact.email);

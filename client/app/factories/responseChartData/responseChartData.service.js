@@ -1,18 +1,18 @@
 'use strict';
 
 angular.module('doodleplusApp')
-.factory('responseChartData', function (storeEvent, Time, $q) {
+.factory('responseChartData', function (manageEvent, Time, $q) {
 
-  var generateResponseData = function(eventID){
+  var generateResponseData = function(admin){
     var daysDeferral = $q.defer();
-    storeEvent.getEvent(eventID, null, function() {
-      var event = storeEvent.event;
-      var times = storeEvent.event.times;
+    manageEvent.getEvent(admin, null, function() {
+      var event = manageEvent.event;
+      var times = manageEvent.event.times;
       Time.organizeByDay(times);
       var days = Time.days;
       days.forEach(function(day){
         day.event = event;
-        day.eventTitle = storeEvent.event.title;
+        day.eventTitle = manageEvent.event.title;
         var allRespondents = [];
         var allTimes = [];
 
@@ -47,6 +47,7 @@ angular.module('doodleplusApp')
       });
     var dayObj = {};
     dayObj.days = days;
+    dayObj.eventID = event._id;
     daysDeferral.resolve(dayObj);
     });
   return daysDeferral.promise;

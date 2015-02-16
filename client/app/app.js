@@ -68,7 +68,7 @@ angular.module('doodleplusApp', [
           // remove any stale tokens
           // possibly add remove for respondee 'token'
 
-	  $cookieStore.remove('token');
+          $cookieStore.remove('token');
           $cookieStore.remove('usertoken');
           return $q.reject(response);
         }
