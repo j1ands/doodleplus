@@ -1,17 +1,18 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore, Auth) {
     $scope.message = function(){
       console.log('event');
     };
 
     var ceCtrl = this;
+    ceCtrl.currentUser = {};
     $scope.isPhone = typeof window.orientation !== 'undefined';
     $scope.invitedEmails = [];
     $scope.eventOptions = {
       isPrivate: false,
-      title: storeEvent.title
+      title: storeEvent.event.title
     };
     $scope.userOptions = {};
     $scope.allDays = {value: false};
@@ -123,7 +124,7 @@ angular.module('doodleplusApp')
       console.log('emails to add',$scope.emailToAdd);
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
-      storeEvent.save({
+      storeEvent.event.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
         time: mergedTimes
@@ -145,7 +146,7 @@ angular.module('doodleplusApp')
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       console.log('the merged time',mergedTimes);
       $scope.eventOptions.timeIncrement = $scope.timeIncrement;
-      storeEvent.save({
+      storeEvent.event.save({
         event: $scope.eventOptions,
         user: $scope.userOptions,
         time: mergedTimes
@@ -154,7 +155,8 @@ angular.module('doodleplusApp')
           $scope.eventFailure = true;
           return;
         }
-	       
+	ceCtrl.currentUser.user = Auth.getCurrentUser();
+	console.log("CURRENT USER", ceCtrl.currentUser);	
         $cookieStore.put('user', res.user._id);
         console.log('res',res);
         ceCtrl.createdEvent = res.createdEvent;

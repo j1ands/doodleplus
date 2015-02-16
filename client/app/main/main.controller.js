@@ -3,7 +3,7 @@
 angular.module('doodleplusApp')
  .controller('MainCtrl', function ($scope, $location, storeEvent) {
     $scope.createEvent = function (eventTitle) {
-      storeEvent.title = eventTitle;
+      storeEvent.event.title = eventTitle;
       $location.path('/createEvent');
     }
     

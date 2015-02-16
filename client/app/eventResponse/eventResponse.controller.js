@@ -26,7 +26,7 @@ angular.module('doodleplusApp')
     }
 
     $scope.getEvent = function(eventID, UUID) {
-      storeEvent.getEvent(eventID, UUID, setEventDetails);
+      storeEvent.event.getEvent(eventID, UUID, setEventDetails);
     }
 
     var setUUID = function(obj) {

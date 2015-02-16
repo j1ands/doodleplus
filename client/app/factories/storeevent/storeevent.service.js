@@ -30,6 +30,6 @@ angular.module('doodleplusApp')
   		});
   	}
 
-    return storeEvent;
+    return {event: storeEvent};
 
   });

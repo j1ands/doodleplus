@@ -26,7 +26,7 @@ angular.module('doodleplusApp')
     };
 
     Response.saveResponses = function(username, UUID, oldResponses, func) {
-      var times = storeEvent.event.times;
+      var times = storeEvent.event.event.times;
       var myOldResponses = oldResponses;
       var responses = [];
 

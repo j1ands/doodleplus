@@ -27,6 +27,7 @@ angular.module('doodleplusApp')
       debugger;
       var x = $cookieStore.get('user');
       var location = '/connect/' + provider + "?user=" + x +"&event=" + eventId;
-      $window.location.href = location;
+      // $window.location.href = location;
+      $window.open(location);
     };
   });
