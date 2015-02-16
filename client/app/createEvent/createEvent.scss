@@ -14,6 +14,7 @@ $break-large: 1200px;
 	table {
 		width: 100%;
 		th {
+			font-size: 25px;
 			button {
 				width: 100%;
 			}
@@ -24,6 +25,9 @@ $break-large: 1200px;
 				height: 60px;
 			}
 		}
+	}
+	.btn.btn-default {    //This is for datepicker wells
+	  font-size:20px;
 	}
 }
 
@@ -126,13 +130,6 @@ button.md-raised.md-primary.md-accent {
   }
 }
 
-.btn.btn-default {    //This is for datepicker wells
-  font-size:20px;
-}
-
-th {                  //This is for the datepicker day heading
-  font-size: 25px;
-}
 
 section {
   height:100%;

@@ -2,7 +2,7 @@
 
 angular.module('doodleplusApp')
 
-  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact,manageEvent,$timeout) {
     var responseArray = [];
     $scope.responses = [];
     $scope.emailToAdd = "";
@@ -98,8 +98,20 @@ angular.module('doodleplusApp')
     };
 
     $scope.editEvent = function(){ //Needs to be worked on
-
-    }
+      console.log('manageEvent',manageEvent);
+      manageEvent.save({adminURL: admin},{event: $scope.event},function(res){
+        console.log('updateRes',res);
+        if (res.success){
+          $scope.event = res.event;
+          $scope.updated = 'Event Updated!';
+          $timeout(function(){
+            $scope.updated = null;
+          }, 5000);
+        } else {
+          //Open up error dialogue
+        }
+      });
+    };
 
 
 

@@ -20,7 +20,7 @@ function sendEmail(emailData,createdEvent) {
       }
     });
     var message = {
-      html: '<a href="localhost:9000/eventResponse/"' + createdEvent._id + '>The Event: localhost:9000/eventResponse/'+createdEvent._id+'</a>',
+      html: '<a href="http://localhost:9000/eventResponse/"' + createdEvent._id + '>The Event: http://localhost:9000/eventResponse/'+createdEvent._id+'</a>',
       text: 'some example text cooooool',
       subject: 'You\'ve been invited to a super cool event!',
       from_email: emailData.creator.email,
@@ -67,6 +67,8 @@ function sendTwilText(to,from,body){
 
 function sendText(contactData,createdEvent){
   var body = textBody(contactData,createdEvent);
+  //console.log('contactData',contactData);
+  //console.log('body',body);
   contactData.contacts.forEach(function(contact){
     if (contact.phone){
       sendTwilText(contact.phone,null,body);

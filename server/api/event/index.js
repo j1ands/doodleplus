@@ -9,5 +9,6 @@ router.get('/', controller.index);
 router.post('/', controller.create);
 router.get('/manage/:admin',controller.findManageEvent);
 router.get('/:id',controller.findEvent);
+router.post('/manage/:admin',controller.update);
 
 module.exports = router;

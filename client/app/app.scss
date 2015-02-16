@@ -10,20 +10,55 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styless
  */
 
-$able: #6CF2A4;
-$ifneedbe: #7CD1F2;
-$maybe: #F2B37C;
+$primary: #7265D6;
+$primarydk: #655CBF;
+
+$able: #88CF69;
+$ifneedbe: #023152;
+$maybe: #7265D6;
+$lightgray: #F9F8F8;
+$mediumgray: #F9F8F8;
+$darkgray: #ccc;
 
 body {
 	font-family: 'Open Sans', sans-serif;
 }
 
 .md-button-colored {
-	background-color: #7265D6;
+	background-color: $primary;
+}
+
+.md-default-theme[disabled] {
+	background-color: $darkgray !important;
 }
 
 .md-button {
 	color: white !important;
+}
+
+md-tabs-ink-bar {
+	height: 4px;
+}
+
+.md-tabs-transparent {
+	section {
+		background-color: white !important;
+		md-tab-label {
+			color: black !important;
+			font-size: 16px !important;
+		}
+		md-tab.active{
+			font-weight: 700;
+		}
+		md-tabs-ink-bar {
+			color: black;
+			background-color: black;
+		}
+		.md-paginator {
+			margin-right: 0px !important;
+			background-color: black !important;
+		}
+	}
 }
 
 
@@ -31,16 +66,14 @@ h5, .h5 {
 	font-weight: bold;
 }
 
-a:hover {
-	text-decoration: none;
+a {
+	color: $primary;
 }
 
-/*.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}*/
+a:hover {
+	color: $primarydk;
+	text-decoration: none;
+}
 
 th.time-input {
 	width: 550px;
@@ -52,12 +85,21 @@ tbody.time-input {
 	overflow: auto;
 }
 
+@media screen and (max-width: 600px) {
+	.page-header {
+		margin: 0 0 20px;
+	}
+}
+
+
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
+@import 'close/close.scss';
 @import 'createEvent/createEvent.scss';
 @import 'eventResponse/eventResponse.scss';
+@import 'google/google.scss';
 @import 'main/main.scss';
 @import 'manageEvent/manageEvent.scss';
 @import 'modal/modal.scss';

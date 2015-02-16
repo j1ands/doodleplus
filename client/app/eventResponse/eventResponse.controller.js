@@ -1,17 +1,17 @@
 'use strict';
 
+
 angular.module('doodleplusApp')
   .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore) {
 
-  
-  $scope.mouseDown = false;
-  $scope.responses = [];
-  $scope.days = [];
-  $scope.username = {};
-  $scope.oldResponses = [];
-  $scope.selectedDates = [];
-  $scope.showCalendar = false;
-  $scope.selectedDay = 0;
+  	$scope.mouseDown = false;
+  	$scope.responses = [];
+  	$scope.days = [];
+    $scope.username = {};
+    $scope.oldResponses = [];
+    $scope.selectedDates = [];
+    $scope.showCalendar = false;
+    $scope.selectedDay = {index: 0};
 
     var event_id = $stateParams.event_id;
 
@@ -23,25 +23,29 @@ angular.module('doodleplusApp')
       $scope.username.name = username;
       $scope.oldResponses = oldResponses;
       $scope.showCalendar = true;
-    }
+    };
 
     $scope.getEvent = function(eventID, UUID) {
       storeEvent.getEvent(eventID, UUID, setEventDetails);
-    }
+    };
 
     var setUUID = function(obj) {
       $scope.UUID = obj.UUID;
       $scope.getEvent($stateParams.event_id, $scope.UUID);
-    }
+    };
 
     if (Auth.getToken()) {
       Auth.getCurrentRespondee(setUUID)
-    } else Auth.createRespondee(setUUID);
+    } else 
+    {
+      Auth.createRespondee(setUUID);
+    }
+
 
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, setEventDetails); 
-    }
+      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, setEventDetails);
+    };
 
     $scope.selectResponse = function(time, response) {
       $scope.mouseDown = true;
@@ -55,11 +59,11 @@ angular.module('doodleplusApp')
         time.status = response;
         time[response] = true;
       }
-    }
+    };
 
     $scope.resetMouse = function() {
       $scope.mouseDown = false;
-    }
+    };
 
     $scope.checkClick = function(time, response) {
       if ($scope.mouseDown === true) {
@@ -69,7 +73,7 @@ angular.module('doodleplusApp')
         time.status = response;
         time[response] = true;
       }
-    }
+    };
 
     $scope.dateDisabled = function(date, mode) {
       var found = true;
@@ -80,7 +84,7 @@ angular.module('doodleplusApp')
               found = false;
               $scope.selectedDates.push(date.getTime() - 43200000);
             }
-          });        
+          });
         }
       return found
     };
@@ -92,10 +96,37 @@ angular.module('doodleplusApp')
 
         $scope.days.forEach(function(day, i) {
           if (dateStr.search(day.date) > -1) {
-            $scope.selectedDay = i;
+            $scope.selectedDay.index = i;
           }
-        })
+        });
+      }
+    };
+
+    var count = 0;
+    var findOffset = function() {
+      if (count < 3) {
+        var div_top = $('.md-header').offset().top;
+        $scope.div_top = div_top;
+        count++;
       }
     }
+
+    findOffset();
+
+    function sticky_relocate() {
+      var window_top = $(window).scrollTop();
+      findOffset();
+      if (window_top > $scope.div_top) {
+        $('.md-header').attr('id', 'stick');
+      } else {
+        $('.md-header').removeAttr('id', 'stick');
+      }
+    }
+
+    $(function() {
+      $(window).scroll(sticky_relocate);
+      sticky_relocate();
+    });
+
   });
 

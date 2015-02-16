@@ -23,6 +23,7 @@ function onConnect(socket) {
   require('../api/time/time.socket').register(socket);
   require('../api/event/event.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
+  require('../api/user/user.socket').register(socket);
 }
 
 module.exports = function(socketio) {

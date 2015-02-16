@@ -87,7 +87,9 @@ function setTokenCookie(req, res) {
   res.cookie('usertoken', JSON.stringify(token));
   //console.log(req);
   //res.send(200, req);
-  res.redirect('/manageEvent/' + req.currentUser.eventId);
+  //res.redirect('/manageEvent/' + req.currentUser.eventId);
+  //console.log("CONTACTS", req.contacts);
+  res.redirect('/close');
 }
 
 
@@ -99,15 +101,20 @@ function isRespondee() {
   return compose()
     // Validate jwt
     .use(function(req, res, next) {
-      var jwtString = req.cookies.token;
+      var jwtString = req.cookies.token || req.query.uuid;
 
       if(jwtString)
       {
-        jwtString = jwtString.substr(1);
-        jwtString = jwtString.substring(0,jwtString.length-1);    
+        if(jwtString[0] == "\"")
+        {
+          jwtString = jwtString.substr(1);
+          jwtString = jwtString.substring(0,jwtString.length-1);    
+        }
       }
 
+
       jwt.verify(jwtString, 'doodleplus-secret', {secret: 'doodleplus-secret'}, function(err, decoded) {
+        console.log("ERRR", err);
         if (err) return res.status(401).send({message: 'Refresh Page'});
         req.user = decoded;
         next();
