@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore, Auth, socket, $timeout) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore, Auth, socket, $timeout,$mdToast) {
     $scope.message = function(){
       console.log('event');
     };
@@ -174,6 +174,15 @@ angular.module('doodleplusApp')
       });
     };
 
+    var openToast =  function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Inivites Sent')
+          .position('top right')
+          .hideDelay(3000)
+      );
+    };
+
     $scope.addContacts = function () {
       console.log('createdEvent',$scope.createdEvent);
       var contactsToAdd = {
@@ -181,6 +190,9 @@ angular.module('doodleplusApp')
         contacts: $scope.contacts
       };
       Contact.save(contactsToAdd,function(res){
+          if (res.success){
+            openToast();
+          }
           console.log('res',res);
       });
     };

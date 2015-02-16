@@ -2,7 +2,7 @@
 
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore,$mdToast) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
@@ -14,6 +14,14 @@ angular.module('doodleplusApp')
     $scope.selectedDay = {index: 0};
 
     var event_id = $stateParams.event_id;
+    var openToast =  function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Inivites Sent')
+          .position('bottom left')
+          .hideDelay(3000)
+      );
+    };
 
     var setEventDetails = function(thisEvent, username, oldResponses) {
       $scope.event = thisEvent;
@@ -36,7 +44,7 @@ angular.module('doodleplusApp')
 
     if (Auth.getToken()) {
       Auth.getCurrentRespondee(setUUID)
-    } else 
+    } else
     {
       Auth.createRespondee(setUUID);
     }
@@ -44,7 +52,7 @@ angular.module('doodleplusApp')
 
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, setEventDetails);
+      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, openToast);
     };
 
     $scope.selectResponse = function(time, response) {
