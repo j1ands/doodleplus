@@ -67,6 +67,8 @@ function sendTwilText(to,from,body){
 
 function sendText(contactData,createdEvent){
   var body = textBody(contactData,createdEvent);
+  //console.log('contactData',contactData);
+  //console.log('body',body);
   contactData.contacts.forEach(function(contact){
     if (contact.phone){
       sendTwilText(contact.phone,null,body);
