@@ -146,6 +146,7 @@ exports.me = function(req, res, next) {
   })
     .then(function(user) { // don't ever give out the password or salt
       if (!user) { return res.json(401); }
+      console.log(user);
       res.json(user);
     })
     .catch(function(err) {

@@ -89,7 +89,7 @@ function setTokenCookie(req, res) {
   //res.send(200, req);
   //res.redirect('/manageEvent/' + req.currentUser.eventId);
   //console.log("CONTACTS", req.contacts);
-  //res.redirect('/close');
+  res.redirect('/close');
 }
 
 

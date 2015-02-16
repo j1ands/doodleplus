@@ -69,6 +69,13 @@ angular.module('doodleplusApp')
       unsyncUpdates: function (modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+      },
+
+      userUpdate: function(cb) {
+        cb = cb || angular.noop;
+        socket.on('user:save', function() {
+          cb();
+        });
       }
     };
   });

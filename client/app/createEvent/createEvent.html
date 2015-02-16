@@ -134,13 +134,29 @@
 			      <h4 flex flex-order="1" layout="row" layout-align="left center" class="link-text">Shareable Link:  <a ng-href="http://localhost:9000/event/{{Create.createdEvent._id}}" class="link-text">http://localhost:9000/event/{{Create.createdEvent._id}}</a></h4>
        		</div>
 	      </md-toolbar>
-	      <div layout="row" layout-margin ng-controller="LoginCtrl">
+	      <div layout="row" layout-margin ng-controller="LoginCtrl" ng-hide="Create.currentUser.user.google">
           <md-button flex flex-order="3" md-theme="google" class="md-raised md-primary google-text" ng-click="loginOauth('google', Create.createdEvent._id)">
             <i class="fa fa-google-plus"></i> Add Contacts
           </md-button>
           <h2 flex flex-order="1" class="prompt-response">Invite some people</h2>
           <h2 flex flex-order="2" class="prompt-response" style="text-align:center">OR</h2>
       	</div>
+        <div layout="row" layout-align="center center" layout-margin ng-show="Create.currentUser.user.google" style="margin-top:25px">
+          <div class="google-contacts-search">
+            <input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts"></input>
+          </div>
+        </div>
+        <div layout="row" layout-align="center center" layout-margin ng-show="Create.currentUser.user.google">
+          <md-list class="google-contacts-list"> 
+              <md-item ng-repeat="contact in Create.currentUser.user.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">
+                <md-item-content> 
+                  <div class="md-tile-content" style="padding:0px;">
+                    <a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact)" ng-class="{chosen:contact.selected}">{{contact.name != "" ? contact.name : contact.email}}</a>
+                  </div>    
+                </md-item-content>
+              </md-item>
+          </md-list>
+        </div>
         <form name="invites" class="event-form">
           <md-input-container>
             <label for="emails">Emails</label>

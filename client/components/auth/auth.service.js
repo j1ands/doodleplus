@@ -15,9 +15,14 @@ angular.module('doodleplusApp')
     currentUser = {};
 
    // check for both to set req.head consistently
-    if ($cookieStore.get('usertoken')) {
-       currentUser = User.get();
+    function checkToken() {
+      if ($cookieStore.get('usertoken')) {
+         currentUser = User.get();
+      }
     }
+
+    checkToken();
+
 
     return {
 
@@ -34,6 +39,7 @@ angular.module('doodleplusApp')
           password: user.password
         })
         .then(function(res) {
+          debugger;
           $cookieStore.put('usertoken', res.data.token);
           currentUser = User.get();
           safeCb(callback)();
@@ -185,6 +191,10 @@ angular.module('doodleplusApp')
         var usertoken = $cookieStore.get('usertoken');
         var returned = (typeof usertoken != 'undefined') ? usertoken : $cookieStore.get('token');
         return returned;
+      },
+
+      checkUserToken: function() {
+        checkToken();
       }
     };
   });

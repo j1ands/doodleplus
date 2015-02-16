@@ -34,13 +34,15 @@ router
   }, passport.authorize('google', {
     failureRedirect: '/signup',
     session: false
-  }), function(req, res, next){
-    //console.log("CONTACTS", req.contacts);
-    console.log("ARGUMENTS", arguments);
-    console.log("REQ", req);
-    console.log("RESSS", res);
-    //res.setHeader('Location', '/close');
-    res.status(205).json({contacts: req.contacts});
-  });
+  }), auth.setTokenCookie);
+
+// function(req, res, next){
+//     //console.log("CONTACTS", req.contacts);
+//     console.log("ARGUMENTS", arguments);
+//     console.log("REQ", req);
+//     console.log("RESSS", res);
+//     //res.setHeader('Location', '/close');
+//     res.status(205).json({contacts: req.contacts});
+//   }
 
 module.exports = router;
