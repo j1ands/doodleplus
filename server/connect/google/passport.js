@@ -16,15 +16,6 @@ exports.setup = function(User, config) {
       consumerKey: config.google.clientID,
       consumerSecret: config.google.clientSecret
     });
-    // c.on('error', function(e){
-    //   console.log('error', e);
-    // });
-    // c.on('contactsReceived', function (contacts) {
-    //   console.log('contacts: ' + contacts);
-    // });
-    // c.getContacts(function(e){
-    //   console.log(e);
-    // });    
 
 
       if(!req.currentUser)

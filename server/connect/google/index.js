@@ -15,15 +15,7 @@ var capture;
 
 router
   .get('/', function(req, res, next) {
-    console.log("i got here");
-    console.log("------");
-    console.log("in index.js", req.query);
-    console.log("------");
-    console.log("original url", req.originalUrl);
-    console.log("------");
-    console.log("url", req.url);
     capture = new CaptureReq(req.query.user, req.query.event);
-    console.log("in indexjs", capture)
     next();
   },passport.authorize('google', {
     failureRedirect: '/signup',
@@ -37,9 +29,6 @@ router
   }))
 
   .get('/callback', function(req, res, next) {
-    console.log("indexjs");
-    console.log(capture);
-    console.log(capture.userId);
     req.currentUser = capture;
     next();
   }, passport.authorize('google', {

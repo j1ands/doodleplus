@@ -2,7 +2,7 @@
 
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
@@ -123,7 +123,6 @@ angular.module('doodleplusApp')
       $(window).scroll(sticky_relocate);
       sticky_relocate();
     });
-
 
   });
 

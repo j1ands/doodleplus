@@ -36,9 +36,7 @@ exports.getRespondee = function(req, res, next) {
   var UUID = req.user.UUID;
 
   if (!UUID) {
-    console.log("shity");
     return res.send(404);
   }
-    console.log("yes");
     res.json({UUID: UUID});
 };

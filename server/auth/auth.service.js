@@ -108,7 +108,7 @@ function isRespondee() {
       }
 
       jwt.verify(jwtString, 'doodleplus-secret', {secret: 'doodleplus-secret'}, function(err, decoded) {
-        if (err) return res.status(401).send("Refresh page!");
+        if (err) return res.status(401).send({message: 'Refresh Page'});
         req.user = decoded;
         next();
       });

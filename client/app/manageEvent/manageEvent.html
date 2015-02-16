@@ -1,70 +1,198 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="page-header">
-        <h2>{{event.title}}</h2>
-      </div>
-    </div>
-  </div>
+<div layout="column" flex>
 
-  <div class="row">
-    <div class="col-lg-12" ng-hide="eventdetail">
-      <a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>
-    </div>
-    <div class="col-lg-12">
-    Sharable link: <a href="http://localhost:9000/event/{{Manage.event_id}}">http://localhost:9000/event/{{Manage.event_id}}</a>
-    </div>
-    <div class="col-lg-12">
-      <form name="invites" ng-submit="addEmail()">
-        <div class="form-group">
-          <label for="emailToAdd">Add Email Addresses:</label>
-          <textarea class="form-control" rows="4" id="emailToAdd" name="emailToAdd" ng-model="emailToAdd" placeholder=""></textarea>
+  <nav mfb-menu position="br" effect="zoomin" label="Go To"
+       active-icon="ion-close-round" resting-icon="ion-plus-round"
+       toggling-method="click">
+    <a mfb-button icon="ion-calendar" label="Responses" ng-click="changePanel(0);"></a>
+    <a mfb-button icon="ion-bowtie" label="Individual Responses" ng-click="changePanel(1)"></a>
+    <a mfb-button icon="ion-edit" label="Edit Event" ng-click="changePanel(2)"></a>
+    <a mfb-button icon="ion-person-add" label="Invite" ng-click="changePanel(3)"></a>
+  </nav>
+
+  <div ng-show="currentPanel===2" class="md-whiteframe-z1 main-content" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Event Information</h2>
+      </div>
+    </md-toolbar>
+    <md-content ng-class="{'md-padding': !isPhone}">
+      <md-toolbar class="md-primary md-hue-3" style="height:100%; min-height:0px">
+        <div layout="row" layout-margin>
+          <h4 flex flex-order="1" layout="row" layout-align="left center" class="link-text">Shareable Link:  <a ng-href="http://localhost:9000/event/{{Manage.event.id}}" class="link-text">http://localhost:9000/event/{{Manage.event.id}}</a></h4>
         </div>
-        <md-button class="md-raised md-primary pull-right" type="submit">Send Invite(s)</md-button>
+      </md-toolbar>
+      <form>
+        <md-input-container>
+          <label for="title">Title: </label>
+          <input id="title" name="title" ng-model="event.title" type="text" required>
+          <div ng-messages="EventInfo.title.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container>
+          <label for="description">Description:</label>
+          <textarea rows="2" id="description" name="description" ng-model="event.description" type="text"></textarea>
+        </md-input-container>
+        <md-input-container>
+          <label for="location">Location:</label>
+          <input id="location" name="location" ng-model="event.location" type="text" placeholder="">
+        </md-input-container>
+        <div layout="row" layout-align="space-around start" >
+          <md-button type="submit" flex class="md-raised md-primary md-accent" ng-click="editEvent()">Confirm Edit</md-button>
+        </div>
       </form>
-      <!-- <h4>Google Contacts:</h4> -->
-    <div class="google-contacts-search" ng-show="Manage.currentUser.google">
-      <input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts"></input>
-    </div>
-   <!-- <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">
-     <a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>
-   </div> -->
-   <md-list layout="column" class="google-contacts-list" ng-show="Manage.currentUser.google"> 
-    	<md-item ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">
-		<md-item-content> 
-			<div class="md-tile-content" style="padding:0px;">
-				<a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact)" ng-class="{chosen:contact.selected}">{{contact.name != "" ? contact.name : contact.email}}</a>
-			</div>		
-		</md-item-content>
-	</md-item>
-    </md-list>
+    </md-content>
+  </div>
 
-      <ul>
-        <li ng-repeat="email in invitedEmails">{{email}}</li>
-      </ul>
-      <div ng-controller="LoginCtrl">
-        <a class="btn btn-google-plus" href="" ng-click="loginOauth('google', Manage.event_id)" ng-hide="Manage.currentUser.google">
-          <i class="fa fa-google-plus"></i> Google Contacts
-        </a>
+  <div ng-show="currentPanel===3" class="md-whiteframe-z1 main-content" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Invite</h2>
       </div>
+    </md-toolbar>
+    <md-content class="md-padding">
+      <div layout="row" layout-margin ng-controller="LoginCtrl">
+        <h2 flex flex-order="1" class="prompt-response">Type in Contacts</h2>
+        <h2 flex flex-order="2" class="prompt-response" style="text-align:center">OR</h2>
+        <md-button flex flex-order="3" md-theme="google" class="md-raised md-primary google-text" ng-click="loginOauth('google', Create.createdEvent._id)">
+          <i class="fa fa-google-plus"></i> Add with G+
+        </md-button>
+      </div>
+      <form name="invites" class="editeventform">
+        <md-input-container>
+          <label for="emails">Emails</label>
+          <textarea rows="2" id="emails" name="emails" ng-model="contacts.emails" type="text"></textarea>
+        </md-input-container>
+        <md-input-container>
+          <label for="phoneNumbers">Phone Numbers</label>
+          <textarea rows="2" id="phoneNumbers" name="phoneNumbers" ng-model="contacts.phoneNumbers" type="text"></textarea>
+        </md-input-container>
+        <div layout="row" layout-align="space-around start" >
+          <md-button type="submit" flex class="md-raised md-primary md-accent" ng-click="addContacts()">Send Invites</md-button>
+        </div>
+      </form>
+    </md-content>
+  </div>
+
+
+
+    <!--<div ng-hide="eventdetail">-->
+      <!--<a href="" ng-init="eventdetail=false" ng-click="eventdetail=true"><span class="h4">Manage Event</span> <span class="h5"><span class="glyphicon glyphicon-chevron-right"></span></span></a>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--Sharable link: <a href="http://localhost:9000/event/{{Manage.event_id}}">http://localhost:9000/event/{{Manage.event_id}}</a>-->
+    <!--</div>-->
+
+      <!--<form name="invites" ng-submit="addEmail()">-->
+        <!--<div class="form-group">-->
+          <!--<label for="emailToAdd">Add Email Addresses:</label>-->
+          <!--<textarea class="form-control" rows="4" id="emailToAdd" name="emailToAdd" ng-model="emailToAdd" placeholder=""></textarea>-->
+        <!--</div>-->
+        <!--<md-button class="md-raised md-primary pull-right" type="submit">Send Invite(s)</md-button>-->
+      <!--</form>-->
+      <!--&lt;!&ndash; <h4>Google Contacts:</h4> &ndash;&gt;-->
+    <!--<div class="google-contacts-search" ng-show="Manage.currentUser.google">-->
+      <!--<input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts"></input>-->
+    <!--</div>-->
+   <!--&lt;!&ndash; <div class="list-group" style="height:200px; width: 300px; overflow:auto;" ng-show="Manage.currentUser.google">-->
+     <!--<a href="" class="list-group-item"  ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name">{{contact.name != "" ? contact.name : contact.email}}</a>-->
+   <!--</div> &ndash;&gt;-->
+   <!--<md-list layout="column" class="google-contacts-list" ng-show="Manage.currentUser.google">-->
+    	<!--<md-item ng-repeat="contact in Manage.currentUser.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">-->
+		<!--<md-item-content>-->
+			<!--<div class="md-tile-content" style="padding:0px;">-->
+				<!--<a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact)" ng-class="{chosen:contact.selected}">{{contact.name != "" ? contact.name : contact.email}}</a>-->
+			<!--</div>-->
+		<!--</md-item-content>-->
+	<!--</md-item>-->
+    <!--</md-list>-->
+
+      <!--<ul>-->
+        <!--<li ng-repeat="email in invitedEmails">{{email}}</li>-->
+      <!--</ul>-->
+      <!--<div ng-controller="LoginCtrl">-->
+        <!--<a class="btn btn-google-plus" href="" ng-click="loginOauth('google', Manage.event_id)" ng-hide="Manage.currentUser.google">-->
+          <!--<i class="fa fa-google-plus"></i> Google Contacts-->
+        <!--</a>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <div ng-show="currentPanel===0" class="md-whiteframe-z1 main-content" layout="column">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Current Responses</h2>
+      </div>
+    </md-toolbar>
+    <div flex id="dayChart" >
+      <md-tabs md-selected="selectedIndex" >
+          <md-tab ng-repeat="day in days" label="{{day.date}}" ng-mousedown="changeDay(selectedIndex,$index)" ng-if="isDays.value">
+            <md-content>
+            <div id="chart-{{$index}}" response-chart on-rect-click="pullData(response)" day="day" day-num="$index"></div>
+            </md-content>
+          </md-tab>
+      </md-tabs>
+    </div>
+  </div>
+
+<div ng-show="currentPanel===1" class="md-whiteframe-z1 main-content" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Selected Responses</h2>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div ng-if="currentPanel===1 && responses[currentIndex].length===0">
+      <h2 style="text-align: center">No Times chosen, but have a shark instead</h2>
+      <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
     </div>
 
-  </div>
+    <md-list>
 
-  <div class="calibration" role="calibration">
-    <svg width="240" height="34">
-    </svg>
-  </div>
+      <md-item><!-- This section is for testing styling -->
+        <md-item-content>
+          <div class="md-tile-left">
+            <h2>Respondent's Name</h2>
+          </div>
+          <div class="md-tile-content">
+            <h3>Status for all Selected Times</h3>
+            <h3> Status</h3>
+          </div>
+        </md-item-content>
+      </md-item><!--End of section for testing styling -->
 
-  <div class="row">
-
-    <div id="chart" class="col-lg-8" response-chart on-rect-click="pullData(response)"></div>
-    <div class="col-lg-4">
-        <ul>
-        <li ng-repeat="response in responses"> {{ response.username }}  {{ response.status }}</li>
-      </ul>
-    </div>
-  </div>
+      <md-item ng-repeat="response in responses[currentIndex]">
+        <md-item-content>
+          <div class="md-tile-left">
+            <h2>{{response.username}}</h2>
+          </div>
+          <div class="md-tile-content">
+            <h3>Status:</h3>
+            <h3>{{response.superStatus}}</h3>
+          </div>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-content>
 </div>
- 
- 
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
