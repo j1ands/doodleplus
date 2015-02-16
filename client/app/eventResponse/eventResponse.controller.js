@@ -35,8 +35,14 @@ angular.module('doodleplusApp')
     }
 
     if (Auth.getToken()) {
+      debugger;
       Auth.getCurrentRespondee(setUUID)
-    } else Auth.createRespondee(setUUID);
+    } else 
+    {
+      debugger;
+      Auth.createRespondee(setUUID);
+    }
+
 
 
     $scope.submitResponses = function() {

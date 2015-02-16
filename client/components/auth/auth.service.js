@@ -81,7 +81,8 @@ angular.module('doodleplusApp')
 
       getCurrentRespondee: function(callback) {
         var token = $cookieStore.get('token');
-        return $http.get('/api/respondee', {UUID: token}).success(function(idObj) {
+        return $http.get('/api/respondee?uuid=' + token).success(function(idObj)
+        return $http.get('/api/respondee', {UUID: token}) {
             safeCb(callback)(idObj);
           }).error(function(err) {
             return safeCb(callback)(err);
