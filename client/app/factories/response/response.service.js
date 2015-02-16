@@ -37,15 +37,15 @@ angular.module('doodleplusApp')
               myOldResponses.push(response);
             }
           });
-        } else  
+        } else
         if (time.status) {
-          responses.push({TimeId: time._id, 
-                          status: time.status, 
+          responses.push({TimeId: time._id,
+                          status: time.status,
                           username: username,
                           UUID: UUID
                         });
         }
-      })
+      });
       if (oldResponses.length > 0) {
         Response.remove({responses: myOldResponses}, function() {
           Response.save({
