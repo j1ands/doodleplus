@@ -9,6 +9,7 @@ var Time  = sqldb.Time;
 var Response = sqldb.Response;
 var Contact = sqldb.Contact;
 var Response = sqldb.Response;
+var sendEmail = require('./sendEmails').sendEmail;
 
 // Gets list of events from the DB
 
@@ -20,11 +21,12 @@ exports.create = function(req, res) {
   User.findOrCreate({where: {email: req.body.user.email}, defaults: req.body.user})
     .spread(function(creator){
       Event.saveNewEvent(req.body, creator).then(function(createdEvent) {
+        sendEmail(createdEvent,creator);
         Time.saveEventTimes(req.body, creator, createdEvent).then(function (createdTimes) {
           res.status(200).send({createdEvent: createdEvent, user: creator});
         })
         .catch(function(err){
-         console.log('err',err);
+          console.log('err',err);
         });
       }).catch(function(err){
         console.log('Event Save Failed. Reason:',err);
