@@ -6,7 +6,7 @@ angular.module('doodleplusApp')
       storeEvent.title = eventTitle;
       $location.path('/createEvent');
     }
-    
+
     //$scope.user = Auth.getCurrentUser();
 
   });
