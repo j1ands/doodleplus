@@ -1,17 +1,17 @@
 'use strict';
 
+
 angular.module('doodleplusApp')
   .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore) {
 
-  
-  $scope.mouseDown = false;
-  $scope.responses = [];
-  $scope.days = [];
-  $scope.username = {};
-  $scope.oldResponses = [];
-  $scope.selectedDates = [];
-  $scope.showCalendar = false;
-  $scope.selectedDay = 0;
+  	$scope.mouseDown = false;
+  	$scope.responses = [];
+  	$scope.days = [];
+    $scope.username = {};
+    $scope.oldResponses = [];
+    $scope.selectedDates = [];
+    $scope.showCalendar = false;
+    $scope.selectedDay = {index: 0};
 
     var event_id = $stateParams.event_id;
 
@@ -92,10 +92,37 @@ angular.module('doodleplusApp')
 
         $scope.days.forEach(function(day, i) {
           if (dateStr.search(day.date) > -1) {
-            $scope.selectedDay = i;
+            $scope.selectedDay.index = i;
           }
         })
       }
     }
+
+    var count = 0;
+    var findOffset = function() {
+      if (count < 3) {
+        var div_top = $('.md-header').offset().top;
+        $scope.div_top = div_top;
+        count++;
+      }
+    }
+
+    findOffset();
+
+    function sticky_relocate() {
+      var window_top = $(window).scrollTop();
+      findOffset();
+      if (window_top > $scope.div_top) {
+        $('.md-header').attr('id', 'stick');
+      } else {
+        $('.md-header').removeAttr('id', 'stick');
+      }
+    }
+
+    $(function() {
+      $(window).scroll(sticky_relocate);
+      sticky_relocate();
+    });
+
   });
 
