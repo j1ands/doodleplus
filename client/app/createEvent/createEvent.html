@@ -147,12 +147,12 @@
           </div>
         </div>
         <div layout="row" layout-align="center center" layout-margin ng-show="Create.currentUser.user.google">
-          <md-list class="google-contacts-list"> 
+          <md-list class="google-contacts-list">
               <md-item ng-repeat="contact in Create.currentUser.user.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item">
-                <md-item-content> 
+                <md-item-content>
                   <div class="md-tile-content" style="padding:0px;">
                     <a href="" class="google-contacts-a" ng-click="addGoogleContactToText(contact)" ng-class="{chosen:contact.selected}">{{contact.name != "" ? contact.name : contact.email}}</a>
-                  </div>    
+                  </div>
                 </md-item-content>
               </md-item>
           </md-list>
@@ -168,7 +168,7 @@
           </md-input-container>
         </form>
         <div layout="row" layout-align="space-around start">
-         <md-button class="md-raised md-primary md-accent" hm-tap="addContacts()" >Send Invites</md-button>
+         <md-button class="md-raised md-primary md-accent" ng-click="addContacts()" >Send Invites</md-button>
         </div>
       </md-content>
     </div>

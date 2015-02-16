@@ -38,7 +38,7 @@ angular.module('doodleplusApp')
     $scope.dayHours = [];
     //Panel Show Logic
     $scope.currentPanel = 0;
-    
+
     $scope.showNextPanel = function(currentPanel){
       if ($scope.EventInfo.$valid){
         if (currentPanel<2){
@@ -165,15 +165,17 @@ angular.module('doodleplusApp')
           $scope.eventFailure = true;
           return;
         }
-	       
+
         $cookieStore.put('user', res.user._id);
         console.log('res',res);
         ceCtrl.createdEvent = res.createdEvent;
+        $scope.createdEvent = res.createdEvent;
         $scope.currentPanel+=1;
       });
     };
 
     $scope.addContacts = function () {
+      console.log('createdEvent',$scope.createdEvent);
       var contactsToAdd = {
         eventId: $scope.createdEvent._id,
         contacts: $scope.contacts
@@ -213,6 +215,6 @@ angular.module('doodleplusApp')
         contact.selected = true;
       }
 
-    }    
+    }
 
   });

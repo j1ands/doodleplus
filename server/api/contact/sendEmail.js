@@ -20,7 +20,7 @@ function sendEmail(emailData,createdEvent) {
       }
     });
     var message = {
-      html: '<a href="localhost:9000/eventResponse/"' + createdEvent._id + '>The Event: localhost:9000/eventResponse/'+createdEvent._id+'</a>',
+      html: '<a href="http://localhost:9000/eventResponse/"' + createdEvent._id + '>The Event: http://localhost:9000/eventResponse/'+createdEvent._id+'</a>',
       text: 'some example text cooooool',
       subject: 'You\'ve been invited to a super cool event!',
       from_email: emailData.creator.email,
