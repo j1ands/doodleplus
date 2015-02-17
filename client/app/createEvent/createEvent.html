@@ -53,75 +53,63 @@
         </md-content>
         <br>
         <div layout="row" layout-align="space-around start" >
-          <md-button type="submit" ng-disabled="EventInfo.$invalid" flex class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="showNextPanel(currentPanel)">Next</md-button>
+          <md-button type="submit" ng-disabled="EventInfo.$invalid" flex class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="showNextPanel(currentPanel)">Choose Dates</md-button>
         </div>
       </div>
     </form>
 
 
-      <div ng-show="currentPanel===1"  class="md-whiteframe-z1 main-content" layout="column">
-        <md-toolbar >
-          <div class="md-toolbar-tools">
-            <h1>Select Dates</h1>
-          </div>
-        </md-toolbar>
-        <md-content style="height: 550px;">
-          <div style="height: 91%;">
+      <div ng-show="currentPanel===1"  class="" layout="column" flex>
+        <div layout="row">
+            <div class="page-header" flex>
+              <h1>Select Dates</h1>
+            </div>
+        </div>
+        <md-content>
+          <div>
             <datepicker ng-click="updateDays()" ng-model="date.value" min-date="minDate" class="datepicker well well-sm" show-weeks="false" multi-select='selectedDates'></datepicker>
           </div>
-          <div style="clear:both"></div>
-          <div style="height:3%" layout="row" layout-align="space-around start">
-            <md-button flex flex-order="1" class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="showPrevPanel()" >Prev</md-button>
-            <div flex flex-order="2"></div>
-            <md-button flex flex-order="3" class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="showNextPanel(currentPanel)" >Next</md-button>
+          <div layout="row" layout-align="space-around start">
+            <md-button flex class="md-button md-cornered md-button-colored btn-lg btn-prev" ng-click="showPrevPanel()" >Edit Event Info</md-button>
+            &nbsp;&nbsp;
+            <md-button flex class="md-button md-cornered md-button-colored btn-lg" ng-disabled="selectedDates.length === 0" ng-click="showNextPanel(currentPanel)" >Select Times</md-button>
           </div>
         </md-content>
       </div >
 
-       <div id="timesTable" ng-show="currentPanel===2" ng-mouseup="timeUp()" class="md-whiteframe-z1 main-content" layout="column">
-        <md-toolbar>
-          <div  class="md-toolbar-tools">
-            <h1>Select Times</h1>
-            <md-button class="md-accent md-default-theme" ng-click="allDays.apply(selectedIndex)" aria-label="All Days" style="display: inline-block; float:right !important; margin-top:-38px;">
-  	  Apply times to all days
-            </md-button>
+        <div ng-show="currentPanel===2" ng-mouseup="timeUp()" layout="column">
+          <div layout="row">
+            <div class="page-header" flex>
+              <h1>Select Times</h1>
+            </div>
           </div>
-        </md-toolbar >
-         <md-tabs ng-click="testAdding()" md-selected="selectedIndex" ng-if="currentPanel===2">
-           <md-tab label="No Dates Yet" ng-if="selectedDates.length===0">
-             <md-content>
-
-               <h2>No dates chosen, but have a shark instead</h2>
-               <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
-               <div layout="row" layout-align="space-around start">
-                 <md-button flex class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="showPrevPanel()" >Prev</md-button>
-               </div>
-             </md-content>
-           </md-tab>
-           <md-tab ng-repeat="day in selectedDates"  label="{{::day | date:short}}">
-             <table class="table table-striped table-responsive disable-text-selection">
-               <thead>
-               <tr>
-                 <th class="time-input">
-                   <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                   Select times for {{::day | date:short}}
-                 </th>
-               </tr>
-               </thead>
-               <tbody class="time-input">
-               <tr ng-mousedown="timeClick($event, $index, selectedIndex)" ng-mouseenter="timeEnter($event, $index, selectedIndex)" ng-repeat="time in dayHours[selectedIndex]">
-                 <td class="time-input" style="width:9500px" ng-class="{success: time.selected}">{{::time.time | date:"h:mm a"}}</td>
-               </tr>
-               </tbody>
-             </table>
-           </md-tab>
-         </md-tabs>
-         <div ng-if="selectedDates.length!==0" layout="row" layout-align="space-around start">
-           <md-button flex flex-order="1" class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="showPrevPanel()">Prev</md-button>
-           <div flex flex-order="2">
-           </div>
-           <md-button flex flex-order="3" class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="saveEvent()">Create!</md-button>
-         </div>
+          <md-tabs class="md-tabs-transparent" ng-click="testAdding()" md-selected="selectedIndex" ng-if="currentPanel===2">
+            <md-tab ng-repeat="day in selectedDates"  label="{{::day | date:'MMM dd'}}">
+              <div layout="row" class="margin-top margin-bottom">
+                <div flex>
+                  <p><i>Times for {{::day | date:'MMM dd'}}</i></p>
+                </div>
+                <div flex>
+                  <md-button class="md-button md-cornered md-button-colored-secondary pull-right" ng-click="allDays.apply(selectedIndex)" aria-label="All Days">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Apply times to all days
+                  </md-button>
+                </div>
+              </div>
+              
+              <table class="table table-striped table-responsive disable-text-selection" id="timesTable">
+                <tbody class="time-input">
+                  <tr ng-mousedown="timeClick($event, $index, selectedIndex)" ng-mouseenter="timeEnter($event, $index, selectedIndex)" ng-repeat="time in dayHours[selectedIndex]">
+                    <td colspan="2" class="time-input" style="width:9500px" ng-class="{success: time.selected}">{{::time.time | date:"h:mm a"}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-tab>
+          </md-tabs><br><br><br>
+        <div layout="row" id="stick-bottom" class="container container-narrow">
+          <md-button flex class="md-button md-cornered md-button-colored btn-lg home-input-button btn-prev" ng-click="showPrevPanel()">Edit Dates</md-button>
+          &nbsp;&nbsp;
+          <md-button flex class="md-button md-cornered md-button-colored btn-lg home-input-button" ng-click="saveEvent()">Create Poll</md-button>
+        </div>
       </div>
 
       <div ng-show="currentPanel===3" class="md-whiteframe-z1 main-content" layout="column">

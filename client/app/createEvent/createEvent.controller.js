@@ -67,7 +67,6 @@ angular.module('doodleplusApp')
 
     $scope.allDays.apply = function(tab)
     {
-      console.log('selectedIndex',tab);
         var selectedTimes = [];
         $scope.dayHours[tab].forEach(function(time, index){
           if(time.selected)
@@ -76,7 +75,6 @@ angular.module('doodleplusApp')
           }
         });
         $scope.selectedDates.forEach(function(date, index){
-          console.log("WAAA", $scope.selectedDates);
           if(index !== tab)
           {
             selectedTimes.forEach(function(val){
@@ -171,5 +169,32 @@ angular.module('doodleplusApp')
           console.log('res',res);
       });
     };
+
+
+    var count = 0;
+    var findOffset = function() {
+      if ($scope.currentPanel === 2 && count < 3) {
+        var div_top = $('.md-header').offset().top;
+        $scope.div_top = div_top;
+        count++;
+      }
+    }
+
+    findOffset();
+
+    function sticky_relocate() {
+      var window_top = $(window).scrollTop();
+      findOffset();
+      if (window_top > $scope.div_top) {
+        $('.md-header').attr('id', 'stick-top').addClass('container').addClass('container-narrow');
+      } else {
+        $('.md-header').removeAttr('id', 'stick-top').removeClass('container').removeClass('container-narrow');
+      }
+    }
+
+    $(function() {
+      $(window).scroll(sticky_relocate);
+      sticky_relocate();
+    });
 
   });

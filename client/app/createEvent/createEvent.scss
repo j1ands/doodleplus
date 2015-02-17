@@ -10,7 +10,6 @@ $break-large: 1200px;
 }
 
 .datepicker {
-	height: 95%;
 	table {
 		width: 100%;
 		th {
@@ -20,14 +19,31 @@ $break-large: 1200px;
 			}
 		}
 		tr {
-			height: 60px;
+			height: 40px;
 			button {
-				height: 60px;
+				height: 70px;
 			}
 		}
 	}
 	.btn.btn-default {    //This is for datepicker wells
 	  font-size:20px;
+	}
+	.btn.btn-info {    //This is for datepicker wells
+	  background-color: $primary;
+	  border-color: $primarydk;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.datepicker {
+		table {
+			tr {
+				height: 60px;
+				button {
+					height: 60px;
+				}
+			}
+		}
 	}
 }
 
@@ -129,18 +145,6 @@ tbody {
   max-height: none !important;
 }
 
-
-
-//#timesTable {
-//  overflow: visible;
-//  height: 1000px;
-//}
-
-//md-content {
-//  @media screen and (min-width: 700px) {
-//    padding:50px;
-//  }
-//}
 .google-btn {
 	background-color:red;
 }
@@ -183,6 +187,7 @@ tbody {
 
 .container-narrow {
 	width: 700px;
+	background-color: white;
 }
 
 @media screen and (max-width: 768px) {
@@ -198,4 +203,17 @@ tbody {
 #checkbox {
 	padding-top: 10px;
 	margin-bottom: 0px;
+}
+
+.btn-prev, .btn-prev:active {
+	background-color: $primarydk !important;
+}
+.btn-prev:hover {
+	background-color: darken($primarydk, 20%) !important;
+}
+
+#timesTable {
+	td {
+		padding: 10px 15px;
+	}
 }
