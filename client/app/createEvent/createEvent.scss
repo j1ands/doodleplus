@@ -2,7 +2,9 @@ $break-small: 600px;
 $break-large: 1200px;
 
 .event-form {
-	padding: 0 30px 0 0;
+	md-input-container {
+		min-height: 80px;
+	}
 }
 
 #description, #emailToAdd {
@@ -10,7 +12,6 @@ $break-large: 1200px;
 }
 
 .datepicker {
-	height: 95%;
 	table {
 		width: 100%;
 		th {
@@ -20,14 +21,31 @@ $break-large: 1200px;
 			}
 		}
 		tr {
-			height: 60px;
+			height: 40px;
 			button {
-				height: 60px;
+				height: 70px;
 			}
 		}
 	}
 	.btn.btn-default {    //This is for datepicker wells
 	  font-size:20px;
+	}
+	.btn.btn-info {    //This is for datepicker wells
+	  background-color: $primary;
+	  border-color: $primarydk;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.datepicker {
+		table {
+			tr {
+				height: 60px;
+				button {
+					height: 60px;
+				}
+			}
+		}
 	}
 }
 
@@ -108,26 +126,9 @@ button.md-raised.md-primary.md-accent {
   }
 }
 
-#options {
-  >  div {
-    width: 45%;
-    display: inline-block;
-  }
-  md-input-container {
-    width: 45%;
-    display: inline-block;
-  }
-
-}
-
+/*`*/
 
 #created {
-  h1 {
-    text-align:center;
-  }
-  h3 {
-
-  }
 }
 
 
@@ -140,43 +141,47 @@ tbody {
   max-height: none !important;
 }
 
-
-
-//#timesTable {
-//  overflow: visible;
-//  height: 1000px;
-//}
-
-//md-content {
-//  @media screen and (min-width: 700px) {
-//    padding:50px;
-//  }
-//}
-.google-btn {
-	background-color:red;
+.google-btn, .google-btn:active {
+	background-color: #D50F25 !important;
+	margin: 15px 0px;
 }
+.google-btn:hover {
+	background-color: #D50F25 !important;
+}
+
 .title-response {
 	@media screen and (max-width: 881px) {
 	font-size: 30px;
 	}
 }
-.prompt-response {
-	@media screen and (max-width: 881px) {
-	font-size: 20px;
-	}
 
-	@media screen and (max-width: 629px) {
-	font-size: 16px;
-	font-weight: 600;
-	}
-}
 .google-text {
 	@media screen and (max-width: 462px) {
 		font-size: 9px;
 	}
 }
 .link-text {
-	@media screen and (max-width: 755px) {
+	white-space: pre;           /* CSS 2.0 */
+	white-space: pre-wrap;      /* CSS 2.1 */
+	white-space: pre-line;      /* CSS 3.0 */
+	white-space: -pre-wrap;     /* Opera 4-6 */
+	white-space: -o-pre-wrap;   /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap;  /* HP Printers */
+	word-wrap: break-word;
+	.h4 {
+		line-height: 1.5;
+		margin: 0px;
+	}
+	a {
+		color: darken($able, 30%) !important;
+		word-break:     break-word;
+		-webkit-hyphens: auto;
+		-moz-hyphens:    auto;
+		hyphens:         auto;
+	}
+}
+/*	@media screen and (max-width: 755px) {
 		font-size: 16px;
 	}
 	@media screen and (max-width: 693px){
@@ -184,10 +189,42 @@ tbody {
 	}
 	@media screen and (max-width: 567px) {
 		font-size:12px;
+	}	
+}*/
+
+.container-narrow {
+	width: 700px;
+	background-color: white;
+}
+
+@media screen and (max-width: 768px) {
+	.container-narrow {
+		width: 100%;
 	}
-	@media screen and (max-width : 493px) {
-		font-size: 16px;
-		display: block;
-		text-align: center;
+}
+
+.input-container-with-message {
+	padding-bottom: 14px;
+}
+
+#checkbox {
+	padding-top: 10px;
+	margin-bottom: 0px;
+}
+
+.btn-prev, .btn-prev:active {
+	background-color: $primarydk !important;
+}
+.btn-prev:hover {
+	background-color: darken($primarydk, 20%) !important;
+}
+
+#timesTable {
+	td {
+		padding: 10px 15px;
 	}
+}
+
+#eventLinkBanner {
+	background-color: lighten($able, 25%) !important;
 }

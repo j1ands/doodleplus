@@ -7,11 +7,12 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 
 /**
- * App-wide Styless
+ * App-wide Stylesss
  */
 
 $primary: #7265D6;
-$primarydk: #655CBF;
+$primarydk: #4A458C;
+$accent: #88CF69;
 
 $able: #88CF69;
 $ifneedbe: #023152;
@@ -25,8 +26,18 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 
-.md-button-colored {
-	background-color: $primary;
+.md-button-colored, .md-button-colored:active {
+	background-color: $primary !important;
+}
+.md-button-colored:hover {
+	background-color: darken($primary, 20%) !important;
+}
+
+.md-button-colored-secondary, .md-button-colored-secondary:active {
+	background-color: $accent !important;
+}
+.md-button-colored-secondary:hover {
+	background-color: darken($accent, 20%) !important
 }
 
 .md-default-theme[disabled] {
@@ -42,6 +53,7 @@ md-tabs-ink-bar {
 }
 
 .md-tabs-transparent {
+	overflow: hidden !important;
 	section {
 		background-color: white !important;
 		md-tab-label {
@@ -86,16 +98,26 @@ tbody.time-input {
 	overflow: auto;
 }
 
+.page-header {
+	margin: 20px 0 20px;
+}
+
 @media screen and (max-width: 600px) {
 	.page-header {
 		margin: 0 0 20px;
 	}
 }
 
+.margin-top {
+	margin-top: 15px;
+}
+.margin-bottom {
+	margin-bottom: 15px;
+}
+
 md-toast {
   margin-top: 200px;
 }
-
 
 // Component styles are injected through grunt
 // injector

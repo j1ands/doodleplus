@@ -79,13 +79,24 @@
 	width: 33%;
 }
 
-#stick {
+#stick-top {
 	position: fixed;
 	top: 0px;
 	z-index: 20000;
-	border-bottom: solid 1px $darkgray;
+	padding: 0 30px 0 0;
 }
 
+/*#stick-top > div {
+	margin-right: 30px;
+	border-bottom: solid 1px $darkgray;
+}*/
+
+#stick-bottom {
+	padding: 0 30px 0 0;
+	position: fixed;
+	bottom: 0px;
+	z-index: 20000
+}
 
 .datepicker-sm {
 	margin: 20px 0 0 0;

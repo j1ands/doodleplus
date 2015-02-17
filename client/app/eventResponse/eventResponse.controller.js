@@ -13,6 +13,7 @@ angular.module('doodleplusApp')
     $scope.showCalendar = false;
     $scope.selectedDay = {index: 0};
 
+    console.log($stateParams);
     var event_id = $stateParams.event_id;
     var openToast =  function() {
       $mdToast.show(
@@ -125,9 +126,9 @@ angular.module('doodleplusApp')
       var window_top = $(window).scrollTop();
       findOffset();
       if (window_top > $scope.div_top) {
-        $('.md-header').attr('id', 'stick');
+        $('.md-header').attr('id', 'stick-top');
       } else {
-        $('.md-header').removeAttr('id', 'stick');
+        $('.md-header').removeAttr('id', 'stick-top');
       }
     }
 

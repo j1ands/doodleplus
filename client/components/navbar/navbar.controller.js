@@ -15,4 +15,14 @@ angular.module('doodleplusApp')
     $scope.createEvent = function() {
       $location.path('/createEvent');
     }
+
+    if ($location.url() !== "/") {
+      $('.navbar').addClass('navbar-sitewide');
+    }
+
+    $scope.$on('$locationChangeStart', function() {
+      if ($location.url() !== "/") {
+       $('.navbar').addClass('navbar-sitewide');
+      } else $('.navbar').removeClass('navbar-sitewide');
+    });
   });
