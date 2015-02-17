@@ -8,6 +8,12 @@ angular.module('doodleplusApp')
     $scope.emailToAdd = "";
     $scope.currentPanel = 0;
     $scope.isPhone = typeof window.orientation !== 'undefined';
+    if ($scope.isPhone){
+      $scope.mult=18;
+    } else {
+      $scope.mult=10;
+    }
+
     $scope.changePanel = function(number){
       $scope.currentPanel = number;
     };
@@ -80,7 +86,7 @@ angular.module('doodleplusApp')
     //         $scope.respondents[i].superstatus = undefined;
     //     }
     // }
-        
+
 
     $scope.pullData = function(response){
         $scope.responses[$scope.currentIndex] = colorRespondents(response);
@@ -92,7 +98,7 @@ angular.module('doodleplusApp')
     };
 
     mCtrl.event_id = $stateParams.event_id;
-    
+
     $scope.addGoogleContactToText = function(contact) {
         var index = $scope.emailToAdd.indexOf(contact.email);
         if($scope.emailToAdd == "")
