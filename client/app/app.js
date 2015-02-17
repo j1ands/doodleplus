@@ -49,7 +49,7 @@ angular.module('doodleplusApp', [
     $httpProvider.interceptors.push('authInterceptor');
   })
 
-  .factory('authInterceptor', function($rootScope, $q, $cookieStore, $injector) {
+  .factory('authInterceptor', function($rootScope, $q, $cookieStore, $injector, errorCounter) {
     var state;
     return {
       // Add authorization token to headers
@@ -60,11 +60,20 @@ angular.module('doodleplusApp', [
         }
         return config;
       },
+	
+	response: function(response) {
+		errorCounter.count = 0;
+		return response;
+	},
       // Intercept 401s and redirect you to main
       responseError: function(response) {
         if (response.status === 401) {
+	  if(errorCounter.count == 1) {
+	  	errorCounter.count = 0;
+  		(state || (state = $injector.get('$state'))).go('main');
+	  }
+	  errorCounter.count++;
           location.reload(); //Reload page option
-          // (state || (state = $injector.get('$state'))).go('main');
           
           // remove any stale tokens
           $cookieStore.remove('token');
