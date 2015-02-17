@@ -5,6 +5,16 @@
 // 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 // 	font-size: 13px;
 // }
+#responseTab {
+  height: 48px;
+  background-color: rgb(76, 175, 80);
+  margin-top: 0px;
+  text-align:center;
+  font-size: 24px;
+  color: white;
+  padding-top: 10px;
+  font-weight: 300;
+}
 
 .axis path {
 	fill:none;
@@ -31,7 +41,7 @@
 }
 
 .name-tile {
-  width: 25%;
+  width: 100%;
   text-align: center;
   font-size: 12px;
   border: solid 1px white;

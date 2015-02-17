@@ -7,7 +7,8 @@ angular.module('doodleplusApp')
 		scope: {
 			onRectClick: '&',
 			day: '=',
-			dayNum: '='
+			dayNum: '=',
+      heightMult: '='
 		},
 		link: function(scope, element, attrs) {
 			d3Service.d3().then(function(d3) {
@@ -46,7 +47,7 @@ angular.module('doodleplusApp')
 					// barSize = frameWidth/numResponses;
 					var m = {top: 40, right: 60, bottom: 20, left: 60},
 					frameWidth = parseInt(d3.select('#dayChart').style('width'))-m.left - m.right,
-					frameHeight = parseInt(d3.select('#dayChart').style('height'))*15,
+					frameHeight = parseInt(d3.select('#dayChart').style('height'))*scope.heightMult,
 					barSize = frameWidth/numResponses;
 
 				var yRange = function(){
