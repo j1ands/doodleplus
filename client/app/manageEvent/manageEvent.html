@@ -122,6 +122,18 @@
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Current Responses</h2>
+        <span>
+          <h4>
+            <table class="color-key" width="400" border="0" cellspacing="0" cellpadding="0">       
+                <tr>
+                  <td width="22%" class="able">&nbsp;ABLE</td> 
+                  <td width="34%" class="ifneedbe">&nbsp;IF NEED BE</td> 
+                  <td width="22%" class="maybe">&nbsp;MAYBE</td>
+                  <td width="22%" class="unable" style="color: #000000">&nbsp;UNABLE</td>  
+                </tr>
+            </table>
+          </h4>
+        </span>
       </div>
     </md-toolbar>
     <div flex id="dayChart" >
@@ -138,19 +150,38 @@
 <div ng-show="currentPanel===1" class="md-whiteframe-z1 main-content" layout="column">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>Selected Responses</h2>
+      <h2>Individual Response Status Over Selected Times</h2>
+        <span>
+          <h4>
+            <table class="color-key" width="300" border="0" cellspacing="0" cellpadding="0">       
+                <tr>
+                  <td width="30%" class="able">&nbsp;ABLE</td> 
+                  <td width="40%" class="ifneedbe">&nbsp;IF NEED BE</td> 
+                  <td width="30%" class="maybe">&nbsp;MAYBE</td> 
+                </tr>
+            </table>
+          </h4>
+        </span>
     </div>
   </md-toolbar>
-  <md-content>
+  <!-- <md-content>
     <div ng-if="currentPanel===1 && responses[currentIndex].length===0">
       <h2 style="text-align: center">No Times chosen, but have a shark instead</h2>
       <img style="display: block;margin-left:auto;margin-right: auto;" ng-src="http://media.giphy.com/media/NrRH9q9nNafja/giphy.gif"/>
     </div>
+ <div id="indiv-status-chart" indiv-status-chart selected="responses[currentIndex]"></div>
 
-    <md-list>
+</md-content> -->
 
-      <md-item><!-- This section is for testing styling -->
-        <md-item-content>
+
+
+
+
+<!--     <md-list>
+
+      <md-item> -->
+      <!-- This section is for testing styling -->
+<!--         <md-item-content>
           <div class="md-tile-left">
             <h2>Respondent's Name</h2>
           </div>
@@ -159,21 +190,23 @@
             <h3> Status</h3>
           </div>
         </md-item-content>
-      </md-item><!--End of section for testing styling -->
+      </md-item>End of section for testing styling  -->
 
       <md-item ng-repeat="response in responses[currentIndex]">
         <md-item-content>
-          <div class="md-tile-left">
+          <div class="md-tile-left name-tile {{response.superStatus}}">
             <h2>{{response.username}}</h2>
           </div>
-          <div class="md-tile-content">
+<!--           <div class="md-tile-content">
             <h3>Status:</h3>
             <h3>{{response.superStatus}}</h3>
-          </div>
+          </div> -->
         </md-item-content>
       </md-item>
     </md-list>
   </md-content>
+
+
 </div>
 
 </div>

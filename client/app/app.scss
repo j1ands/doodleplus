@@ -17,6 +17,7 @@ $accent: #88CF69;
 $able: #88CF69;
 $ifneedbe: #023152;
 $maybe: #7265D6;
+$unable: #ffffff;
 $lightgray: #F9F8F8;
 $mediumgray: #F9F8F8;
 $darkgray: #ccc;
@@ -52,6 +53,7 @@ md-tabs-ink-bar {
 }
 
 .md-tabs-transparent {
+	overflow: hidden !important;
 	section {
 		background-color: white !important;
 		md-tab-label {
@@ -113,13 +115,18 @@ tbody.time-input {
 	margin-bottom: 15px;
 }
 
+md-toast {
+  margin-top: 200px;
+}
 
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
+@import 'close/close.scss';
 @import 'createEvent/createEvent.scss';
 @import 'eventResponse/eventResponse.scss';
+@import 'google/google.scss';
 @import 'main/main.scss';
 @import 'manageEvent/manageEvent.scss';
 @import 'modal/modal.scss';

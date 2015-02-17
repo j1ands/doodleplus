@@ -1,12 +1,23 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore) {
+  .controller('CreateEventCtrl', function ($filter, $scope, storeEvent, Time, dayTime, Contact, $location, $cookieStore, Auth, socket, $timeout,$mdToast) {
     $scope.message = function(){
       console.log('event');
     };
 
     var ceCtrl = this;
+    ceCtrl.currentUser = {};
+    ceCtrl.currentUser.user = Auth.getCurrentUser();
+    socket.userUpdate(function(){
+      $timeout(function(){
+        Auth.checkUserToken();
+        ceCtrl.currentUser.user = Auth.getCurrentUser();
+        $scope.$apply();
+      }, 750);
+    });
+    $scope.contacts = {};
+    $scope.contacts.emails = "";
     $scope.isPhone = typeof window.orientation !== 'undefined';
     $scope.invitedEmails = [];
     $scope.eventOptions = {
@@ -27,7 +38,7 @@ angular.module('doodleplusApp')
     $scope.dayHours = [];
     //Panel Show Logic
     $scope.currentPanel = 0;
-    
+
     $scope.showNextPanel = function(currentPanel){
       if ($scope.EventInfo.$valid){
         if (currentPanel<2){
@@ -118,7 +129,7 @@ angular.module('doodleplusApp')
 
 
     $scope.genTimes =function(){
-      console.log('emails to add',$scope.emailToAdd);
+      console.log('emails to add',$scope.contacts.emails);
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       storeEvent.save({
@@ -133,8 +144,8 @@ angular.module('doodleplusApp')
     };
 
     $scope.addEmail = function(){
-      if ($scope.emailToAdd){
-        $scope.invitedEmails.push($scope.emailToAdd);
+      if ($scope.contacts.emails){
+        $scope.invitedEmails.push($scope.contacts.emails);
       }
     };
     //Creating Event & Saving contacts
@@ -152,24 +163,37 @@ angular.module('doodleplusApp')
           $scope.eventFailure = true;
           return;
         }
-	       
+
         $cookieStore.put('user', res.user._id);
         console.log('res',res);
         ceCtrl.createdEvent = res.createdEvent;
+        $scope.createdEvent = res.createdEvent;
         $scope.currentPanel+=1;
       });
     };
 
+    var openToast =  function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Inivites Sent')
+          .position('top right')
+          .hideDelay(3000)
+      );
+    };
+
     $scope.addContacts = function () {
+      console.log('createdEvent',$scope.createdEvent);
       var contactsToAdd = {
         eventId: $scope.createdEvent._id,
         contacts: $scope.contacts
       };
       Contact.save(contactsToAdd,function(res){
+          if (res.success){
+            openToast();
+          }
           console.log('res',res);
       });
     };
-
 
     var count = 0;
     var findOffset = function() {
@@ -196,5 +220,37 @@ angular.module('doodleplusApp')
       $(window).scroll(sticky_relocate);
       sticky_relocate();
     });
+
+    $scope.addGoogleContactToText = function(contact) {
+      var index = $scope.contacts.emails.indexOf(contact.email);
+      if($scope.contacts.emails == "")
+      {
+        $scope.contacts.emails += contact.email;
+      }
+      else if(index > -1)
+      {
+        if(index == 0)
+        {
+          $scope.contacts.emails = $scope.contacts.emails.replace(new RegExp(contact.email + '(\, )?', 'g'), "");
+        }
+        else
+        {
+          $scope.contacts.emails = $scope.contacts.emails.replace(new RegExp('(\, )?' + contact.email, 'g'), "");
+        }
+      }
+      else
+      {
+        $scope.contacts.emails += ", " + contact.email;
+      }
+      if(contact.selected)
+      {
+        contact.selected = false;
+      }
+      else
+      {
+        contact.selected = true;
+      }
+
+    }
 
   });

@@ -2,7 +2,7 @@
 
 angular.module('doodleplusApp')
 
-  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact) {
+  .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact,manageEvent,$timeout,$mdToast) {
     var responseArray = [];
     $scope.responses = [];
     $scope.emailToAdd = "";
@@ -28,7 +28,6 @@ angular.module('doodleplusApp')
             $scope.isDays.value = true;
             $scope.eventTitle = $scope.days[0].eventTitle;
             $scope.event = $scope.days[0].event;
-          console.log('event on scope',$scope.event);
         }
     })
 
@@ -48,7 +47,6 @@ angular.module('doodleplusApp')
     $scope.respondents = [];
 
     $scope.pullData = function(response){
-        console.log('pullData response',response);
         $scope.responses[$scope.currentIndex] = response;
         $scope.$apply();
     };
@@ -57,6 +55,8 @@ angular.module('doodleplusApp')
         $scope.currentIndex = curInd;
     };
 
+    mCtrl.event_id = $stateParams.event_id;
+    
     $scope.addGoogleContactToText = function(contact) {
         var index = $scope.emailToAdd.indexOf(contact.email);
         if($scope.emailToAdd == "")
@@ -94,13 +94,33 @@ angular.module('doodleplusApp')
         contacts: $scope.contacts
       };
       Contact.save(contactsToAdd,function(res){
-        console.log('res',res);
       });
+    };
+    var openToast =  function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Event Updated')
+          .position('top right')
+          .hideDelay(3000)
+      );
     };
 
     $scope.editEvent = function(){ //Needs to be worked on
-
-    }
+      console.log('manageEvent',manageEvent);
+      manageEvent.save({adminURL: admin},{event: $scope.event},function(res){
+        console.log('updateRes',res);
+        if (res.success){
+          openToast();
+          $scope.event = res.event;
+          $scope.updated = 'Event Updated!';
+          $timeout(function(){
+            $scope.updated = null;
+          }, 5000);
+        } else {
+          //Open up error dialogue
+        }
+      });
+    };
 
 
 

@@ -29,7 +29,6 @@ angular.module('doodleplusApp')
       var times = storeEvent.event.times;
       var myOldResponses = oldResponses;
       var responses = [];
-
       times.forEach(function(time) {
         if (time.status === "removed") {
           time.responses.forEach(function(response) {
@@ -37,15 +36,15 @@ angular.module('doodleplusApp')
               myOldResponses.push(response);
             }
           });
-        } else  
+        } else
         if (time.status) {
-          responses.push({TimeId: time._id, 
-                          status: time.status, 
+          responses.push({TimeId: time._id,
+                          status: time.status,
                           username: username,
                           UUID: UUID
                         });
         }
-      })
+      });
       if (oldResponses.length > 0) {
         Response.remove({responses: myOldResponses}, function() {
           Response.save({
@@ -61,8 +60,8 @@ angular.module('doodleplusApp')
           console.log("Responses saved!", res);
         });
       }
-    }
-
+      func();
+    };
 
     return Response;
   });

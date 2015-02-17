@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('doodleplusApp')
-  .controller('LoginCtrl', function($scope, Auth, $state, $window, $cookieStore) {
+  .controller('LoginCtrl', function($scope, Auth, $state, $window, $cookieStore, $stateParams, $http) {
     $scope.user = {};
     $scope.errors = {};
+    $scope.eventid = $stateParams.eventid;
 
     $scope.login = function(form) {
       $scope.submitted = true;
@@ -26,6 +27,19 @@ angular.module('doodleplusApp')
     $scope.loginOauth = function(provider, eventId) {
       var x = $cookieStore.get('user');
       var location = '/connect/' + provider + "?user=" + x +"&event=" + eventId;
-      $window.location.href = location;
+      // $http.get(location)
+      //   .success(function(data)
+      //   {
+      //     debugger;
+      //   })
+      //   .error(function(data)
+      //   {
+      //     debugger;
+      //   });
+
+      $window.open(location);      
+      //$window.location.href = location;
+      //$window.open('/' + provider + '/' + eventId);
     };
+
   });

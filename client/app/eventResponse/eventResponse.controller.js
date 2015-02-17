@@ -2,7 +2,7 @@
 
 
 angular.module('doodleplusApp')
-  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore) {
+  .controller('EventResponseCtrl', function ($scope, $stateParams, storeEvent, Time, Response, Auth,$cookieStore,$mdToast) {
 
   	$scope.mouseDown = false;
   	$scope.responses = [];
@@ -15,6 +15,14 @@ angular.module('doodleplusApp')
 
     console.log($stateParams);
     var event_id = $stateParams.event_id;
+    var openToast =  function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .content('Inivites Sent')
+          .position('bottom left')
+          .hideDelay(3000)
+      );
+    };
 
     var setEventDetails = function(thisEvent, username, oldResponses) {
       $scope.event = thisEvent;
@@ -24,25 +32,29 @@ angular.module('doodleplusApp')
       $scope.username.name = username;
       $scope.oldResponses = oldResponses;
       $scope.showCalendar = true;
-    }
+    };
 
     $scope.getEvent = function(eventID, UUID) {
       storeEvent.getEvent(eventID, UUID, setEventDetails);
-    }
+    };
 
     var setUUID = function(obj) {
       $scope.UUID = obj.UUID;
       $scope.getEvent($stateParams.event_id, $scope.UUID);
+    };
+
+    if (Auth.getRespondeeToken()) {
+      Auth.getCurrentRespondee(setUUID)
+    } else
+    {
+      Auth.createRespondee(setUUID);
     }
 
-    if (Auth.getToken()) {
-      Auth.getCurrentRespondee(setUUID)
-    } else Auth.createRespondee(setUUID);
 
 
     $scope.submitResponses = function() {
-      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, setEventDetails); 
-    }
+      Response.saveResponses($scope.username.name, $scope.UUID, $scope.oldResponses, openToast);
+    };
 
     $scope.selectResponse = function(time, response) {
       $scope.mouseDown = true;
@@ -56,11 +68,11 @@ angular.module('doodleplusApp')
         time.status = response;
         time[response] = true;
       }
-    }
+    };
 
     $scope.resetMouse = function() {
       $scope.mouseDown = false;
-    }
+    };
 
     $scope.checkClick = function(time, response) {
       if ($scope.mouseDown === true) {
@@ -70,7 +82,7 @@ angular.module('doodleplusApp')
         time.status = response;
         time[response] = true;
       }
-    }
+    };
 
     $scope.dateDisabled = function(date, mode) {
       var found = true;
@@ -81,7 +93,7 @@ angular.module('doodleplusApp')
               found = false;
               $scope.selectedDates.push(date.getTime() - 43200000);
             }
-          });        
+          });
         }
       return found
     };
@@ -95,9 +107,9 @@ angular.module('doodleplusApp')
           if (dateStr.search(day.date) > -1) {
             $scope.selectedDay.index = i;
           }
-        })
+        });
       }
-    }
+    };
 
     var count = 0;
     var findOffset = function() {

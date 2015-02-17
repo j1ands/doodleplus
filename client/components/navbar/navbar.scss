@@ -24,6 +24,10 @@
 		margin-right: -15px;
 	}
 
+	.navbar-toggle:active, .navbar-toggle:focus {
+		background-color: rgba(0,0,0,0) !important;
+	}
+
 @media (min-width: 600px) {
 	.navbar-brand {
 		padding: 37px 15px;
@@ -88,4 +92,8 @@
 		font-size: 40px;
 		padding: 22px 15px 0px 15px;
 	}
+}
+
+.navbar-sitewide {
+	background-color: darken($primary, 45%) !important;
 }
