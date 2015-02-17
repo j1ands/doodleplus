@@ -32,6 +32,21 @@ angular.module('doodleplusApp')
     })
 
     var admin = $stateParams.admin;
+    $scope.respondents = [];
+
+    var formatRespondents = function(days){
+        var pushed = [];
+        days.forEach(function(day){
+            day.times.forEach(function(time){
+                for (var i=0; i<time.responses.length; i++){
+                    if (pushed.indexOf(time.responses[i].UUID) < 0){
+                        $scope.respondents.push({ username: time.responses[i].username, UUID: time.responses[i].UUID });
+                        pushed.push(time.responses[i].UUID);
+                    }
+                }
+            })
+        })
+    }
 
     responseChartData.generateResponseData(admin)
         .then (function(days){
@@ -41,13 +56,34 @@ angular.module('doodleplusApp')
             days.days.forEach(function(elem,idx){
                 $scope.responses[idx] = [];
             });
-    });
+            formatRespondents($scope.days);
+            console.log($scope.respondents)
+        });
 
 
-    $scope.respondents = [];
+    var colorRespondents = function(responses) {
+        var coloredRespondents = $scope.respondents;
+        coloredRespondents.forEach(function(respondent){
+            respondent.superStatus = null;
+            for (var i=0; i<responses.length; i++){
+                if (respondent.UUID === responses[i].UUID){
+                    respondent.superStatus = responses[i].superStatus;
+                }
+            }
+        })
+        console.log(coloredRespondents)
+        return coloredRespondents;
+    }
+
+    // var deColorRespondents = function() {
+    //     for (var i; i<$scope.respondents; i++){
+    //         $scope.respondents[i].superstatus = undefined;
+    //     }
+    // }
+        
 
     $scope.pullData = function(response){
-        $scope.responses[$scope.currentIndex] = response;
+        $scope.responses[$scope.currentIndex] = colorRespondents(response);
         $scope.$apply();
     };
 
@@ -106,9 +142,9 @@ angular.module('doodleplusApp')
     };
 
     $scope.editEvent = function(){ //Needs to be worked on
-      console.log('manageEvent',manageEvent);
+      // console.log('manageEvent',manageEvent);
       manageEvent.save({adminURL: admin},{event: $scope.event},function(res){
-        console.log('updateRes',res);
+        // console.log('updateRes',res);
         if (res.success){
           openToast();
           $scope.event = res.event;
