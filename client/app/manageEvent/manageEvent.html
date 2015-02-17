@@ -106,12 +106,14 @@
         </md-tabs>
       </div>
       <div ng-if="!isPhone" flex="20">
-        <h3 id="responseTab">People</h3>
+        <h3 id="responseTab"></h3>
         <md-list>
+        <!-- <h4 style="text-align: center">People</h4> -->
           <md-item ng-repeat="response in responses[currentIndex]">
             <md-item-content>
-              <div  class="md-tile-left name-tile {{response.superStatus}}"  ng-show="response.superStatus">
-                <h2>{{response.username}}</h2>
+
+              <div  class="md-tile-left main-name-tile {{response.superStatus}}">
+                <h4>{{response.username}}</h4>
               </div>
             </md-item-content>
           </md-item>
