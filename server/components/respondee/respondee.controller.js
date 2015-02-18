@@ -22,7 +22,7 @@ exports.createRespondee = function(req, res) {
   console.log("createRespondee");
   var UUID = generateUUID();
   var token = jwt.sign({ UUID: UUID }, config.secrets.session, {
-      expiresInMinutes: 15
+      expiresInMinutes: 524160
       // expiresInMinutes: 60 * 730 // Do we want the token to expire?
     });
   res.json({ token: token });

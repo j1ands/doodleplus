@@ -114,7 +114,7 @@ function isRespondee() {
 
 
       jwt.verify(jwtString, 'doodleplus-secret', {secret: 'doodleplus-secret'}, function(err, decoded) {
-        console.log("ERRR", err);
+        console.log("RESPONDEE ERRR", err);
         if (err) return res.status(401).send({message: 'Refresh Page'});
         req.user = decoded;
         next();
