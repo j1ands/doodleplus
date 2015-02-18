@@ -84,12 +84,15 @@
 	top: 0px;
 	z-index: 20000;
 	padding: 0 30px 0 0;
+	button {
+		margin-right: 30px !important;
+	}
 }
 
-/*#stick-top > div {
+#stick-top > div {
 	margin-right: 30px;
-	border-bottom: solid 1px $darkgray;
-}*/
+	/*border-bottom: solid 1px $darkgray;*/
+}
 
 #stick-bottom {
 	padding: 0 30px 0 0;

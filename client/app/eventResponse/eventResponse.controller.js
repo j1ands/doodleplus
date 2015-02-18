@@ -61,12 +61,14 @@ angular.module('doodleplusApp')
       if(time.status === response) {
         time.status = "removed";
         time[response] = false;
+        $scope.removingResponses = true;
       } else {
         time.able = false;
         time.ifneedbe = false;
         time.maybe = false;
         time.status = response;
         time[response] = true;
+        $scope.removingResponses = false;
       }
     };
 
@@ -75,12 +77,17 @@ angular.module('doodleplusApp')
     };
 
     $scope.checkClick = function(time, response) {
-      if ($scope.mouseDown === true) {
+      if ($scope.mouseDown === true && $scope.removingResponses === false) {
         time.able = false;
         time.ifneedbe = false;
         time.maybe = false;
         time.status = response;
         time[response] = true;
+      } else if ($scope.mouseDown === true) {
+       if (time.status) {
+        time.status = "removed";
+        }
+        time[response] = false;
       }
     };
 
