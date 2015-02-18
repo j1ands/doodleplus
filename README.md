@@ -51,7 +51,8 @@ __Note:__ If you encounter errors in the installation process for npm, it is rec
 	bower install
 	```
 3. Let's is installed!
-###<a name="roadmap"></a> Roadmap
+
+####<a name="roadmap"></a> Roadmap
 - E-mail templating with let's' logo
 - Final time selection with e-mail/text confirmation
 - Response chart will visually separate blocks of time
