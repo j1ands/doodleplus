@@ -1,9 +1,10 @@
+# Let's
 ![Badge of Honor](https://img.shields.io/badge/Built%20at-Fullstack-green.svg?style=flat-square)
+> A web app designed to find the perfect time for you and your friends.
 
 ## Table of Contents
 - [Examples](#examples)
 - [Usage](#usage)
-- [Testing](#testing)
 - [Installation](#installation)
 - [Roadmap](#roadmap)
 - [Features](#features)
@@ -13,15 +14,43 @@
 - [License](#license)
 
 ##<a name="examples"></a>Examples
-
+- Event Creation![Example 0](file:///C:/Users/jordan/Desktop/Desktop%201/lets9.gif)
+<hr></hr> 
+<p></p>
+- Event Response![Example 1](file:///C:/Users/jordan/Desktop/Desktop%201/event1.gif )
 
 ##<a name="usage"></a>Usage
 
-##<a name="testing"></a>Testing
+1. Make sure you have PostGreSQL installed and a database named 'doodleplus' running.
+2. Feel free to edit the PostGreSQL user information with server/config/enivornment/development.js.
+
+	```
+	uri: 'postgres://USER:PASS@localhost/doodleplus'
+	```
+3. Run the app with `grunt`.
+
+	```
+	grunt serve
+	```
+	
+
+<!-- <a name="testing"></a>Testing -->
 
 ##<a name="installation"></a>Installation
 __Note:__ If you encounter errors in the installation process for npm, it is recommended that you try running the install command with `sudo`
 
+1. First, clone the repository to your local machine.
+
+	```
+	git clone https://github.com/j1ands/doodleplus.git
+	```
+2. Next, `bower` and `npm` install.
+
+	```
+	npm install
+	bower install
+	```
+3. Let's is installed!
 ###<a name="roadmap"></a> Roadmap
 - E-mail templating with let's' logo
 - Final time selection with e-mail/text confirmation
@@ -41,8 +70,7 @@ __Note:__ If you encounter errors in the installation process for npm, it is rec
 
 ####<a name="bugs"></a> Known bugs
 
-- Syntax highlighting doesn't work in safari
-- It ain't easy being cheezy.
+- Dates in event management view are unordered.
 
 ##<a name="contributors"></a> Contributors
 * __Justin Sung__ -  [LinkedIn](http://linkedin.com/in/justinfsung) | [GitHub](https://github.com/Ataraxic)
@@ -54,4 +82,3 @@ __Note:__ If you encounter errors in the installation process for npm, it is rec
 
 This projected is licensed under the terms of the [MIT license](http://opensource.org/licenses/MIT)
 
-> Written with [StackEdit](https://stackedit.io/).
