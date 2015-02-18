@@ -14,10 +14,10 @@
 - [License](#license)
 
 ##<a name="examples"></a>Examples
-- Event Creation![Example 0](file:///C:/Users/jordan/Desktop/Desktop%201/lets9.gif)
+- Event Creation![Example 0](https://cloud.githubusercontent.com/assets/8934559/6252290/2f4e6da6-b767-11e4-976b-573f37c68068.gif)
 <hr></hr> 
 <p></p>
-- Event Response![Example 1](file:///C:/Users/jordan/Desktop/Desktop%201/event1.gif )
+- Event Response![Example 1](https://cloud.githubusercontent.com/assets/8934559/6252280/15ef0cb2-b767-11e4-82cf-2a8716c2f664.gif)
 
 ##<a name="usage"></a>Usage
 
