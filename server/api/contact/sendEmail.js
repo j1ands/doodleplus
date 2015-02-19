@@ -20,9 +20,9 @@ function sendEmail(emailData,createdEvent) {
       }
     });
     var message = {
-      html: '<a href="http://localhost:9000/eventResponse/"' + createdEvent._id + '>The Event: http://localhost:9000/eventResponse/'+createdEvent._id+'</a>',
+      html: '<a href="http://findatime.io/eventResponse/'+createdEvent._id+'">Respond</a>',
       text: 'some example text cooooool',
-      subject: 'You\'ve been invited to a super cool event!',
+      subject: 'You\'re invited to '+emailData.creator.name+'\'s event: '+createdEvent.title,
       from_email: emailData.creator.email,
       from_name: emailData.creator.name,
       to: toEmail
@@ -39,7 +39,7 @@ function sendEmail(emailData,createdEvent) {
 }
 function textBody(phoneData,createdEvent){
   var template = 'Hello, '+ phoneData.creator.name + ' has invited you to their amazing event: '+ createdEvent.title+ '.\n' +
-    'Pleased respond by using this link \nhttp://localhost:9000/event/'+ createdEvent._id;
+    'Pleased respond by using this link \nhttp://findatime.io/event/'+ createdEvent._id;
   if (createdEvent.isPrivate){
     //do something else;
   }

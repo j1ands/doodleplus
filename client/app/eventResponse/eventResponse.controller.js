@@ -18,7 +18,7 @@ angular.module('doodleplusApp')
     var openToast =  function() {
       $mdToast.show(
         $mdToast.simple()
-          .content('Inivites Sent')
+          .content('Responses Submitted')
           .position('bottom left')
           .hideDelay(3000)
       );
