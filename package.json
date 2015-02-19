@@ -20,6 +20,7 @@
     "mandrill-api": "^1.0.41",
     "method-override": "~1.0.0",
     "morgan": "~1.0.0",
+    "newrelic": "^1.16.2",
     "passport": "~0.2.0",
     "passport-facebook": "latest",
     "passport-google-oauth": "latest",

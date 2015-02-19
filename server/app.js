@@ -1,7 +1,7 @@
 /**
  * Main application file
  */
-
+require('newrelic');
 'use strict';
 
 // Set default node environment to development
