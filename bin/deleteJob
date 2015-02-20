@@ -1,0 +1,19 @@
+#! /app/.heroku/node/bin/node
+var sqldb = require('../server/sqldb');
+var User = sqldb.User;
+
+function deleteJob() {
+	User.update({'googleId' : null, 'google' : null}, {where: {}, returning: true})
+		.then(function(updatedUsers) {
+			process.exit();
+		});
+	}
+
+var currentDay = new Date();
+
+if(currentDay.getDay() == 7)
+{
+	deleteJob();
+} else {
+	process.exit();
+}
