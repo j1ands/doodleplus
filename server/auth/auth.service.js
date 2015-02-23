@@ -105,7 +105,7 @@ function isRespondee() {
 
       if(jwtString)
       {
-        if(jwtString[0] == "\"")
+        if(jwtString[0] == "\"") // jshint ignore:line
         {
           jwtString = jwtString.substr(1);
           jwtString = jwtString.substring(0,jwtString.length-1);    
