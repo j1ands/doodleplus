@@ -53,11 +53,28 @@
     <md-content class="md-padding">
       <div layout="row" layout-margin ng-controller="LoginCtrl">
         <h2 flex flex-order="1" class="prompt-response">Type in Contacts</h2>
-        <h2 flex flex-order="2" class="prompt-response" style="text-align:center">OR</h2>
-        <md-button flex flex-order="3" md-theme="google" class="md-raised md-primary google-text" ng-click="loginOauth('google', Create.createdEvent._id)">
+        <h2 flex flex-order="2" class="prompt-response" style="text-align:center" ng-hide="Manage.currentUser.user.google">OR</h2>
+        <md-button flex flex-order="3" md-theme="google" class="md-raised md-primary google-text" ng-click="loginOauth('google', Create.createdEvent._id)" ng-hide="Manage.currentUser.user.google">
           <i class="fa fa-google-plus"></i> Add with G+
         </md-button>
       </div>
+
+	<div layout="row" layout-align="center center" ng-show="Manage.currentUser.user.google">
+          <div class="google-contacts-search">
+            <input class="google-contacts-input" ng-model="searchText.name" type="text" placeholder="Search Google Contacts">
+          </div>
+        </div>
+        <div layout="row" layout-align="center center" ng-show="Manage.currentUser.user.google">
+          <md-list class="google-contacts-list disable-text-selection">
+              <md-item ng-repeat="contact in Manage.currentUser.user.google.contacts | filter:searchText.name | orderBy: 'email'" class="google-contacts-item" ng-class="{chosen:contact.selected}" ng-click="addGoogleContactToText(contact)">
+                <md-item-content>
+                    {{contact.name != "" ? contact.name : contact.email}}
+                </md-item-content>
+              </md-item>
+          </md-list>
+        </div>
+
+
       <form name="invites" class="editeventform">
         <md-input-container>
           <label for="emails">Emails</label>

@@ -69,8 +69,7 @@ angular.module('doodleplusApp', [
         if (response.status === 401) {
 		if(errorCounter.count == 1) {
 			errorCounter.count = 0;
-			(state || (state = $injector.get('$state'))).go('main');
-			return $q.reject(response);
+			location.href = "/";
 		} else {
 		errorCounter.count++;
           	location.reload(); //Reload page option
