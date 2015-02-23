@@ -1,6 +1,6 @@
 # Let's
 ![Badge of Honor](https://img.shields.io/badge/Built%20at-Fullstack-green.svg?style=flat-square)
-> A web app designed to find the perfect time for you and your friends.
+> [Let's][1] is a web app designed to find the perfect time for you and your friends.
 
 ## Table of Contents
 - [Examples](#examples)
@@ -82,4 +82,6 @@ __Note:__ If you encounter errors in the installation process for npm, it is rec
 ##<a name="license"></a> License
 
 This projected is licensed under the terms of the [MIT license](http://opensource.org/licenses/MIT)
+
+[1]: http://findatime.io
 
