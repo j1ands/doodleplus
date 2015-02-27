@@ -61,20 +61,17 @@ angular.module('doodleplusApp', [
         return config;
       },
   	response: function(response) {
-		errorCounter.count = 0;
+		errorCounter.set(0);
 		return response;
 	},
       // Intercept 401s and redirect you to main
       responseError: function(response) {
         if (response.status === 401) {
-		console.log("in first if", errorCounter);
-		if(errorCounter.count == 1) {
-			console.log("in second if", errorCounter);
-			errorCounter.count = 0;
+		if(errorCounter.get() == 1) {
+			errorCounter.set(0);
 			location.href = "/";
 		} else {
-			errorCounter.count+=1;
-			console.log("in else", errorCounter);
+			errorCounter.set(1);
           		location.reload(); //Reload page option
           
           		// remove any stale tokens
