@@ -67,6 +67,7 @@ angular.module('doodleplusApp', [
       // Intercept 401s and redirect you to main
       responseError: function(response) {
         if (response.status === 401) {
+		debugger;
 		if(errorCounter.count == 1) {
 			errorCounter.count = 0;
 			location.href = "/";

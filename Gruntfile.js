@@ -633,6 +633,7 @@ module.exports = function (grunt) {
     }
 
     if (target === 'debug') {
+    console.log("DEBUGGGGGGGG");
       return grunt.task.run([
         'clean:server',
         'env:all',
@@ -645,6 +646,7 @@ module.exports = function (grunt) {
       ]);
     }
 
+    console.log("SERVEEEEEEEEEE");
     grunt.task.run([
       'clean:server',
       'env:all',
@@ -676,6 +678,7 @@ module.exports = function (grunt) {
     }
 
     else if (target === 'client') {
+	    console.log("Clientttttttt");
       return grunt.task.run([
         'clean:server',
         'env:all',
@@ -700,6 +703,7 @@ module.exports = function (grunt) {
       }
 
       else {
+	console.log("e2eeeeeeeee");
         return grunt.task.run([
           'clean:server',
           'env:all',
@@ -760,7 +764,6 @@ module.exports = function (grunt) {
     'clean:dist',
     'injector:sass', 
     'concurrent:dist',
-    'injector',
     'wiredep',
     'useminPrepare',
     'autoprefixer',

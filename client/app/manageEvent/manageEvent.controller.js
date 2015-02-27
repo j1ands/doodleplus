@@ -4,6 +4,8 @@ angular.module('doodleplusApp')
 
   .controller('ManageEventCtrl', function ($scope, $stateParams, Time, Response, responseChartData, Auth, Contact,manageEvent,$timeout,$mdToast, socket) {
     var responseArray = [];
+    $scope.contacts = {};
+    $scope.contacts.emails = "";
     $scope.responses = [];
     $scope.emailToAdd = "";
     $scope.currentPanel = 0;
