@@ -764,6 +764,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'injector:sass', 
     'concurrent:dist',
+    'injector',
     'wiredep',
     'useminPrepare',
     'autoprefixer',

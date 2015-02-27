@@ -70,14 +70,13 @@ angular.module('doodleplusApp', [
 		if(errorCountTwo.get() == 1) {
 			errorCountTwo.set(0);
 			location.href = "/";
+          		// remove any stale tokens
+        		$cookieStore.remove('token');
+          		$cookieStore.remove('usertoken');
 		} else {
 			errorCountTwo.set(1);
           		location.reload(); //Reload page option
-          
-          		// remove any stale tokens
-          		$cookieStore.remove('token');
-          		$cookieStore.remove('usertoken');
-		}
+  	}
           	return $q.reject(response);
         }
         else {

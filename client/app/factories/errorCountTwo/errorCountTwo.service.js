@@ -3,11 +3,10 @@
 angular.module('doodleplusApp')
   .factory('errorCountTwo', function () {
     var count = {};
-    count.val = 0;
 
     return {
       get: function () {
-        return count.val;
+        return count.val == undefined ? 0 : count.val;
       },
       set: function (v) {
 	count.val = v;
