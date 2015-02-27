@@ -7,7 +7,6 @@ angular.module('doodleplusApp')
     $scope.contacts = {};
     $scope.contacts.emails = "";
     $scope.responses = [];
-    $scope.emailToAdd = "";
     $scope.currentPanel = 0;
     $scope.isPhone = typeof window.orientation !== 'undefined';
     if ($scope.isPhone){
@@ -103,9 +102,9 @@ angular.module('doodleplusApp')
 
     $scope.addGoogleContactToText = function(contact) {
         var index = $scope.contacts.emails.indexOf(contact.email);
-        if($scope.emailToAdd == "")
+        if($scope.contacts.emails == "")
         {
-        $scope.contacts.emails += contact.email;
+	        $scope.contacts.emails += contact.email;
         }
         else if(index > -1)
         {
@@ -120,7 +119,7 @@ angular.module('doodleplusApp')
         }
         else
         {
-            $scope.contacts.emails+= ", " + contact.email;
+            $scope.contacts.emails += ", " + contact.email;
         }
         if(contact.selected)
         {
