@@ -2,13 +2,14 @@
 
 angular.module('doodleplusApp')
   .factory('errorCountTwo', function () {
-    	var count = 0;
     	var service = {};
-    	service.get = function() {
-	    return count;
-    	}
-    	service.set = function(v) {
-	    count = v;
-    	}
-    	return service;
+	service.count = 0;
+    	return  {
+		get: function() {
+			return service.count;
+		},
+	  	set: function(v) {
+			service.count = v;
+		}
+	}
   });
