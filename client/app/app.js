@@ -67,19 +67,21 @@ angular.module('doodleplusApp', [
       // Intercept 401s and redirect you to main
       responseError: function(response) {
         if (response.status === 401) {
-		debugger;
+		console.log("in first if", errorCounter);
 		if(errorCounter.count == 1) {
+			console.log("in second if", errorCounter);
 			errorCounter.count = 0;
 			location.href = "/";
 		} else {
-		errorCounter.count++;
-          	location.reload(); //Reload page option
+			errorCounter.count+=1;
+			console.log("in else", errorCounter);
+          		location.reload(); //Reload page option
           
-          	// remove any stale tokens
-          	$cookieStore.remove('token');
-          	$cookieStore.remove('usertoken');
-          	return $q.reject(response);
+          		// remove any stale tokens
+          		$cookieStore.remove('token');
+          		$cookieStore.remove('usertoken');
 		}
+          	return $q.reject(response);
         }
         else {
           return $q.reject(response);
