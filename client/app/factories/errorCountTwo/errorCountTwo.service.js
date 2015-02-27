@@ -11,5 +11,4 @@ angular.module('doodleplusApp')
 	    count = v;
     	}
     	return service;
-    };
   });
