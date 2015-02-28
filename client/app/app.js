@@ -49,7 +49,7 @@ angular.module('doodleplusApp', [
     $httpProvider.interceptors.push('authInterceptor');
   })
 
-  .factory('authInterceptor', function($rootScope, $q, $cookieStore, $injector, errorCountTwo) {
+  .factory('authInterceptor', function($rootScope, $q, $cookieStore, $injector, errorCounter) {
     var state;
     return {
       // Add authorization token to headers
@@ -60,23 +60,18 @@ angular.module('doodleplusApp', [
         }
         return config;
       },
-  	response: function(response) {
-		errorCountTwo.set(0);
-		return response;
-	},
       // Intercept 401s and redirect you to main
       responseError: function(response) {
         if (response.status === 401) {
-		if(errorCountTwo.get() == 1) {
-			errorCountTwo.set(0);
-			location.href = "/";
-          		// remove any stale tokens
-        		$cookieStore.remove('token');
+		if(errorCounter.count == 1) {
+			errorCounter.count = 0;
+			(state || $injector.get($state)).go('main');
+        	} else {
+			errorCounter.count = 1;
+			(state || $injector.get($state)).reload();
+			$cookieStore.remove('token');
           		$cookieStore.remove('usertoken');
-		} else {
-			errorCountTwo.set(1);
-          		location.reload(); //Reload page option
-  	}
+  		}
           	return $q.reject(response);
         }
         else {
