@@ -65,10 +65,10 @@ angular.module('doodleplusApp', [
         if (response.status === 401) {
 		if(errorCounter.count == 1) {
 			errorCounter.count = 0;
-			(state || $injector.get($state)).go('main');
+			(state || $injector.get('$state')).go('main');
         	} else {
 			errorCounter.count = 1;
-			(state || $injector.get($state)).reload();
+			(state || $injector.get('$state')).reload();
 			$cookieStore.remove('token');
           		$cookieStore.remove('usertoken');
   		}
