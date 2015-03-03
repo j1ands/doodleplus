@@ -20,7 +20,7 @@
 - Event Response![Example 1](https://cloud.githubusercontent.com/assets/8934559/6252280/15ef0cb2-b767-11e4-82cf-2a8716c2f664.gif)
 <hr></hr> 
 <p></p>
-- Event Management![Example 2](https://cloud.githubusercontent.com/assets/8836416/6469329/7a684982-c1a9-11e4-9b07-d37a74d9fc91.gif)
+- Event Management![Example 2](https://cloud.githubusercontent.com/assets/8836416/6469557/7ee3ebe0-c1ab-11e4-9b0c-98b2188f1a8e.gif)
 
 ##<a name="usage"></a>Usage
 
