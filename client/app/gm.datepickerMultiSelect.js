@@ -102,11 +102,9 @@ angular.module('gm.datepickerMultiSelect', ['ui.bootstrap'])
           if(selectedDates.indexOf(dateVal) < 0) {
             selectedDates.push(dateVal);
             dayTime.updateDay(selectedDates,scope.dayHours,increment);
-            console.log(selectedDates);
           } else {
             selectedDates.splice(selectedDates.indexOf(dateVal), 1);
             dayTime.updateDay(selectedDates,scope.dayHours,increment);
-            console.log(selectedDates);
           }
         });
       }

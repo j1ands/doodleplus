@@ -129,7 +129,6 @@ angular.module('doodleplusApp')
 
 
     $scope.genTimes =function(){
-      console.log('emails to add',$scope.contacts.emails);
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
       storeEvent.save({
@@ -137,7 +136,6 @@ angular.module('doodleplusApp')
         user: $scope.userOptions,
         time: mergedTimes
       }, function(res){
-        console.log("response",res);
         $cookieStore.put('user', res.user._id);
         $location.path('/manageEvent/' + res.createdEvent._id);
       });
@@ -152,7 +150,6 @@ angular.module('doodleplusApp')
     $scope.saveEvent = function () {
       var mergedTimes = [];
       mergedTimes = Time.filterTimes(mergedTimes.concat.apply(mergedTimes, $scope.dayHours));
-      console.log('the merged time',mergedTimes);
       $scope.eventOptions.timeIncrement = $scope.timeIncrement;
       storeEvent.save({
         event: $scope.eventOptions,
@@ -165,7 +162,6 @@ angular.module('doodleplusApp')
         }
 
         $cookieStore.put('user', res.user._id);
-        console.log('res',res);
         ceCtrl.createdEvent = res.createdEvent;
         $scope.createdEvent = res.createdEvent;
         $scope.currentPanel+=1;
@@ -182,7 +178,6 @@ angular.module('doodleplusApp')
     };
 
     $scope.addContacts = function () {
-      console.log('createdEvent',$scope.createdEvent);
       var contactsToAdd = {
         eventId: $scope.createdEvent._id,
         contacts: $scope.contacts
@@ -191,7 +186,6 @@ angular.module('doodleplusApp')
           if (res.success){
             openToast();
           }
-          console.log('res',res);
       });
     };
 
